@@ -20,7 +20,6 @@ public class CameraRotate : MonoBehaviour
     {
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
-        Debug.Log($"Mouse X : {mouseX}, Mouse Y : {mouseY}");
 
         _rotationX += mouseX * RotationSpeed * Time.deltaTime;
         _rotationY += -mouseY * RotationSpeed * Time.deltaTime;

@@ -3,7 +3,12 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
     public float MoveSpeed = 7f;
+    public float RunSpeed = 12f;
     public float JumpPower = 5f;
+
+    public float Stamina = 50f;
+    private float _staminaUseSpeed = 10f;
+    private float _staminaFillSpeed = 3f;
 
     private CharacterController _characterController;
     private const float GRAVITY = -9.8f; // ม฿ทย
@@ -46,6 +51,16 @@ public class PlayerMove : MonoBehaviour
         dir.y = _yVelocity;
 
         //transform.position += dir * MoveSpeed * Time.deltaTime;
-        _characterController.Move(dir * MoveSpeed * Time.deltaTime);
+        if (Input.GetKey(KeyCode.LeftShift) && Stamina > 0f)
+        {
+            _characterController.Move(dir * RunSpeed * Time.deltaTime);
+            Stamina -= _staminaUseSpeed * Time.deltaTime;
+        }
+        else
+        {
+            Stamina += _staminaFillSpeed * Time.deltaTime;
+            _characterController.Move(dir * MoveSpeed * Time.deltaTime);
+        }
+        Debug.Log($"current stamina : {Stamina}");
     }
 }
