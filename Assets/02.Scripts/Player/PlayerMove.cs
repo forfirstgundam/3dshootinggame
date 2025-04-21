@@ -1,14 +1,19 @@
 using UnityEngine;
+using System;
+using System.Collections;
+using UnityEngine.Rendering;
 
 public class PlayerMove : MonoBehaviour
 {
     public float MoveSpeed = 7f;
     public float RunSpeed = 12f;
-    public float JumpPower = 5f;
+    public float RollSpeed = 25f;
 
-    public float Stamina = 50f;
-    private float _staminaUseSpeed = 10f;
-    private float _staminaFillSpeed = 3f;
+    public float JumpPower = 5f;
+    public int AvailableJump = 2;
+
+    private int _maxJump = 2;
+    private bool _isRolling = false;
 
     private CharacterController _characterController;
     private const float GRAVITY = -9.8f; // 중력
@@ -23,9 +28,20 @@ public class PlayerMove : MonoBehaviour
      * 3. 방향에 따라 플레이어 이동
      */
 
-    private void Awake()
+    IEnumerator Roll(Vector3 dir)
     {
-        _characterController = GetComponent<CharacterController>();
+        _isRolling = true;
+        float rolltime = 0.1f;
+        float curtime = 0f;
+        while (curtime <= rolltime)
+        {
+            _characterController.Move(dir * RollSpeed* Time.deltaTime);
+            curtime += Time.deltaTime;
+            yield return null;
+        }
+        Debug.Log("has rolled");
+        _isRolling = false;
+        yield return null;
     }
 
     private void Update()
@@ -39,28 +55,48 @@ public class PlayerMove : MonoBehaviour
         //dir.y = 0;
         //TransformDirection : 로컬 공간의 벡터 -> 월드 공간의 벡터
 
-        if (_characterController.isGrounded) _isJumping = false;
+        if (_characterController.isGrounded)
+        {
+            AvailableJump = _maxJump;
+            _isJumping = false;
+        }
 
-        if (Input.GetButtonDown("Jump") && !_isJumping)
+        if (Input.GetButtonDown("Jump") && AvailableJump >0)
         {
             _yVelocity = JumpPower;
             _isJumping = true;
+            AvailableJump--;
+            Debug.Log($"you can jump {AvailableJump}");
         }
 
         _yVelocity += GRAVITY * Time.deltaTime;
         dir.y = _yVelocity;
 
         //transform.position += dir * MoveSpeed * Time.deltaTime;
-        if (Input.GetKey(KeyCode.LeftShift) && Stamina > 0f)
+
+        //shift를 눌러서 뛰기
+        //기본 이동들: 구르기 중이 아닐 때
+        if (!_isRolling)
         {
-            _characterController.Move(dir * RunSpeed * Time.deltaTime);
-            Stamina -= _staminaUseSpeed * Time.deltaTime;
+            if (Input.GetKey(KeyCode.LeftShift) && PlayerStamina.Stamina > 0f)
+            {
+                _characterController.Move(dir * RunSpeed * Time.deltaTime);
+                PlayerStamina.Stamina -= PlayerStamina.DashUseRate * Time.deltaTime;
+            }
+            else if (Input.GetKeyDown(KeyCode.E) && PlayerStamina.Stamina > PlayerStamina.RollUsage)
+            {
+                PlayerStamina.Stamina -= PlayerStamina.RollUsage;
+                StartCoroutine(Roll(dir));
+            }
+            else
+            {
+                PlayerStamina.Stamina += PlayerStamina.FillRate * Time.deltaTime;
+                PlayerStamina.Stamina = Mathf.Clamp(PlayerStamina.Stamina, 0, PlayerStamina.MaxStamina);
+                _characterController.Move(dir * MoveSpeed * Time.deltaTime);
+            }
         }
-        else
-        {
-            Stamina += _staminaFillSpeed * Time.deltaTime;
-            _characterController.Move(dir * MoveSpeed * Time.deltaTime);
-        }
-        Debug.Log($"current stamina : {Stamina}");
+
+        
+        Debug.Log($"current stamina : {PlayerStamina.Stamina}");
     }
 }
