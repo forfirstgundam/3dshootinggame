@@ -55,16 +55,34 @@ public class PlayerMove : MonoBehaviour
     }
     private bool checkWallInFront()
     {
-        Vector3 origin = transform.position;
-        Vector3 forward = transform.forward;
-        float rayDistance = 0.6f;
-
-        return Physics.Raycast(origin, forward, rayDistance);
+        CollisionFlags collisionplace = _characterController.collisionFlags;
+        return (collisionplace & CollisionFlags.Sides) != 0;
     }
 
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
+    }
+
+    private void Movement(float h, float v, float speed)
+    {
+        Vector3 dir = new Vector3(h, 0, v).normalized;
+        dir = Camera.main.transform.TransformDirection(dir);
+        dir.y = _yVelocity; // 중력 적용
+        _characterController.Move(dir * speed * Time.deltaTime);
+    }
+
+    private void Jump()
+    {
+        if (_characterController.isGrounded)
+        {
+            AvailableJump = _maxJump;
+            _isJumping = false;
+        }
+
+        _yVelocity = JumpPower;
+        _isJumping = true;
+        AvailableJump--;
     }
 
     private void Update()
@@ -75,24 +93,17 @@ public class PlayerMove : MonoBehaviour
         Vector3 dir = new Vector3(h, 0, v);
         dir = dir.normalized;
         dir = Camera.main.transform.TransformDirection(dir);
+        Debug.Log($"{dir}");
         //TransformDirection : 로컬 공간의 벡터 -> 월드 공간의 벡터
 
-        if (_characterController.isGrounded)
+        if (!_climbWall)
         {
-            AvailableJump = _maxJump;
-            _isJumping = false;
+            _yVelocity += GRAVITY * Time.deltaTime;
         }
-
-        if (Input.GetButtonDown("Jump") && AvailableJump >0)
+        else
         {
-            _yVelocity = JumpPower;
-            _isJumping = true;
-            AvailableJump--;
-            Debug.Log($"you can jump {AvailableJump}");
+            _yVelocity = 0f;
         }
-
-        _yVelocity += GRAVITY * Time.deltaTime;
-        dir.y = _yVelocity;
 
         //transform.position += dir * MoveSpeed * Time.deltaTime;
 
@@ -119,10 +130,14 @@ public class PlayerMove : MonoBehaviour
                     _climbWall = false;
                 }
 
+            } else if (Input.GetButtonDown("Jump") && AvailableJump > 0)
+            {
+                Jump();
+                Debug.Log($"you can jump {AvailableJump}");
             }
             else if (Input.GetKey(KeyCode.LeftShift) && PlayerStamina.Stamina > 0f)
             {
-                _characterController.Move(dir * RunSpeed * Time.deltaTime);
+                Movement(h, v, RunSpeed);
                 PlayerStamina.Stamina -= PlayerStamina.DashUseRate * Time.deltaTime;
             }
             else if (Input.GetKeyDown(KeyCode.E) && PlayerStamina.Stamina > PlayerStamina.RollUsage)
@@ -134,7 +149,7 @@ public class PlayerMove : MonoBehaviour
             {
                 PlayerStamina.Stamina += PlayerStamina.FillRate * Time.deltaTime;
                 PlayerStamina.Stamina = Mathf.Clamp(PlayerStamina.Stamina, 0, PlayerStamina.MaxStamina);
-                _characterController.Move(dir * MoveSpeed * Time.deltaTime);
+                Movement(h, v, MoveSpeed);
             }
         }
         
