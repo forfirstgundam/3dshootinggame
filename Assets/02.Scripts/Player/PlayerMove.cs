@@ -15,6 +15,8 @@ public class PlayerMove : MonoBehaviour
     private int _maxJump = 2;
     private bool _isRolling = false;
 
+    private bool _climbWall = false;
+
     private CharacterController _characterController;
     private const float GRAVITY = -9.8f; // 중력
     private float _yVelocity = 0f;       // 중력 가속도
@@ -44,6 +46,27 @@ public class PlayerMove : MonoBehaviour
         yield return null;
     }
 
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if(Vector3.Angle(hit.normal, Vector3.up) > 85f)
+        {
+            _climbWall = true;
+        }
+    }
+    private bool checkWallInFront()
+    {
+        Vector3 origin = transform.position;
+        Vector3 forward = transform.forward;
+        float rayDistance = 0.6f;
+
+        return Physics.Raycast(origin, forward, rayDistance);
+    }
+
+    private void Awake()
+    {
+        _characterController = GetComponent<CharacterController>();
+    }
+
     private void Update()
     {
         float h = Input.GetAxisRaw("Horizontal");
@@ -52,7 +75,6 @@ public class PlayerMove : MonoBehaviour
         Vector3 dir = new Vector3(h, 0, v);
         dir = dir.normalized;
         dir = Camera.main.transform.TransformDirection(dir);
-        //dir.y = 0;
         //TransformDirection : 로컬 공간의 벡터 -> 월드 공간의 벡터
 
         if (_characterController.isGrounded)
@@ -78,7 +100,27 @@ public class PlayerMove : MonoBehaviour
         //기본 이동들: 구르기 중이 아닐 때
         if (!_isRolling)
         {
-            if (Input.GetKey(KeyCode.LeftShift) && PlayerStamina.Stamina > 0f)
+            if (_climbWall)
+            {
+                if(PlayerStamina.Stamina > 0 && checkWallInFront())
+                {
+                    Vector3 forward = Camera.main.transform.forward;
+                    forward.y = 0;
+                    forward = forward.normalized;
+
+                    Vector3 wallRight = Vector3.Cross(Vector3.up, forward);
+                    Vector3 climbDir = (Vector3.up * v + wallRight * h).normalized;
+
+                    _characterController.Move(climbDir * MoveSpeed * Time.deltaTime);
+                    PlayerStamina.Stamina -= PlayerStamina.ClimbUseRate * Time.deltaTime;
+                }
+                else
+                {
+                    _climbWall = false;
+                }
+
+            }
+            else if (Input.GetKey(KeyCode.LeftShift) && PlayerStamina.Stamina > 0f)
             {
                 _characterController.Move(dir * RunSpeed * Time.deltaTime);
                 PlayerStamina.Stamina -= PlayerStamina.DashUseRate * Time.deltaTime;
@@ -95,7 +137,6 @@ public class PlayerMove : MonoBehaviour
                 _characterController.Move(dir * MoveSpeed * Time.deltaTime);
             }
         }
-
         
         Debug.Log($"current stamina : {PlayerStamina.Stamina}");
     }
