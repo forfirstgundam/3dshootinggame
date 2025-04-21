@@ -24,7 +24,6 @@ public class CameraRotate : MonoBehaviour
         _rotationX += mouseX * RotationSpeed * Time.deltaTime;
         _rotationY += -mouseY * RotationSpeed * Time.deltaTime;
 
-        _rotationX = Mathf.Clamp(_rotationX, -90f, 90f);
         _rotationY = Mathf.Clamp(_rotationY, -90f, 90f);
         Vector3 dir = new Vector3(-_rotationY, _rotationX, 0);
 

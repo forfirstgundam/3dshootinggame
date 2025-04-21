@@ -1,21 +1,20 @@
 using UnityEngine;
-using System;
 using System.Collections;
-using UnityEngine.Rendering;
 
 public class PlayerMove : MonoBehaviour
 {
+    public PlayerStatsSO Stats;
+
     public float MoveSpeed = 7f;
     public float RunSpeed = 12f;
     public float RollSpeed = 25f;
 
     public float JumpPower = 5f;
     public int AvailableJump = 2;
-
     private int _maxJump = 2;
-    private bool _isRolling = false;
 
-    private bool _climbWall = false;
+    private bool _isRolling = false;
+    private bool _isClimbing = false;
 
     private CharacterController _characterController;
     private const float GRAVITY = -9.8f; // 중력
@@ -50,7 +49,7 @@ public class PlayerMove : MonoBehaviour
     {
         if(Vector3.Angle(hit.normal, Vector3.up) > 85f)
         {
-            _climbWall = true;
+            _isClimbing = true;
         }
     }
     private bool checkWallInFront()
@@ -90,13 +89,12 @@ public class PlayerMove : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
-        Vector3 dir = new Vector3(h, 0, v);
-        dir = dir.normalized;
+        Vector3 dir = new Vector3(h, 0, v).normalized;
         dir = Camera.main.transform.TransformDirection(dir);
         Debug.Log($"{dir}");
         //TransformDirection : 로컬 공간의 벡터 -> 월드 공간의 벡터
 
-        if (!_climbWall)
+        if (!_isClimbing)
         {
             _yVelocity += GRAVITY * Time.deltaTime;
         }
@@ -111,9 +109,9 @@ public class PlayerMove : MonoBehaviour
         //기본 이동들: 구르기 중이 아닐 때
         if (!_isRolling)
         {
-            if (_climbWall)
+            if (_isClimbing)
             {
-                if(PlayerStamina.Stamina > 0 && checkWallInFront())
+                if(_isClimbing && Stats.Stamina > 0 && checkWallInFront())
                 {
                     Vector3 forward = Camera.main.transform.forward;
                     forward.y = 0;
@@ -123,11 +121,11 @@ public class PlayerMove : MonoBehaviour
                     Vector3 climbDir = (Vector3.up * v + wallRight * h).normalized;
 
                     _characterController.Move(climbDir * MoveSpeed * Time.deltaTime);
-                    PlayerStamina.Stamina -= PlayerStamina.ClimbUseRate * Time.deltaTime;
+                    Stats.Stamina -= Stats.ClimbUseRate * Time.deltaTime;
                 }
                 else
                 {
-                    _climbWall = false;
+                    _isClimbing = false;
                 }
 
             } else if (Input.GetButtonDown("Jump") && AvailableJump > 0)
@@ -135,24 +133,24 @@ public class PlayerMove : MonoBehaviour
                 Jump();
                 Debug.Log($"you can jump {AvailableJump}");
             }
-            else if (Input.GetKey(KeyCode.LeftShift) && PlayerStamina.Stamina > 0f)
+            else if (Input.GetKey(KeyCode.LeftShift) && Stats.Stamina > 0f)
             {
                 Movement(h, v, RunSpeed);
-                PlayerStamina.Stamina -= PlayerStamina.DashUseRate * Time.deltaTime;
+                Stats.Stamina -= Stats.DashUseRate * Time.deltaTime;
             }
-            else if (Input.GetKeyDown(KeyCode.E) && PlayerStamina.Stamina > PlayerStamina.RollUsage)
+            else if (Input.GetKeyDown(KeyCode.E) && Stats.Stamina > Stats.RollUsage)
             {
-                PlayerStamina.Stamina -= PlayerStamina.RollUsage;
+                Stats.Stamina -= Stats.RollUsage;
                 StartCoroutine(Roll(dir));
             }
             else
             {
-                PlayerStamina.Stamina += PlayerStamina.FillRate * Time.deltaTime;
-                PlayerStamina.Stamina = Mathf.Clamp(PlayerStamina.Stamina, 0, PlayerStamina.MaxStamina);
+                Stats.Stamina += Stats.FillRate * Time.deltaTime;
+                Stats.Stamina = Mathf.Clamp(Stats.Stamina, 0, Stats.MaxStamina);
                 Movement(h, v, MoveSpeed);
             }
         }
         
-        Debug.Log($"current stamina : {PlayerStamina.Stamina}");
+        Debug.Log($"current stamina : {Stats.Stamina}");
     }
 }

@@ -234,6 +234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a420c0fdb751d84f8a02d273d78f225, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Stats: {fileID: 11400000, guid: 75766ed7c7bd19c4aa54d736c88039a3, type: 2}
   StaminaBar: {fileID: 1161222351}
 --- !u!1 &257936660
 GameObject:
@@ -603,7 +604,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef8bcdfe0dd1496408439f3a80bdcec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RotationSpeed: 50
+  RotationSpeed: 100
 --- !u!114 &330585549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -733,6 +734,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a8acede764f74945a0db6c0cbd6c25c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Stats: {fileID: 11400000, guid: 75766ed7c7bd19c4aa54d736c88039a3, type: 2}
   MoveSpeed: 7
   RunSpeed: 15
   RollSpeed: 25

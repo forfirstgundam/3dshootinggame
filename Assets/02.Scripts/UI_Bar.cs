@@ -3,10 +3,11 @@ using UnityEngine.UI;
 
 public class UI_Bar : MonoBehaviour
 {
+    public PlayerStatsSO Stats;
     public Slider StaminaBar;
 
     private void Update()
     {
-        StaminaBar.value = (PlayerStamina.Stamina / PlayerStamina.MaxStamina);
+        StaminaBar.value = (Stats.Stamina / Stats.MaxStamina);
     }
 }
