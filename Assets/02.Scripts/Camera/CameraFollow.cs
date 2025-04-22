@@ -7,6 +7,10 @@ public class CameraFollow : MonoBehaviour
     public Transform Player;
     public int ViewPoint = 0;
 
+    public float RotationSpeed = 100f;
+    private float _rotationX = 0;
+    private float _rotationY = 0;
+
     private void Revolve()
     {
         float xdegree = Player.eulerAngles.y;
@@ -17,7 +21,25 @@ public class CameraFollow : MonoBehaviour
         float z = Mathf.Cos(yawRad) * Targets[ViewPoint].z;
 
         transform.position = Player.position + new Vector3(x, Targets[ViewPoint].y, z);
-        Debug.Log($"camera is here : {transform.position}");
+    }
+
+    private void Rotate()
+    {
+        float mouseX = Input.GetAxis("Mouse X");
+        float mouseY = Input.GetAxis("Mouse Y");
+
+        _rotationX += mouseX * RotationSpeed * Time.deltaTime;
+        _rotationY += -mouseY * RotationSpeed * Time.deltaTime;
+
+        _rotationY = Mathf.Clamp(_rotationY, -90f, 90f);
+        _rotationX = Mathf.Clamp(_rotationX, -90f, 90f);
+        Vector3 dir = new Vector3(-_rotationY, _rotationX, 0);
+
+        /* 회전 공식 : 
+         * 새로운 위치 = 현재 위치 + 속도 * 시간
+         * 새로운 각도 = 현재 각도 + 회전 속도 * 시간
+         */
+        transform.eulerAngles = new Vector3(_rotationY, _rotationX, 0);
     }
 
     private void ViewSwitch()
@@ -46,5 +68,13 @@ public class CameraFollow : MonoBehaviour
         // interpoling, smoothing 기법
         ViewSwitch();
         Revolve();
+        if (ViewPoint != 0)
+        {
+            transform.LookAt(Player.position);
+        }
+        else
+        {
+            Rotate();
+        }
     }
 }
