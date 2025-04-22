@@ -32,7 +32,6 @@ public class CameraFollow : MonoBehaviour
         _rotationY += -mouseY * RotationSpeed * Time.deltaTime;
 
         _rotationY = Mathf.Clamp(_rotationY, -90f, 90f);
-        _rotationX = Mathf.Clamp(_rotationX, -90f, 90f);
         Vector3 dir = new Vector3(-_rotationY, _rotationX, 0);
 
         /* 회전 공식 : 
@@ -75,6 +74,7 @@ public class CameraFollow : MonoBehaviour
         else
         {
             Rotate();
+            //Player.eulerAngles = new Vector3(0, _rotationX, 0);
         }
     }
 }
