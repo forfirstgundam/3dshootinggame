@@ -13,4 +13,9 @@ public class PlayerStatsSO : ScriptableObject
     public float RollUsage = 20f;
 
     public int MaxBomb = 3;
+
+    public float MinThrowPower = 15f;
+    public float MaxThrowPower = 30f;
+
+    public float ThrowPowerRate = 10f;
 }

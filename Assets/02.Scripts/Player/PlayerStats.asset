@@ -19,3 +19,5 @@ MonoBehaviour:
   ClimbUseRate: 5
   RollUsage: 20
   MaxBomb: 3
+  MinThrowPower: 15
+  MaxThrowPower: 30
