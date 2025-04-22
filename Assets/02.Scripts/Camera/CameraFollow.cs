@@ -2,13 +2,19 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform[] Targets;
+    public Vector3[] Targets;
+    public Transform Player;
     public int ViewPoint = 0;
+
+    private void Awake()
+    {
+        Player = GameObject.FindGameObjectWithTag("Player").transform;
+    }
 
     private void Update()
     {
         // interpoling, smoothing ±â¹ý
-        transform.position = Targets[ViewPoint].position;
+        transform.position = Player.position + Targets[ViewPoint];
 
         if (Input.GetKeyDown(KeyCode.Alpha8) || Input.GetKeyDown(KeyCode.Keypad8))
         {

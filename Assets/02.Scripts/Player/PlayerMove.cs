@@ -17,7 +17,7 @@ public class PlayerMove : MonoBehaviour
 
     // Constants
     private const float GRAVITY = -9.8f;
-    private const float ROLL_DURATION = 0.1f;
+    private const float ROLL_DURATION = 0.3f;
     private const float WALL_ANGLE_THRESHOLD = 85f;
 
     // Component references
@@ -131,10 +131,17 @@ public class PlayerMove : MonoBehaviour
     {
         _isRolling = true;
         float elapsedTime = 0f;
+        float initialX = transform.eulerAngles.x;
 
         while (elapsedTime <= ROLL_DURATION)
         {
             characterController.Move(direction * _rollSpeed * Time.deltaTime);
+
+            float t = elapsedTime / ROLL_DURATION;
+            float xRotation = Mathf.Lerp(initialX, initialX + 360f, t);
+            Vector3 currentEuler = transform.eulerAngles;
+            transform.eulerAngles = new Vector3(xRotation, currentEuler.y, currentEuler.z);
+
             elapsedTime += Time.deltaTime;
             yield return null;
         }
