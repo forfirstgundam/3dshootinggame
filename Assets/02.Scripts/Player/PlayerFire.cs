@@ -1,4 +1,6 @@
 using UnityEngine;
+using System;
+using System.Collections;
 
 public class PlayerFire : MonoBehaviour
 {
@@ -8,33 +10,67 @@ public class PlayerFire : MonoBehaviour
     public GameObject BombPrefab;
 
     private float _curThrowPower;
+    private float _bulletTimer;
+    private float _curBullet;
 
     public int BombCount;
 
     public ParticleSystem BulletEffect;
 
+    private Coroutine _loadBullet;
+
+    private IEnumerator LoadBullet()
+    {
+        Debug.Log("loading bullet");
+        float timer = 0f;
+        UIManager.Instance.ShowLoadBar();
+
+        while(timer <= Stat.LoadTime)
+        {
+            timer += Time.deltaTime;
+            UIManager.Instance.LoadBarUpdate(timer);
+            yield return null;
+        }
+        _curBullet = Stat.MaxBullet;
+        UIManager.Instance.HideLoadBar();
+    }
+
     private void FireBullets()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            if (_bulletTimer <= 0f && _curBullet > 0)
+            {
+                if(_loadBullet != null)
+                {
+                    StopCoroutine(_loadBullet);
+                    UIManager.Instance.HideLoadBar();
+                }
+                InstantiateBullets();
+            }
+        }
+    }
+
+    private void InstantiateBullets()
     {
         // Ray :  레이저(시작 위치, 방향)
         // RayCast : 레이저를 발사
         // RayCastHit: 레이저가 부딪힌 물체 저장
-        if (Input.GetMouseButtonUp(0))
+        Ray ray = new Ray(FirePosition.transform.position, Camera.main.transform.forward);
+        RaycastHit hitInfo = new RaycastHit();
+
+        bool isHit = Physics.Raycast(ray, out hitInfo);
+
+        if (isHit)
         {
-            Ray ray = new Ray(FirePosition.transform.position, Camera.main.transform.forward);
-            RaycastHit hitInfo = new RaycastHit();
-
-            bool isHit = Physics.Raycast(ray, out hitInfo);
-
-            if (isHit)
-            {
-                // Hit effect
-                BulletEffect.transform.position = hitInfo.point;
-                BulletEffect.transform.forward = hitInfo.normal;
-                BulletEffect.Play();
-                Debug.Log("fire bullets");
-            }
-            
+            // Hit effect
+            BulletEffect.transform.position = hitInfo.point;
+            BulletEffect.transform.forward = hitInfo.normal;
+            BulletEffect.Play();
         }
+        _curBullet--;
+        Debug.Log($"left bullets : {_curBullet}");
+        _bulletTimer = Stat.BulletCoolTime;
     }
 
     private void FireBomb()
@@ -68,11 +104,20 @@ public class PlayerFire : MonoBehaviour
     {
         BombCount = Stat.MaxBomb;
         _curThrowPower = Stat.MinThrowPower;
+        _curBullet = Stat.MaxBullet;
+
+        _bulletTimer = 0f;
+
         UIManager.Instance.UpdateBombNum(BombCount);
     }
 
     private void Update()
     {
+        _bulletTimer -= Time.deltaTime;
+        if(Input.GetKey(KeyCode.R) && _loadBullet == null)
+        {
+            StartCoroutine(LoadBullet());
+        }
         FireBullets();
         FireBomb();
     }

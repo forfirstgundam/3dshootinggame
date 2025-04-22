@@ -18,4 +18,8 @@ public class PlayerStatsSO : ScriptableObject
     public float MaxThrowPower = 30f;
 
     public float ThrowPowerRate = 10f;
+    public float BulletCoolTime = 0.1f;
+    public float LoadTime = 2f;
+
+    public int MaxBullet = 50;
 }
