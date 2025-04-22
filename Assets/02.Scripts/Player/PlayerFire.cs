@@ -113,8 +113,6 @@ public class PlayerFire : MonoBehaviour
     private void DrawLine(Vector3 start, Vector3 end)
     {
         LineRenderer line = Instantiate(bulletLinePrefab);
-        line.startWidth = 1f;
-        line.endWidth = 1f;
         line.SetPosition(0, start);
         line.SetPosition(1, end);
         StartCoroutine(DisableLineAfter(line, lineDuration));
