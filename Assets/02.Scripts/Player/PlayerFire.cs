@@ -50,12 +50,11 @@ public class PlayerFire : MonoBehaviour
 
             if (Input.GetMouseButtonUp(1))
             {
-                GameObject bomb = Instantiate(BombPrefab);
-                bomb.transform.position = FirePosition.transform.position;
+                GameObject bomb = Pools.Instance.Create(0, FirePosition.transform.position);
 
                 Rigidbody bombRigidbody = bomb.GetComponent<Rigidbody>();
 
-                bombRigidbody.AddForce(Camera.main.transform.forward * Stat.MinThrowPower, ForceMode.Impulse);
+                bombRigidbody.AddForce(Camera.main.transform.forward * _curThrowPower, ForceMode.Impulse);
                 bombRigidbody.AddTorque(Vector3.one);
                 BombCount--;
                 UIManager.Instance.UpdateBombNum(BombCount);

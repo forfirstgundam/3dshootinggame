@@ -21,3 +21,4 @@ MonoBehaviour:
   MaxBomb: 3
   MinThrowPower: 15
   MaxThrowPower: 30
+  ThrowPowerRate: 5
