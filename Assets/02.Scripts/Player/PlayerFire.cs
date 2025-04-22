@@ -75,6 +75,7 @@ public class PlayerFire : MonoBehaviour
         UIManager.Instance.UpdateBulletNum(_curBullet);
         Debug.Log($"left bullets : {_curBullet}");
         _bulletTimer = Stat.BulletCoolTime;
+        CameraVibrate.Instance.ShakeCamera();
     }
 
     private void FireBomb()
