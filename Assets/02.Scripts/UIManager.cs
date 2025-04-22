@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
     public Slider StaminaBar;
     public Slider LoadBulletBar;
     public TextMeshProUGUI BombNumber;
+    public TextMeshProUGUI BulletNumber;
 
     private void Awake()
     {
@@ -18,6 +19,11 @@ public class UIManager : MonoBehaviour
     public void UpdateBombNum(int num)
     {
         BombNumber.text = $"ÆøÅº : {num} / {Stats.MaxBomb}";
+    }
+
+    public void UpdateBulletNum(int num)
+    {
+        BulletNumber.text = $"ÃÑ¾Ë : {num} / {Stats.MaxBullet}";
     }
 
     public void ShowLoadBar()

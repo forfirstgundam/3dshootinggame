@@ -22,3 +22,6 @@ MonoBehaviour:
   MinThrowPower: 15
   MaxThrowPower: 30
   ThrowPowerRate: 5
+  BulletCoolTime: 0.2
+  LoadTime: 2
+  MaxBullet: 50

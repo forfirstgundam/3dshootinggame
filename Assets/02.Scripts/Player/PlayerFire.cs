@@ -11,8 +11,8 @@ public class PlayerFire : MonoBehaviour
 
     private float _curThrowPower;
     private float _bulletTimer;
-    private float _curBullet;
 
+    private int _curBullet;
     public int BombCount;
 
     public ParticleSystem BulletEffect;
@@ -32,6 +32,7 @@ public class PlayerFire : MonoBehaviour
             yield return null;
         }
         _curBullet = Stat.MaxBullet;
+        UIManager.Instance.UpdateBulletNum(_curBullet);
         UIManager.Instance.HideLoadBar();
     }
 
@@ -44,6 +45,8 @@ public class PlayerFire : MonoBehaviour
                 if(_loadBullet != null)
                 {
                     StopCoroutine(_loadBullet);
+                    _loadBullet = null;
+                    Debug.Log("stop loading");
                     UIManager.Instance.HideLoadBar();
                 }
                 InstantiateBullets();
@@ -69,6 +72,7 @@ public class PlayerFire : MonoBehaviour
             BulletEffect.Play();
         }
         _curBullet--;
+        UIManager.Instance.UpdateBulletNum(_curBullet);
         Debug.Log($"left bullets : {_curBullet}");
         _bulletTimer = Stat.BulletCoolTime;
     }
@@ -109,6 +113,7 @@ public class PlayerFire : MonoBehaviour
         _bulletTimer = 0f;
 
         UIManager.Instance.UpdateBombNum(BombCount);
+        UIManager.Instance.UpdateBulletNum(_curBullet);
     }
 
     private void Update()
@@ -116,7 +121,7 @@ public class PlayerFire : MonoBehaviour
         _bulletTimer -= Time.deltaTime;
         if(Input.GetKey(KeyCode.R) && _loadBullet == null)
         {
-            StartCoroutine(LoadBullet());
+            _loadBullet = StartCoroutine(LoadBullet());
         }
         FireBullets();
         FireBomb();
