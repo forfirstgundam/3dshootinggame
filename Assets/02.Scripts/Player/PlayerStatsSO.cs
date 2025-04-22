@@ -11,4 +11,6 @@ public class PlayerStatsSO : ScriptableObject
     public float ClimbUseRate = 5f;
 
     public float RollUsage = 20f;
+
+    public int MaxBomb = 3;
 }

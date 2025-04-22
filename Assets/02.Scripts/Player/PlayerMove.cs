@@ -138,7 +138,7 @@ public class PlayerMove : MonoBehaviour
             characterController.Move(direction * _rollSpeed * Time.deltaTime);
 
             float t = elapsedTime / ROLL_DURATION;
-            float xRotation = Mathf.Lerp(initialX, initialX + 360f, t);
+            float xRotation = Mathf.Lerp(initialX, initialX + 359f, t);
             Vector3 currentEuler = transform.eulerAngles;
             transform.eulerAngles = new Vector3(xRotation, currentEuler.y, currentEuler.z);
 
@@ -146,6 +146,7 @@ public class PlayerMove : MonoBehaviour
             yield return null;
         }
 
+        transform.eulerAngles = new Vector3(initialX, transform.eulerAngles.y, transform.eulerAngles.z);
         _isRolling = false;
     }
 

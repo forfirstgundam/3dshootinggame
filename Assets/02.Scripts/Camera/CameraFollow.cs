@@ -5,7 +5,7 @@ public class CameraFollow : MonoBehaviour
 {
     public Vector3[] Targets;
     public Transform Player;
-    public int ViewPoint = 0;
+    public int ViewPoint = 1;
 
     public float RotationSpeed = 100f;
     private float _rotationX = 0;
@@ -69,7 +69,7 @@ public class CameraFollow : MonoBehaviour
         Revolve();
         if (ViewPoint != 0)
         {
-            transform.LookAt(Player.position);
+            //transform.LookAt(Player.position);
         }
         else
         {
