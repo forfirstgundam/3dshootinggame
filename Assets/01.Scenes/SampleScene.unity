@@ -453,6 +453,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &325845515
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 325845516}
+  m_Layer: 0
+  m_Name: TPSCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &325845516
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 325845515}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: -2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 399267592}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -617,7 +648,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 832e6a68b16b1ab409cb123a6d784604, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 1267621621}
+  Targets:
+  - {fileID: 1267621621}
+  - {fileID: 325845516}
+  - {fileID: 581746918}
+  ViewPoint: 0
 --- !u!1 &399267588
 GameObject:
   m_ObjectHideFlags: 0
@@ -707,6 +742,8 @@ Transform:
   m_Children:
   - {fileID: 1145213038}
   - {fileID: 1267621621}
+  - {fileID: 325845516}
+  - {fileID: 581746918}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &399267593
@@ -735,11 +772,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Stats: {fileID: 11400000, guid: 75766ed7c7bd19c4aa54d736c88039a3, type: 2}
-  MoveSpeed: 7
-  RunSpeed: 15
-  RollSpeed: 25
-  JumpPower: 5
-  AvailableJump: 2
+  _moveSpeed: 7
+  _runSpeed: 12
+  _rollSpeed: 25
+  _jumpPower: 5
+  _maxJumpCount: 2
 --- !u!143 &399267595
 CharacterController:
   m_ObjectHideFlags: 0
@@ -961,6 +998,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 502414795}
   m_CullTransparentMesh: 1
+--- !u!1 &581746917
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 581746918}
+  m_Layer: 0
+  m_Name: QuarterCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &581746918
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 581746917}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 5, z: -8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 399267592}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &795374970
 GameObject:
   m_ObjectHideFlags: 0
