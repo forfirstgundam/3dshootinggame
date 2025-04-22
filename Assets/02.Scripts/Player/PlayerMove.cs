@@ -3,154 +3,193 @@ using System.Collections;
 
 public class PlayerMove : MonoBehaviour
 {
+    [Header("Player Stats")]
     public PlayerStatsSO Stats;
 
-    public float MoveSpeed = 7f;
-    public float RunSpeed = 12f;
-    public float RollSpeed = 25f;
+    [Header("Movement Settings")]
+    [SerializeField] private float _moveSpeed = 7f;
+    [SerializeField] private float _runSpeed = 12f;
+    [SerializeField] private float _rollSpeed = 25f;
 
-    public float JumpPower = 5f;
-    public int AvailableJump = 2;
-    private int _maxJump = 2;
+    [Header("Jump Settings")]
+    [SerializeField] private float _jumpPower = 5f;
+    [SerializeField] private int _maxJumpCount = 2;
 
-    private bool _isRolling = false;
-    private bool _isClimbing = false;
+    // Constants
+    private const float GRAVITY = -9.8f;
+    private const float ROLL_DURATION = 0.1f;
+    private const float WALL_ANGLE_THRESHOLD = 85f;
 
-    private CharacterController _characterController;
-    private const float GRAVITY = -9.8f; // 중력
-    private float _yVelocity = 0f;       // 중력 가속도
+    // Component references
+    private CharacterController characterController;
+    private Camera mainCamera;
 
-    private bool _isJumping = false;
-    /* 목표 : wasd를 누르면 캐릭터가 이동 (카메라 방향에 맞게)
-     * 
-     * 구현 순서 : 
-     * 1. 키보드 입력
-     * 2. 입력으로부터 방향 설정
-     * 3. 방향에 따라 플레이어 이동
-     */
-
-    IEnumerator Roll(Vector3 dir)
-    {
-        _isRolling = true;
-        float rolltime = 0.1f;
-        float curtime = 0f;
-        while (curtime <= rolltime)
-        {
-            _characterController.Move(dir * RollSpeed* Time.deltaTime);
-            curtime += Time.deltaTime;
-            yield return null;
-        }
-        Debug.Log("has rolled");
-        _isRolling = false;
-        yield return null;
-    }
-
-    private void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        if(Vector3.Angle(hit.normal, Vector3.up) > 85f)
-        {
-            _isClimbing = true;
-        }
-    }
-    private bool checkWallInFront()
-    {
-        CollisionFlags collisionplace = _characterController.collisionFlags;
-        return (collisionplace & CollisionFlags.Sides) != 0;
-    }
+    // Movement state
+    private float _verticalVelocity;
+    private int _availableJumps;
+    private bool _isRolling;
+    private bool _isClimbing;
+    private bool _isJumping;
 
     private void Awake()
     {
-        _characterController = GetComponent<CharacterController>();
-    }
-
-    private void Movement(float h, float v, float speed)
-    {
-        Vector3 dir = new Vector3(h, 0, v).normalized;
-        dir = Camera.main.transform.TransformDirection(dir);
-        dir.y = _yVelocity; // 중력 적용
-        _characterController.Move(dir * speed * Time.deltaTime);
-    }
-
-    private void Jump()
-    {
-        if (_characterController.isGrounded)
-        {
-            AvailableJump = _maxJump;
-            _isJumping = false;
-        }
-
-        _yVelocity = JumpPower;
-        _isJumping = true;
-        AvailableJump--;
+        characterController = GetComponent<CharacterController>();
+        mainCamera = Camera.main;
+        _availableJumps = _maxJumpCount;
     }
 
     private void Update()
     {
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
-
-        Vector3 dir = new Vector3(h, 0, v).normalized;
-        dir = Camera.main.transform.TransformDirection(dir);
-        Debug.Log($"{dir}");
-        //TransformDirection : 로컬 공간의 벡터 -> 월드 공간의 벡터
-
-        if (!_isClimbing)
+        HandleMovementInput();
+        ApplyGravity();
+        HandleStaminaRegeneration();
+        if (characterController.isGrounded)
         {
-            _yVelocity += GRAVITY * Time.deltaTime;
+            _availableJumps = _maxJumpCount;
+            _verticalVelocity = 0;
+        }
+    }
+
+    private void HandleMovementInput()
+    {
+        if (_isRolling) return;
+
+        Vector3 moveDirection = GetMovementDirection();
+
+        if (_isClimbing)
+        {
+            HandleClimbing(moveDirection);
+        }
+        else if (Input.GetButtonDown("Jump") && CanJump())
+        {
+            PerformJump();
+        }
+        else if (Input.GetKey(KeyCode.LeftShift) && CanRun())
+        {
+            PerformRun(moveDirection);
+        }
+        else if (Input.GetKeyDown(KeyCode.E) && CanRoll())
+        {
+            PerformRoll(moveDirection);
         }
         else
         {
-            _yVelocity = 0f;
+            PerformNormalMovement(moveDirection);
         }
+    }
 
-        //transform.position += dir * MoveSpeed * Time.deltaTime;
+    private Vector3 GetMovementDirection()
+    {
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
+        Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
+        return mainCamera.transform.TransformDirection(direction);
+    }
 
-        //shift를 눌러서 뛰기
-        //기본 이동들: 구르기 중이 아닐 때
-        if (!_isRolling)
+    private void HandleClimbing(Vector3 moveDirection)
+    {
+        if (Stats.Stamina > 0 && IsWallInFront())
         {
-            if (_isClimbing)
-            {
-                if(_isClimbing && Stats.Stamina > 0 && checkWallInFront())
-                {
-                    Vector3 forward = Camera.main.transform.forward;
-                    forward.y = 0;
-                    forward = forward.normalized;
+            Vector3 forward = mainCamera.transform.forward;
+            forward.y = 0;
+            forward = forward.normalized;
 
-                    Vector3 wallRight = Vector3.Cross(Vector3.up, forward);
-                    Vector3 climbDir = (Vector3.up * v + wallRight * h).normalized;
+            Vector3 wallRight = Vector3.Cross(Vector3.up, forward);
+            Vector3 climbDirection = (Vector3.up * Input.GetAxisRaw("Vertical") + 
+                                    wallRight * Input.GetAxisRaw("Horizontal")).normalized;
 
-                    _characterController.Move(climbDir * MoveSpeed * Time.deltaTime);
-                    Stats.Stamina -= Stats.ClimbUseRate * Time.deltaTime;
-                }
-                else
-                {
-                    _isClimbing = false;
-                }
-
-            } else if (Input.GetButtonDown("Jump") && AvailableJump > 0)
-            {
-                Jump();
-                Debug.Log($"you can jump {AvailableJump}");
-            }
-            else if (Input.GetKey(KeyCode.LeftShift) && Stats.Stamina > 0f)
-            {
-                Movement(h, v, RunSpeed);
-                Stats.Stamina -= Stats.DashUseRate * Time.deltaTime;
-            }
-            else if (Input.GetKeyDown(KeyCode.E) && Stats.Stamina > Stats.RollUsage)
-            {
-                Stats.Stamina -= Stats.RollUsage;
-                StartCoroutine(Roll(dir));
-            }
-            else
-            {
-                Stats.Stamina += Stats.FillRate * Time.deltaTime;
-                Stats.Stamina = Mathf.Clamp(Stats.Stamina, 0, Stats.MaxStamina);
-                Movement(h, v, MoveSpeed);
-            }
+            characterController.Move(climbDirection * _moveSpeed * Time.deltaTime);
+            ConsumeStamina(Stats.ClimbUseRate * Time.deltaTime);
         }
-        
-        Debug.Log($"current stamina : {Stats.Stamina}");
+        else
+        {
+            _isClimbing = false;
+        }
+    }
+
+    private void PerformNormalMovement(Vector3 direction)
+    {
+        direction.y = _verticalVelocity;
+        characterController.Move(direction * _moveSpeed * Time.deltaTime);
+    }
+
+    private void PerformRun(Vector3 direction)
+    {
+        direction.y = _verticalVelocity;
+        characterController.Move(direction * _runSpeed * Time.deltaTime);
+        ConsumeStamina(Stats.DashUseRate * Time.deltaTime);
+    }
+
+    private void PerformJump()
+    {
+        _verticalVelocity = _jumpPower;
+        _isJumping = true;
+        _availableJumps--;
+    }
+
+    private IEnumerator Roll(Vector3 direction)
+    {
+        _isRolling = true;
+        float elapsedTime = 0f;
+
+        while (elapsedTime <= ROLL_DURATION)
+        {
+            characterController.Move(direction * _rollSpeed * Time.deltaTime);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        _isRolling = false;
+    }
+
+    private void PerformRoll(Vector3 direction)
+    {
+        ConsumeStamina(Stats.RollUsage);
+        StartCoroutine(Roll(direction));
+    }
+
+    private void ApplyGravity()
+    {
+        if (!_isClimbing)
+        {
+            _verticalVelocity += GRAVITY * Time.deltaTime;
+        }
+        else
+        {
+            _verticalVelocity = 0f;
+        }
+    }
+
+    private void HandleStaminaRegeneration()
+    {
+        if (!_isRolling && !Input.GetKey(KeyCode.LeftShift) && !_isClimbing)
+        {
+            Stats.Stamina += Stats.FillRate * Time.deltaTime;
+            Stats.Stamina = Mathf.Clamp(Stats.Stamina, 0, Stats.MaxStamina);
+        }
+    }
+
+    private void ConsumeStamina(float amount)
+    {
+        Stats.Stamina -= amount;
+        Stats.Stamina = Mathf.Max(0, Stats.Stamina);
+    }
+
+    private bool CanJump() => _availableJumps > 0;
+    private bool CanRun() => Stats.Stamina > 0f;
+    private bool CanRoll() => Stats.Stamina > Stats.RollUsage;
+    private bool IsWallInFront()
+    {
+        Vector3 origin = transform.position;
+        origin.y = origin.y - 1;
+        Vector3 forward = transform.forward;
+        float rayDistance = 0.6f;
+
+        return Physics.Raycast(origin, forward, rayDistance);
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        _isClimbing = Vector3.Angle(hit.normal, Vector3.up) > WALL_ANGLE_THRESHOLD;
     }
 }
