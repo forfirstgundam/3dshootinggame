@@ -18,7 +18,7 @@ public class CameraVibrate : MonoBehaviour
         _originalPos = transform.position;
     }
 
-    public void ShakeCamera(float duration = 0.1f, float magnitude = 0.5f)
+    public void ShakeCamera(float duration = 0.1f, float magnitude = 1f)
     {
         _originalPos = transform.position;
         _vibrateTime = duration;
@@ -37,10 +37,6 @@ public class CameraVibrate : MonoBehaviour
             transform.localPosition = _originalPos + new Vector3(x, y, z);
 
             _vibrateTime -= Time.deltaTime; // 시간이 지나면 흔들림 감소
-        }
-        else
-        {
-            transform.localPosition = _originalPos; // 원래 위치로 복귀
         }
     }
 

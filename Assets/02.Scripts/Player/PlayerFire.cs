@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class PlayerFire : MonoBehaviour
 {
@@ -18,6 +19,9 @@ public class PlayerFire : MonoBehaviour
     public ParticleSystem BulletEffect;
 
     private Coroutine _loadBullet;
+
+    [SerializeField] private LineRenderer bulletLinePrefab;
+    [SerializeField] private float lineDuration = 0.05f;
 
     private IEnumerator LoadBullet()
     {
@@ -66,6 +70,7 @@ public class PlayerFire : MonoBehaviour
 
         if (isHit)
         {
+            DrawLine(FirePosition.transform.position, hitInfo.point);
             // Hit effect
             BulletEffect.transform.position = hitInfo.point;
             BulletEffect.transform.forward = hitInfo.normal;
@@ -105,6 +110,21 @@ public class PlayerFire : MonoBehaviour
         }
     }
 
+    private void DrawLine(Vector3 start, Vector3 end)
+    {
+        LineRenderer line = Instantiate(bulletLinePrefab);
+        line.startWidth = 1f;
+        line.endWidth = 1f;
+        line.SetPosition(0, start);
+        line.SetPosition(1, end);
+        StartCoroutine(DisableLineAfter(line, lineDuration));
+    }
+
+    private IEnumerator DisableLineAfter(LineRenderer line, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        Destroy(line.gameObject); // 또는 풀링 시스템 사용 시 비활성화
+    }
     private void Start()
     {
         BombCount = Stat.MaxBomb;

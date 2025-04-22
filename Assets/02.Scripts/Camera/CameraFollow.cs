@@ -62,6 +62,13 @@ public class CameraFollow : MonoBehaviour
         Player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
+    void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;  // 커서 중앙에 고정
+        Cursor.visible = false;                    // 커서 숨기기
+    }
+
+
     private void Update()
     {
         // interpoling, smoothing 기법
