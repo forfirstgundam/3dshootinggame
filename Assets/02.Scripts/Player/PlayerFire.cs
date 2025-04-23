@@ -28,17 +28,17 @@ public class PlayerFire : MonoBehaviour
     {
         Debug.Log("loading bullet");
         float timer = 0f;
-        UIManager.Instance.ShowLoadBar();
+        MainUI.Instance.ShowLoadBar();
 
         while(timer <= Stat.LoadTime)
         {
             timer += Time.deltaTime;
-            UIManager.Instance.LoadBarUpdate(timer);
+            MainUI.Instance.LoadBarUpdate(timer);
             yield return null;
         }
         _curBullet = Stat.MaxBullet;
-        UIManager.Instance.UpdateBulletNum(_curBullet);
-        UIManager.Instance.HideLoadBar();
+        MainUI.Instance.UpdateBulletNum(_curBullet);
+        MainUI.Instance.HideLoadBar();
     }
 
     private void FireBullets()
@@ -52,7 +52,7 @@ public class PlayerFire : MonoBehaviour
                     StopCoroutine(_loadBullet);
                     _loadBullet = null;
                     Debug.Log("stop loading");
-                    UIManager.Instance.HideLoadBar();
+                    MainUI.Instance.HideLoadBar();
                 }
                 InstantiateBullets();
             }
@@ -92,7 +92,7 @@ public class PlayerFire : MonoBehaviour
             }
         }
         _curBullet--;
-        UIManager.Instance.UpdateBulletNum(_curBullet);
+        MainUI.Instance.UpdateBulletNum(_curBullet);
         Debug.Log($"left bullets : {_curBullet}");
         _bulletTimer = Stat.BulletCoolTime;
         CameraVibrate.Instance.ShakeCamera();
@@ -118,7 +118,7 @@ public class PlayerFire : MonoBehaviour
                 bombRigidbody.AddForce(Camera.main.transform.forward * _curThrowPower, ForceMode.Impulse);
                 bombRigidbody.AddTorque(Vector3.one);
                 BombCount--;
-                UIManager.Instance.UpdateBombNum(BombCount);
+                MainUI.Instance.UpdateBombNum(BombCount);
                 Debug.Log(BombCount);
                 _curThrowPower = Stat.MinThrowPower;
             }
@@ -146,8 +146,8 @@ public class PlayerFire : MonoBehaviour
 
         _bulletTimer = 0f;
 
-        UIManager.Instance.UpdateBombNum(BombCount);
-        UIManager.Instance.UpdateBulletNum(_curBullet);
+        MainUI.Instance.UpdateBombNum(BombCount);
+        MainUI.Instance.UpdateBulletNum(_curBullet);
     }
 
     private void Update()

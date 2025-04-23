@@ -2,9 +2,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour
+public class MainUI : MonoBehaviour
 {
-    public static UIManager Instance;
+    public static MainUI Instance;
     public PlayerStatsSO Stats;
     public Slider StaminaBar;
     public Slider LoadBulletBar;
