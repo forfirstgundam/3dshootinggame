@@ -76,7 +76,8 @@ public class CameraFollow : MonoBehaviour
         Revolve();
         if (ViewPoint != 0)
         {
-            transform.LookAt(Player.position);
+            Rotate();
+            //transform.LookAt(Player.position);
         }
         else
         {
