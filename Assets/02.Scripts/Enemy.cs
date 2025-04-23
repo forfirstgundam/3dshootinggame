@@ -1,13 +1,15 @@
+using System.Collections;
 using UnityEngine;
 
 public enum EnemyState
 {
     Idle,
+    Patrol,
     Trace,
     Return,
     Attack,
     Hit,
-    Die
+    Die,
 }
 
 // 인공지능 : 지능을 가지고 행동하는 알고리즘
@@ -30,6 +32,12 @@ public class Enemy : MonoBehaviour
     public float AttackCoolTime = 1f;
     private float _attackTimer = 1f;
 
+    public float IdleTime = 5f;
+    public float HitTime = 0.5f;
+    public float DieTime = 1f;
+
+    public int Health = 100;
+
     private void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player");
@@ -44,6 +52,11 @@ public class Enemy : MonoBehaviour
             case (EnemyState.Idle):
                 {
                     Idle();
+                    break;
+                }
+            case (EnemyState.Patrol):
+                {
+                    Patrol();
                     break;
                 }
             case (EnemyState.Trace):
@@ -63,12 +76,12 @@ public class Enemy : MonoBehaviour
                 }
             case (EnemyState.Hit):
                 {
-                    Hit();
+                    StartCoroutine(Hit());
                     break;
                 }
             case (EnemyState.Die):
                 {
-                    Die();
+                    StartCoroutine(Die());
                     break;
                 }
         }
@@ -76,7 +89,7 @@ public class Enemy : MonoBehaviour
 
     private void Idle()
     {
-        // 가만히 있기
+        // 가만히 있다가 패트롤 위치로 이동
 
         // 가까워질 경우 Trace로 전환 
         if (Vector3.Distance(transform.position, _player.transform.position) < FindDistance)
@@ -84,6 +97,11 @@ public class Enemy : MonoBehaviour
             Debug.Log("상태전환: Idle -> Trace");
             CurrentState = EnemyState.Trace;
         }
+    }
+
+    private void Patrol()
+    {
+        // 3가지 위치로 이동하기
     }
 
     private void Trace()
@@ -153,13 +171,37 @@ public class Enemy : MonoBehaviour
 
     }
 
-    private void Hit()
+    private IEnumerator Hit()
     {
+        // 일정 시간 경직
+        yield return new WaitForSeconds(HitTime);
 
+        // 상태 전환
+        Debug.Log("상태전환: Hit -> Trace");
+        CurrentState = EnemyState.Trace;
     }
 
-    private void Die()
+    private IEnumerator Die()
     {
+        yield return new WaitForSeconds(DieTime);
+        gameObject.SetActive(false);
+    }
 
+    public void TakeDamage(Damage damage)
+    {
+        if (CurrentState == EnemyState.Hit || CurrentState == EnemyState.Die) return;
+
+        Health -= damage.Value;
+        if(Health <= 0)
+        {
+            Debug.Log("상태전환: Hit -> Die");
+            CurrentState = EnemyState.Die;
+            return;
+        }
+
+        // Hit로 전환
+        Debug.Log($"상태전환: (any state, {CurrentState}) -> Hit");
+        Debug.Log($"enemy : {Health}");     
+        CurrentState = EnemyState.Hit;
     }
 }

@@ -18,7 +18,7 @@ public class CameraVibrate : MonoBehaviour
         _originalPos = transform.position;
     }
 
-    public void ShakeCamera(float duration = 0.1f, float magnitude = 1f)
+    public void ShakeCamera(float duration = 0.1f, float magnitude = 2f)
     {
         _originalPos = transform.position;
         _vibrateTime = duration;

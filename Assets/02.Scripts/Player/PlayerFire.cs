@@ -78,6 +78,16 @@ public class PlayerFire : MonoBehaviour
             BulletEffect.transform.position = hitInfo.point;
             BulletEffect.transform.forward = hitInfo.normal;
             BulletEffect.Play();
+
+            if (hitInfo.collider.gameObject.CompareTag("Enemy"))
+            {
+                Enemy enemy = hitInfo.collider.GetComponent<Enemy>();
+                Damage damage = new Damage();
+                damage.Value = 20;
+                damage.From = gameObject;
+
+                enemy.TakeDamage(damage);
+            }
         }
         _curBullet--;
         UIManager.Instance.UpdateBulletNum(_curBullet);
