@@ -135,7 +135,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &16501105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -962,7 +962,7 @@ MonoBehaviour:
   - {x: 0, y: 6, z: -8}
   Player: {fileID: 0}
   ViewPoint: 0
-  RotationSpeed: 100
+  RotationSpeed: 200
 --- !u!114 &330585550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1078,7 +1078,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a0e38ca0106ed64b8a07be979d5a9c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RotationSpeed: 100
+  RotationSpeed: 200
 --- !u!114 &399267594
 MonoBehaviour:
   m_ObjectHideFlags: 0
