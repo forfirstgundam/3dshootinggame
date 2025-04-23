@@ -99,6 +99,7 @@ public class Enemy : MonoBehaviour
         if(_idleTimer >= IdleTime)
         {
             Debug.Log("상태전환: Idle -> Patrol");
+            BacklogUI.Instance.AddLog("적이 순찰합니다");
             CurrentState = EnemyState.Patrol;
             _idleTimer = 0f;
             return;
@@ -108,6 +109,7 @@ public class Enemy : MonoBehaviour
         if (Vector3.Distance(transform.position, _player.transform.position) < FindDistance)
         {
             Debug.Log("상태전환: Idle -> Trace");
+            BacklogUI.Instance.AddLog("적이 당신을 알아챘습니다");
             CurrentState = EnemyState.Trace;
             _idleTimer = 0f;
             return;
@@ -124,6 +126,7 @@ public class Enemy : MonoBehaviour
             transform.position = PatrolPositions[_curPos].position;
             _returnPosition = PatrolPositions[_curPos].position;
             Debug.Log("상태전환: Patrol -> Idle");
+            BacklogUI.Instance.AddLog("적이 멈췄습니다");
             CurrentState = EnemyState.Idle;
             if(_curPos >= PatrolPositions.Length - 1)
             {
@@ -146,6 +149,7 @@ public class Enemy : MonoBehaviour
         if (Vector3.Distance(transform.position, _player.transform.position) >= ReturnDistance)
         {
             Debug.Log("상태전환: Trace -> Return");
+            BacklogUI.Instance.AddLog("적이 돌아갑니다");
             CurrentState = EnemyState.Return;
             return;
         }
@@ -154,6 +158,7 @@ public class Enemy : MonoBehaviour
         if (Vector3.Distance(transform.position, _player.transform.position) < AttackDistance)
         {
             Debug.Log("상태전환: Trace -> Attack");
+            BacklogUI.Instance.AddLog("적이 당신을 공격합니다");
             CurrentState = EnemyState.Attack;
             return;
         }
@@ -169,6 +174,7 @@ public class Enemy : MonoBehaviour
         if (Vector3.Distance(transform.position, _player.transform.position) < FindDistance)
         {
             Debug.Log("상태전환: Return -> Trace");
+            BacklogUI.Instance.AddLog("적이 당신을 알아챘습니다");
             CurrentState = EnemyState.Trace;
         }
 
@@ -176,6 +182,7 @@ public class Enemy : MonoBehaviour
         if (Vector3.Distance(transform.position, _returnPosition) <= 0.1f)
         {
             Debug.Log("상태전환: Return -> Idle");
+            BacklogUI.Instance.AddLog("적이 멈췄습니다");
             transform.position = _returnPosition;
             CurrentState = EnemyState.Idle;
             return;
@@ -192,6 +199,7 @@ public class Enemy : MonoBehaviour
         if(Vector3.Distance(transform.position, _player.transform.position) >= AttackDistance)
         {
             Debug.Log("상태전환: Attack -> Trace");
+            BacklogUI.Instance.AddLog("적이 당신을 알아챘습니다");
             CurrentState = EnemyState.Trace;
             _attackTimer = 1f;
             return;
@@ -202,6 +210,7 @@ public class Enemy : MonoBehaviour
         if(_attackTimer >= AttackCoolTime)
         {
             Debug.Log("플레이어를 공격합니다");
+            BacklogUI.Instance.AddLog("공격을 받았습니다");
             _attackTimer = 0f;
         }
 
@@ -220,6 +229,7 @@ public class Enemy : MonoBehaviour
 
         // 상태 전환
         Debug.Log("상태전환: Hit -> Trace");
+        BacklogUI.Instance.AddLog("적이 당신을 알아챘습니다");
         CurrentState = EnemyState.Trace;
     }
 
@@ -237,12 +247,14 @@ public class Enemy : MonoBehaviour
         if(Health <= 0)
         {
             Debug.Log("상태전환: Hit -> Die");
+            BacklogUI.Instance.AddLog("적이 죽었습니다");
             CurrentState = EnemyState.Die;
             return;
         }
 
         // Hit로 전환
         Debug.Log($"상태전환: (any state, {CurrentState}) -> Hit");
+        BacklogUI.Instance.AddLog("적을 맞혔습니다");
         Debug.Log($"enemy : {Health}");
         CurrentState = EnemyState.Hit;
         if(_beingHit == null)
