@@ -85,6 +85,8 @@ public class PlayerFire : MonoBehaviour
                 Damage damage = new Damage();
                 damage.Value = 20;
                 damage.From = gameObject;
+                damage.KnockValue = 0.5f;
+                damage.KnockDir = hitInfo.point - FirePosition.transform.position;
 
                 enemy.TakeDamage(damage);
             }

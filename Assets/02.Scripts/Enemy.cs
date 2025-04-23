@@ -20,7 +20,10 @@ public class Enemy : MonoBehaviour
 {
     public EnemyState CurrentState = EnemyState.Idle;
     private CharacterController _characterController;
-    private Vector3 _startPosition;
+    private Vector3 _returnPosition;
+    public Transform[] PatrolPositions;
+
+    private int _curPos;
 
     private GameObject _player;
 
@@ -33,8 +36,12 @@ public class Enemy : MonoBehaviour
     private float _attackTimer = 1f;
 
     public float IdleTime = 5f;
+    private float _idleTimer = 0f;
+
     public float HitTime = 0.5f;
     public float DieTime = 1f;
+
+    private Coroutine _beingHit;
 
     public int Health = 100;
 
@@ -42,7 +49,7 @@ public class Enemy : MonoBehaviour
     {
         _player = GameObject.FindGameObjectWithTag("Player");
         _characterController = GetComponent<CharacterController>();
-        _startPosition = transform.position;
+        _returnPosition = transform.position;
     }
 
     private void Update()
@@ -76,7 +83,6 @@ public class Enemy : MonoBehaviour
                 }
             case (EnemyState.Hit):
                 {
-                    StartCoroutine(Hit());
                     break;
                 }
             case (EnemyState.Die):
@@ -89,19 +95,49 @@ public class Enemy : MonoBehaviour
 
     private void Idle()
     {
-        // 가만히 있다가 패트롤 위치로 이동
+        // 일정 시간 지나면 Patrol로 전환
+        if(_idleTimer >= IdleTime)
+        {
+            Debug.Log("상태전환: Idle -> Patrol");
+            CurrentState = EnemyState.Patrol;
+            _idleTimer = 0f;
+            return;
+        }
 
         // 가까워질 경우 Trace로 전환 
         if (Vector3.Distance(transform.position, _player.transform.position) < FindDistance)
         {
             Debug.Log("상태전환: Idle -> Trace");
             CurrentState = EnemyState.Trace;
+            _idleTimer = 0f;
+            return;
         }
+
+        _idleTimer += Time.deltaTime;
     }
 
     private void Patrol()
     {
+        // 지정 위치로 이동했을 경우 : 다음 위치 지정, 다시 idle로
+        if (Vector3.Distance(transform.position, PatrolPositions[_curPos].position) <= 0.1f)
+        {
+            transform.position = PatrolPositions[_curPos].position;
+            _returnPosition = PatrolPositions[_curPos].position;
+            Debug.Log("상태전환: Patrol -> Idle");
+            CurrentState = EnemyState.Idle;
+            if(_curPos >= PatrolPositions.Length - 1)
+            {
+                _curPos = 0;
+            }else
+            {
+                _curPos++;
+            }
+            return;
+        }
+
         // 3가지 위치로 이동하기
+        Vector3 dir = (PatrolPositions[_curPos].position - transform.position).normalized;
+        _characterController.Move(dir * MoveSpeed * Time.deltaTime);
     }
 
     private void Trace()
@@ -137,16 +173,16 @@ public class Enemy : MonoBehaviour
         }
 
         // 원래 위치일 경우 Idle로 전환
-        if (Vector3.Distance(transform.position, _startPosition) <= 0.1f)
+        if (Vector3.Distance(transform.position, _returnPosition) <= 0.1f)
         {
             Debug.Log("상태전환: Return -> Idle");
-            transform.position = _startPosition;
+            transform.position = _returnPosition;
             CurrentState = EnemyState.Idle;
             return;
         }
 
         // 원래 위치로 복귀
-        Vector3 dir = (_startPosition - transform.position).normalized;
+        Vector3 dir = (_returnPosition - transform.position).normalized;
         _characterController.Move(dir * MoveSpeed * Time.deltaTime);
     }
 
@@ -171,10 +207,16 @@ public class Enemy : MonoBehaviour
 
     }
 
-    private IEnumerator Hit()
+    private IEnumerator Hit(Vector3 dir, float knockback)
     {
         // 일정 시간 경직
-        yield return new WaitForSeconds(HitTime);
+        float _timer = 0f;
+        while(_timer <= HitTime)
+        {
+            _characterController.Move(dir * knockback * Time.deltaTime);
+            _timer += Time.deltaTime;
+            yield return null;
+        }
 
         // 상태 전환
         Debug.Log("상태전환: Hit -> Trace");
@@ -201,7 +243,16 @@ public class Enemy : MonoBehaviour
 
         // Hit로 전환
         Debug.Log($"상태전환: (any state, {CurrentState}) -> Hit");
-        Debug.Log($"enemy : {Health}");     
+        Debug.Log($"enemy : {Health}");
         CurrentState = EnemyState.Hit;
+        if(_beingHit == null)
+        {
+            _beingHit = StartCoroutine(Hit(damage.KnockDir, damage.KnockValue));
+        }
+        else
+        {
+            StopCoroutine(_beingHit);
+            _beingHit = StartCoroutine(Hit(damage.KnockDir, damage.KnockValue));
+        }
     }
 }
