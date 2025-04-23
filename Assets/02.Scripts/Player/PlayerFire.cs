@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 using Unity.VisualScripting;
+using UnityEngine.UIElements;
 
 public class PlayerFire : MonoBehaviour
 {
@@ -65,6 +66,8 @@ public class PlayerFire : MonoBehaviour
         // RayCastHit: 레이저가 부딪힌 물체 저장
         Ray ray = new Ray(FirePosition.transform.position, Camera.main.transform.forward);
         RaycastHit hitInfo = new RaycastHit();
+        Debug.DrawRay(FirePosition.transform.position, Camera.main.transform.forward * 100f, Color.red, 1f);
+
 
         bool isHit = Physics.Raycast(ray, out hitInfo);
 
