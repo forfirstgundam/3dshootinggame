@@ -8,15 +8,17 @@ using UnityEngine.AI;
 
 public class Enemy : BaseEnemy
 {
-    //private void Start()
-    //{
-    //    _player = GameObject.FindGameObjectWithTag("Player");
-    //    _characterController = GetComponent<CharacterController>();
-    //    _agent = GetComponent<NavMeshAgent>();
-    //    _returnPosition = transform.position;
-    //    Health = Stat.MaxHealth;
-    //}
-    
+    private void Start()
+    {
+        Player = GameObject.FindGameObjectWithTag("Player");
+        _characterController = GetComponent<CharacterController>();
+        _agent = GetComponent<NavMeshAgent>();
+        _returnPosition = transform.position;
+        Health = Stat.MaxHealth;
+
+        this.ChangeEnemyState(new IdleState());
+    }
+
 
     //private void Update()
     //{
