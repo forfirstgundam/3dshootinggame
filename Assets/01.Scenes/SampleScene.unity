@@ -4989,8 +4989,8 @@ PrefabInstance:
       value: Barrel
       objectReference: {fileID: 0}
     - target: {fileID: 7243685481859033929, guid: 37ac8979c9a10fa42b98d510eee19627, type: 3}
-      propertyPath: ExplodePower
-      value: 50
+      propertyPath: FlyTime
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -125,6 +125,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 50
   CurHealth: 0
+  Explosion: {fileID: 19800006, guid: e0609132424a24844b1d53ad3d704fd9, type: 3}
   HitTime: 0.02
   FlyTime: 5
-  ExplodePower: 5
+  ExplodePower: 100
