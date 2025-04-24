@@ -8,53 +8,54 @@ using UnityEngine.AI;
 
 public class Enemy : BaseEnemy
 {
-    private void Start()
-    {
-        _player = GameObject.FindGameObjectWithTag("Player");
-        _characterController = GetComponent<CharacterController>();
-        _agent = GetComponent<NavMeshAgent>();
-        _returnPosition = transform.position;
-        Health = Stat.MaxHealth;
-    }
+    //private void Start()
+    //{
+    //    _player = GameObject.FindGameObjectWithTag("Player");
+    //    _characterController = GetComponent<CharacterController>();
+    //    _agent = GetComponent<NavMeshAgent>();
+    //    _returnPosition = transform.position;
+    //    Health = Stat.MaxHealth;
+    //}
+    
 
-    private void Update()
-    {
-        switch (CurrentState)
-        {
-            case (EnemyState.Idle):
-                {
-                    Idle();
-                    break;
-                }
-            case (EnemyState.Patrol):
-                {
-                    Patrol();
-                    break;
-                }
-            case (EnemyState.Trace):
-                {
-                    Trace();
-                    break;
-                }
-            case (EnemyState.Return):
-                {
-                    Return();
-                    break;
-                }
-            case (EnemyState.Attack):
-                {
-                    Attack();
-                    break;
-                }
-            case (EnemyState.Hit):
-                {
-                    break;
-                }
-            case (EnemyState.Die):
-                {
-                    StartCoroutine(Die());
-                    break;
-                }
-        }
-    }    
+    //private void Update()
+    //{
+    //    switch (CurrentState)
+    //    {
+    //        case (EnemyState.Idle):
+    //            {
+    //                Idle();
+    //                break;
+    //            }
+    //        case (EnemyState.Patrol):
+    //            {
+    //                Patrol();
+    //                break;
+    //            }
+    //        case (EnemyState.Trace):
+    //            {
+    //                Trace();
+    //                break;
+    //            }
+    //        case (EnemyState.Return):
+    //            {
+    //                Return();
+    //                break;
+    //            }
+    //        case (EnemyState.Attack):
+    //            {
+    //                Attack();
+    //                break;
+    //            }
+    //        case (EnemyState.Hit):
+    //            {
+    //                break;
+    //            }
+    //        case (EnemyState.Die):
+    //            {
+    //                StartCoroutine(Die());
+    //                break;
+    //            }
+    //    }
+    //}    
 }
