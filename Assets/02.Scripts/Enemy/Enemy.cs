@@ -2,23 +2,15 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public enum EnemyState
-{
-    Idle,
-    Patrol,
-    Trace,
-    Return,
-    Attack,
-    Hit,
-    Die,
-}
-
 // 인공지능 : 지능을 가지고 행동하는 알고리즘
 // 반응형 / 계획형 -> 규칙 기반 인공지능(전통적인 방식) 
 //                 -> 제어문 기반
 
 public class Enemy : MonoBehaviour
 {
+    public EnemyStatsSO Stat;
+    public int Health;
+
     public EnemyState CurrentState = EnemyState.Idle;
     private CharacterController _characterController;
     private NavMeshAgent _agent;
@@ -28,24 +20,10 @@ public class Enemy : MonoBehaviour
     private int _curPos;
 
     private GameObject _player;
-
-    public float MoveSpeed = 5f;
-    public float FindDistance = 7f;
-    public float ReturnDistance = 15f;
-    public float AttackDistance = 3f;
-
-    public float AttackCoolTime = 1f;
     private float _attackTimer = 1f;
-
-    public float IdleTime = 5f;
     private float _idleTimer = 0f;
 
-    public float HitTime = 0.5f;
-    public float DieTime = 1f;
-
     private Coroutine _beingHit;
-
-    public int Health = 100;
 
     private void Start()
     {
@@ -53,6 +31,7 @@ public class Enemy : MonoBehaviour
         _characterController = GetComponent<CharacterController>();
         _agent = GetComponent<NavMeshAgent>();
         _returnPosition = transform.position;
+        Health = Stat.MaxHealth;
     }
 
     private void Update()
@@ -99,7 +78,7 @@ public class Enemy : MonoBehaviour
     private void Idle()
     {
         // 일정 시간 지나면 Patrol로 전환
-        if(_idleTimer >= IdleTime)
+        if(_idleTimer >= Stat.IdleTime)
         {
             Debug.Log("상태전환: Idle -> Patrol");
             BacklogUI.Instance.AddLog("적이 순찰합니다");
@@ -109,7 +88,7 @@ public class Enemy : MonoBehaviour
         }
 
         // 가까워질 경우 Trace로 전환 
-        if (Vector3.Distance(transform.position, _player.transform.position) < FindDistance)
+        if (Vector3.Distance(transform.position, _player.transform.position) < Stat.FindDistance)
         {
             Debug.Log("상태전환: Idle -> Trace");
             BacklogUI.Instance.AddLog("적이 당신을 알아챘습니다");
@@ -126,6 +105,7 @@ public class Enemy : MonoBehaviour
         // 지정 위치로 이동했을 경우 : 다음 위치 지정, 다시 idle로
         if (Vector3.Distance(transform.position, PatrolPositions[_curPos].position) <= 0.1f)
         {
+            _agent.ResetPath();
             transform.position = PatrolPositions[_curPos].position;
             _returnPosition = PatrolPositions[_curPos].position;
             Debug.Log("상태전환: Patrol -> Idle");
@@ -142,15 +122,15 @@ public class Enemy : MonoBehaviour
         }
 
         // 3가지 위치로 이동하기
-        Vector3 dir = (PatrolPositions[_curPos].position - transform.position).normalized;
-        _agent.SetDestination(_player.transform.position);
+        _agent.SetDestination(PatrolPositions[_curPos].position);
+        //Vector3 dir = (PatrolPositions[_curPos].position - transform.position).normalized;
         //_characterController.Move(dir * MoveSpeed * Time.deltaTime);
     }
 
     private void Trace()
     {
         // 멀어질 경우 Return으로 전환
-        if (Vector3.Distance(transform.position, _player.transform.position) >= ReturnDistance)
+        if (Vector3.Distance(transform.position, _player.transform.position) >= Stat.ReturnDistance)
         {
             Debug.Log("상태전환: Trace -> Return");
             BacklogUI.Instance.AddLog("적이 돌아갑니다");
@@ -159,7 +139,7 @@ public class Enemy : MonoBehaviour
         }
 
         // 공격 범위만큼 가까워지면 Attack으로 전환
-        if (Vector3.Distance(transform.position, _player.transform.position) < AttackDistance)
+        if (Vector3.Distance(transform.position, _player.transform.position) < Stat.AttackDistance)
         {
             Debug.Log("상태전환: Trace -> Attack");
             BacklogUI.Instance.AddLog("적이 당신을 공격합니다");
@@ -176,7 +156,7 @@ public class Enemy : MonoBehaviour
     private void Return()
     {
         // 플레이어와 가까워질 경우 Trace로 전환
-        if (Vector3.Distance(transform.position, _player.transform.position) < FindDistance)
+        if (Vector3.Distance(transform.position, _player.transform.position) < Stat.FindDistance)
         {
             Debug.Log("상태전환: Return -> Trace");
             BacklogUI.Instance.AddLog("적이 당신을 알아챘습니다");
@@ -202,7 +182,7 @@ public class Enemy : MonoBehaviour
     private void Attack()
     {
         // 멀어질 경우 Trace로 전환
-        if(Vector3.Distance(transform.position, _player.transform.position) >= AttackDistance)
+        if(Vector3.Distance(transform.position, _player.transform.position) >= Stat.AttackDistance)
         {
             Debug.Log("상태전환: Attack -> Trace");
             BacklogUI.Instance.AddLog("적이 당신을 알아챘습니다");
@@ -213,7 +193,7 @@ public class Enemy : MonoBehaviour
 
         // 플레이어를 공격
         _attackTimer += Time.deltaTime;
-        if(_attackTimer >= AttackCoolTime)
+        if(_attackTimer >= Stat.AttackCoolTime)
         {
             Debug.Log("플레이어를 공격합니다");
             BacklogUI.Instance.AddLog("공격을 받았습니다");
@@ -227,7 +207,7 @@ public class Enemy : MonoBehaviour
         // 일정 시간 경직
         float _timer = 0f;
         _agent.ResetPath();
-        while(_timer <= HitTime)
+        while(_timer <= Stat.HitTime)
         {
             _characterController.Move(dir * knockback * Time.deltaTime);
             _timer += Time.deltaTime;
@@ -243,7 +223,7 @@ public class Enemy : MonoBehaviour
 
     private IEnumerator Die()
     {
-        yield return new WaitForSeconds(DieTime);
+        yield return new WaitForSeconds(Stat.DieTime);
         gameObject.SetActive(false);
     }
 

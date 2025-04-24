@@ -6,10 +6,15 @@ public class MainUI : MonoBehaviour
 {
     public static MainUI Instance;
     public PlayerStatsSO Stats;
+
     public Slider StaminaBar;
     public Slider LoadBulletBar;
+
     public TextMeshProUGUI BombNumber;
     public TextMeshProUGUI BulletNumber;
+
+    public Button MinimapPlus;
+    public Button MinimapMinus;
 
     private void Awake()
     {
@@ -38,6 +43,16 @@ public class MainUI : MonoBehaviour
     public void LoadBarUpdate(float progress)
     {
         LoadBulletBar.value = (progress / Stats.LoadTime);
+    }
+
+    public void OnMapPlus()
+    {
+        MinimapCamera.Instance.MinimapScaleChange(true);
+    }
+
+    public void OnMapMinus()
+    {
+        MinimapCamera.Instance.MinimapScaleChange(false);
     }
 
     private void Update()

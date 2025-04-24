@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 public class PlayerFire : MonoBehaviour
 {
@@ -41,19 +42,26 @@ public class PlayerFire : MonoBehaviour
 
     private void FireBullets()
     {
-        if (Input.GetMouseButton(0))
+        if (!EventSystem.current.IsPointerOverGameObject())
         {
-            if (_bulletTimer <= 0f && _curBullet > 0)
+            if (Input.GetMouseButton(0))
             {
-                if(_loadBullet != null)
+                if (_bulletTimer <= 0f && _curBullet > 0)
                 {
-                    StopCoroutine(_loadBullet);
-                    _loadBullet = null;
-                    Debug.Log("stop loading");
-                    MainUI.Instance.HideLoadBar();
+                    if (_loadBullet != null)
+                    {
+                        StopCoroutine(_loadBullet);
+                        _loadBullet = null;
+                        Debug.Log("stop loading");
+                        MainUI.Instance.HideLoadBar();
+                    }
+                    InstantiateBullets();
                 }
-                InstantiateBullets();
             }
+        }
+        else
+        {
+            Debug.Log("is on ui??");
         }
     }
 
