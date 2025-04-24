@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 using UnityEngine.EventSystems;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class PlayerFire : MonoBehaviour
 {
@@ -95,6 +96,17 @@ public class PlayerFire : MonoBehaviour
                 damage.KnockDir = hitInfo.point - FirePosition.transform.position;
 
                 enemy.TakeDamage(damage);
+            }
+            if (hitInfo.collider.gameObject.CompareTag("ExplodableObject"))
+            {
+                Barrel barrel = hitInfo.collider.GetComponent<Barrel>();
+                Damage damage = new Damage();
+                damage.Value = 20;
+                damage.From = gameObject;
+                damage.KnockValue = 0.5f;
+                damage.KnockDir = hitInfo.point - FirePosition.transform.position;
+
+                barrel.TakeDamage(damage);
             }
         }
         _curBullet--;

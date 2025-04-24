@@ -732,7 +732,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 503
+    m_Bits: 1527
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -952,6 +952,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Stats: {fileID: 11400000, guid: 75766ed7c7bd19c4aa54d736c88039a3, type: 2}
+  Health: 0
   _moveSpeed: 7
   _runSpeed: 12
   _rollSpeed: 20
@@ -1453,7 +1454,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 695
+    m_Bits: 1719
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: f4044c2fbe86acf4c8be3f16ad9bea55, type: 2}
   m_TargetDisplay: 1
@@ -4911,6 +4912,10 @@ PrefabInstance:
       value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 6300066252464642667, guid: a66d4f193ce0c414fa408f2e22fc84c3, type: 3}
+      propertyPath: Stat
+      value: 
+      objectReference: {fileID: 11400000, guid: bbe31d6ed3447e744a2fdf45d64649e7, type: 2}
+    - target: {fileID: 6300066252464642667, guid: a66d4f193ce0c414fa408f2e22fc84c3, type: 3}
       propertyPath: 'PatrolPositions.Array.data[0]'
       value: 
       objectReference: {fileID: 1612633649}
@@ -4941,7 +4946,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5452717838562474387, guid: 37ac8979c9a10fa42b98d510eee19627, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -34
+      value: -33
       objectReference: {fileID: 0}
     - target: {fileID: 5452717838562474387, guid: 37ac8979c9a10fa42b98d510eee19627, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4949,7 +4954,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5452717838562474387, guid: 37ac8979c9a10fa42b98d510eee19627, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 39
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 5452717838562474387, guid: 37ac8979c9a10fa42b98d510eee19627, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4982,6 +4987,10 @@ PrefabInstance:
     - target: {fileID: 5838576533056581662, guid: 37ac8979c9a10fa42b98d510eee19627, type: 3}
       propertyPath: m_Name
       value: Barrel
+      objectReference: {fileID: 0}
+    - target: {fileID: 7243685481859033929, guid: 37ac8979c9a10fa42b98d510eee19627, type: 3}
+      propertyPath: ExplodePower
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

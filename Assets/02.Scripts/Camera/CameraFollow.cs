@@ -64,8 +64,8 @@ public class CameraFollow : MonoBehaviour
 
     void Start()
     {
-        //Cursor.lockState = CursorLockMode.Locked;  // 커서 중앙에 고정
-        //Cursor.visible = false;                    // 커서 숨기기
+        Cursor.lockState = CursorLockMode.Locked;  // 커서 중앙에 고정
+        Cursor.visible = false;                    // 커서 숨기기
     }
 
 

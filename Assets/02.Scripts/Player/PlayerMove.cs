@@ -5,6 +5,7 @@ public class PlayerMove : MonoBehaviour
 {
     [Header("Player Stats")]
     public PlayerStatsSO Stats;
+    public int Health;
 
     [Header("Movement Settings")]
     [SerializeField] private float _moveSpeed = 7f;
@@ -35,6 +36,7 @@ public class PlayerMove : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         mainCamera = Camera.main;
         _availableJumps = _maxJumpCount;
+        Health = Stats.MaxHealth;
     }
 
     private void Update()
@@ -197,5 +199,17 @@ public class PlayerMove : MonoBehaviour
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         _isClimbing = Vector3.Angle(hit.normal, Vector3.up) > WALL_ANGLE_THRESHOLD;
+    }
+
+    public void TakeDamage(Damage damage)
+    {
+        Health -= damage.Value;
+        if (Health <= 0)
+        {
+            Debug.Log("당신은 죽었습니다");
+            gameObject.SetActive(false);
+            return;
+        }
+
     }
 }
