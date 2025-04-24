@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 public enum EnemyState
 {
@@ -20,6 +21,7 @@ public class Enemy : MonoBehaviour
 {
     public EnemyState CurrentState = EnemyState.Idle;
     private CharacterController _characterController;
+    private NavMeshAgent _agent;
     private Vector3 _returnPosition;
     public Transform[] PatrolPositions;
 
@@ -49,6 +51,7 @@ public class Enemy : MonoBehaviour
     {
         _player = GameObject.FindGameObjectWithTag("Player");
         _characterController = GetComponent<CharacterController>();
+        _agent = GetComponent<NavMeshAgent>();
         _returnPosition = transform.position;
     }
 
@@ -140,7 +143,8 @@ public class Enemy : MonoBehaviour
 
         // 3가지 위치로 이동하기
         Vector3 dir = (PatrolPositions[_curPos].position - transform.position).normalized;
-        _characterController.Move(dir * MoveSpeed * Time.deltaTime);
+        _agent.SetDestination(_player.transform.position);
+        //_characterController.Move(dir * MoveSpeed * Time.deltaTime);
     }
 
     private void Trace()
@@ -164,8 +168,9 @@ public class Enemy : MonoBehaviour
         }
 
         // 플레이어 따라오기
-        Vector3 dir = (_player.transform.position - transform.position).normalized;
-        _characterController.Move(dir * MoveSpeed * Time.deltaTime);
+        //Vector3 dir = (_player.transform.position - transform.position).normalized;
+        //_characterController.Move(dir * MoveSpeed * Time.deltaTime);
+        _agent.SetDestination(_player.transform.position);
     }
 
     private void Return()
@@ -189,8 +194,9 @@ public class Enemy : MonoBehaviour
         }
 
         // 원래 위치로 복귀
-        Vector3 dir = (_returnPosition - transform.position).normalized;
-        _characterController.Move(dir * MoveSpeed * Time.deltaTime);
+        //Vector3 dir = (_returnPosition - transform.position).normalized;
+        //_characterController.Move(dir * MoveSpeed * Time.deltaTime);
+        _agent.SetDestination(_returnPosition);
     }
 
     private void Attack()
@@ -220,6 +226,7 @@ public class Enemy : MonoBehaviour
     {
         // 일정 시간 경직
         float _timer = 0f;
+        _agent.ResetPath();
         while(_timer <= HitTime)
         {
             _characterController.Move(dir * knockback * Time.deltaTime);
@@ -228,6 +235,7 @@ public class Enemy : MonoBehaviour
         }
 
         // 상태 전환
+        _agent.SetDestination(_player.transform.position);
         Debug.Log("상태전환: Hit -> Trace");
         BacklogUI.Instance.AddLog("적이 당신을 알아챘습니다");
         CurrentState = EnemyState.Trace;

@@ -1,8 +1,6 @@
 using UnityEngine;
 using System;
 using System.Collections;
-using Unity.VisualScripting;
-using UnityEngine.UIElements;
 
 public class PlayerFire : MonoBehaviour
 {

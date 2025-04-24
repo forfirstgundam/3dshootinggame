@@ -29,7 +29,6 @@ public class PlayerMove : MonoBehaviour
     private int _availableJumps;
     private bool _isRolling;
     private bool _isClimbing;
-    private bool _isJumping;
 
     private void Awake()
     {
@@ -123,7 +122,6 @@ public class PlayerMove : MonoBehaviour
     private void PerformJump()
     {
         _verticalVelocity = _jumpPower;
-        _isJumping = true;
         _availableJumps--;
     }
 
