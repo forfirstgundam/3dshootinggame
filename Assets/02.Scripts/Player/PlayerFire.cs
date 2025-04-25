@@ -88,7 +88,7 @@ public class PlayerFire : MonoBehaviour
 
             if (hitInfo.collider.gameObject.CompareTag("Enemy"))
             {
-                Enemy enemy = hitInfo.collider.GetComponent<Enemy>();
+                BaseEnemy enemy = hitInfo.collider.GetComponent<BaseEnemy>();
                 Damage damage = new Damage();
                 damage.Value = 20;
                 damage.From = gameObject;
@@ -111,7 +111,6 @@ public class PlayerFire : MonoBehaviour
         }
         _curBullet--;
         MainUI.Instance.UpdateBulletNum(_curBullet);
-        Debug.Log($"left bullets : {_curBullet}");
         _bulletTimer = Stat.BulletCoolTime;
         CameraVibrate.Instance.ShakeCamera();
     }

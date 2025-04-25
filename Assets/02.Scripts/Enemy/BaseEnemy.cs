@@ -31,6 +31,11 @@ public class BaseEnemy : MonoBehaviour
 
     protected Coroutine _beingHit;
 
+    public void Initialize()
+    {
+        Health = Stat.MaxHealth;
+    }
+
     public void ChangeEnemyState(IEnemyState newState)
     {
         _currentState?.Exit(this);
