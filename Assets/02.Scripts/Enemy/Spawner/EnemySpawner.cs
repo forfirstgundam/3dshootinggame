@@ -5,8 +5,8 @@ public class EnemySpawner : MonoBehaviour
     public float SpawnCoolTime = 5f;
     private float _timer = 0f;
 
-    public float offset = 3f;
-    public Transform[] PatrolPositions;
+    public int Offset = 5;
+    public Vector3[] PatrolPositions;
 
     private void Update()
     {
@@ -15,12 +15,19 @@ public class EnemySpawner : MonoBehaviour
         if(_timer > SpawnCoolTime)
         {
             Debug.Log("spawning enemy");
-            Vector3 spawnpoint = new Vector3(transform.position.x + Random.Range(-offset, offset), transform.position.y + Random.Range(-offset, offset), transform.position.z + Random.Range(-offset, offset));
+
+            Vector3 PositionOffset = new Vector3(Random.Range(-Offset, Offset + 1), Random.Range(-Offset, Offset + 1), Random.Range(-Offset, Offset + 1));
+
+            Vector3 spawnpoint = transform.position + PositionOffset;
             GameObject newthing = Pools.Instance.Create(1, transform.position);
             BaseEnemy enemy = newthing.GetComponent<BaseEnemy>();
 
             enemy.Initialize();
-            enemy.PatrolPositions = PatrolPositions;
+            enemy.PatrolPositions = new Vector3[PatrolPositions.Length];
+            for (int i =0;i<PatrolPositions.Length; i++)
+            {
+                enemy.PatrolPositions[i] = PatrolPositions[i] + PositionOffset;
+            }
             _timer = 0f;
         }
     }

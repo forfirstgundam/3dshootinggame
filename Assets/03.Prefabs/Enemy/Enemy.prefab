@@ -154,10 +154,10 @@ MonoBehaviour:
   Stat: {fileID: 11400000, guid: bbe31d6ed3447e744a2fdf45d64649e7, type: 2}
   Health: 100
   PatrolPositions:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {x: -30, y: 1, z: 30}
+  - {x: 30, y: 1, z: 30}
+  - {x: 30, y: 1, z: 0}
+  - {x: -30, y: 1, z: 0}
   CurPatrolPos: 0
   Player: {fileID: 0}
 --- !u!195 &1625153083978864665

@@ -5,7 +5,7 @@ public class ReturnState : IEnemyState
     public void Enter(BaseEnemy enemy)
     {
         // 원래 위치로 복귀
-        enemy.EnemySetDestination(enemy.PatrolPositions[enemy.CurPatrolPos].position);
+        enemy.EnemySetDestination(enemy.PatrolPositions[enemy.CurPatrolPos]);
     }
 
     public void Execute(BaseEnemy enemy)
@@ -19,7 +19,7 @@ public class ReturnState : IEnemyState
         }
 
         // 원래 위치로 돌아올 경우 IdleState로 전환
-        float distanceToPosition = Vector3.Distance(enemy.transform.position, enemy.PatrolPositions[enemy.CurPatrolPos].position);
+        float distanceToPosition = Vector3.Distance(enemy.transform.position, enemy.PatrolPositions[enemy.CurPatrolPos]);
         if (distanceToPosition <= 0.1f)
         {
             Debug.Log("상태 변화 : Return -> Idle");

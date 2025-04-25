@@ -23,7 +23,7 @@ public class BaseEnemy : MonoBehaviour
     protected CharacterController _characterController;
     protected NavMeshAgent _agent;
     protected Vector3 _returnPosition;
-    public Transform[] PatrolPositions;
+    public Vector3[] PatrolPositions;
 
     public int CurPatrolPos;
 

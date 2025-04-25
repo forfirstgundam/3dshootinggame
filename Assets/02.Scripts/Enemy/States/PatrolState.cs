@@ -5,14 +5,14 @@ public class PatrolState : IEnemyState
     public void Enter(BaseEnemy enemy)
     {
         // PatrolPosition으로 가기
-        enemy.EnemySetDestination(enemy.PatrolPositions[enemy.CurPatrolPos].position);
+        enemy.EnemySetDestination(enemy.PatrolPositions[enemy.CurPatrolPos]);
     }
 
     public void Execute(BaseEnemy enemy)
     {
         // 현재 PatrolPosition에 도착했을 경우 IdleState로 전환
-        float distanceToPosition = Vector3.Distance(enemy.transform.position, enemy.PatrolPositions[enemy.CurPatrolPos].position);
-        if (distanceToPosition <= 0.1f)
+        float distanceToPosition = Vector3.Distance(enemy.transform.position, enemy.PatrolPositions[enemy.CurPatrolPos]);
+        if (distanceToPosition <= 0.5f)
         {
             Debug.Log("상태 변화 : Patrol -> Idle");
             enemy.ChangeEnemyState(new IdleState());
