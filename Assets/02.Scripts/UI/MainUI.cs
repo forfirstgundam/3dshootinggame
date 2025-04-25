@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class MainUI : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class MainUI : MonoBehaviour
 
     public TextMeshProUGUI BombNumber;
     public TextMeshProUGUI BulletNumber;
+
+    public Image GlitchEffect;
+    public Coroutine GlitchOn;
 
     public Button MinimapPlus;
     public Button MinimapMinus;
@@ -55,9 +59,37 @@ public class MainUI : MonoBehaviour
         MinimapCamera.Instance.MinimapScaleChange(false);
     }
 
+    public void GlitchEffectOn()
+    {
+        if(GlitchOn == null)
+        {
+            GlitchOn = StartCoroutine(Glitching());
+        } else
+        {
+            StopCoroutine(GlitchOn);
+            GlitchOn = StartCoroutine(Glitching());
+        }
+    }
+
+    private IEnumerator Glitching()
+    {
+        
+        yield return null;
+    }
+
     private void Update()
     {
         StaminaBar.value = (Stats.Stamina / Stats.MaxStamina);
         //LoadBulletBar.value
+
+        if (Input.GetKeyDown(KeyCode.KeypadMinus))
+        {
+            OnMapMinus();
+        }
+
+        if (Input.GetKeyDown(KeyCode.KeypadPlus))
+        {
+            OnMapPlus();
+        }
     }
 }

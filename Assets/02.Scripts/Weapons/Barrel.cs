@@ -4,7 +4,7 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 using UnityEngine.Rendering.Universal;
 using DG.Tweening;
 
-public class Barrel : MonoBehaviour
+public class Barrel : MonoBehaviour, IDamageable
 {
     public int MaxHealth = 50;
     public int CurHealth;
@@ -69,44 +69,54 @@ public class Barrel : MonoBehaviour
 
     private void Explode()
     {
-        if(Exploding)
-        {
-
-        }
         Damage damage = new Damage();
         damage.Value = ExplodeDamage;
         damage.From = this.gameObject;
         damage.KnockValue = 0.2f;
 
-        int enemyLayerMask = 1 << 8;
-        Collider[] EnemyColliders = Physics.OverlapSphere(transform.position, ExplosionRadius, enemyLayerMask);
-        foreach (var hitCollider in EnemyColliders)
+        // IDamageable로 바꾸기
+        Collider[] colls = Physics.OverlapSphere(transform.position, ExplosionRadius);
+        foreach (Collider col in colls)
         {
-            BaseEnemy enemy = hitCollider.GetComponent<BaseEnemy>();
-            damage.KnockDir = (hitCollider.transform.position - transform.position).normalized;
-            Debug.Log("barrel gave damage to enemy");
-            enemy.TakeDamage(damage);
+            if(col.TryGetComponent<IDamageable>(out IDamageable damageable))
+            {
+                damageable.TakeDamage(damage);
+            }
         }
 
-        int playerLayerMask = 1 << 6;
-        Collider[] PlayerCollider = Physics.OverlapSphere(transform.position, ExplosionRadius, playerLayerMask);
-        //foreach (var hitCollider in hitColliders)
+        // layermask : 비트 연산으로 여러 개 가능
+        // 유니티는 레이어를 넘버링하는 것이 아니라 비트로 관리
+        // 제외할 때 : ~(1<<9) - 9번째 빼고 전체
+
+        //int enemyLayerMask = 1 << 8;
+        //Collider[] EnemyColliders = Physics.OverlapSphere(transform.position, ExplosionRadius, enemyLayerMask);
+        //foreach (var hitCollider in EnemyColliders)
         //{
-        //    PlayerMove player = hitCollider.GetComponent<PlayerMove>();
+        //    BaseEnemy enemy = hitCollider.GetComponent<BaseEnemy>();
         //    damage.KnockDir = (hitCollider.transform.position - transform.position).normalized;
-        //    PlayerMove.TakeDamage(damage);
+        //    Debug.Log("barrel gave damage to enemy");
+        //    enemy.TakeDamage(damage);
         //}
 
-        int barrelLayerMask = 1 << 10;
-        Collider[] BarrelColliders = Physics.OverlapSphere(transform.position, ExplosionRadius, barrelLayerMask);
-        foreach (var hitCollider in BarrelColliders)
-        {
-            if (hitCollider.gameObject == gameObject) continue;
-            Barrel barrel = hitCollider.GetComponent<Barrel>();
-            damage.KnockDir = (hitCollider.transform.position - transform.position).normalized;
-            Debug.Log("barrel gave damage to barrel");
-            barrel.TakeDamage(damage);
-        }
+        //int playerLayerMask = 1 << 6;
+        //Collider[] PlayerCollider = Physics.OverlapSphere(transform.position, ExplosionRadius, playerLayerMask);
+        ////foreach (var hitCollider in hitColliders)
+        ////{
+        ////    PlayerMove player = hitCollider.GetComponent<PlayerMove>();
+        ////    damage.KnockDir = (hitCollider.transform.position - transform.position).normalized;
+        ////    PlayerMove.TakeDamage(damage);
+        ////}
+
+        //int barrelLayerMask = 1 << 10;
+        //Collider[] BarrelColliders = Physics.OverlapSphere(transform.position, ExplosionRadius, barrelLayerMask);
+        //foreach (var hitCollider in BarrelColliders)
+        //{
+        //    if (hitCollider.gameObject == gameObject) continue;
+        //    Barrel barrel = hitCollider.GetComponent<Barrel>();
+        //    damage.KnockDir = (hitCollider.transform.position - transform.position).normalized;
+        //    Debug.Log("barrel gave damage to barrel");
+        //    barrel.TakeDamage(damage);
+        //}
     }
 
     public void TakeDamage(Damage damage)

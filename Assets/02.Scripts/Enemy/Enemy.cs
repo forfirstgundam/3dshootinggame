@@ -23,46 +23,4 @@ public class Enemy : BaseEnemy
     {
         _currentState?.Execute(this);
     }
-
-
-    //private void Update()
-    //{
-    //    switch (CurrentState)
-    //    {
-    //        case (EnemyState.Idle):
-    //            {
-    //                Idle();
-    //                break;
-    //            }
-    //        case (EnemyState.Patrol):
-    //            {
-    //                Patrol();
-    //                break;
-    //            }
-    //        case (EnemyState.Trace):
-    //            {
-    //                Trace();
-    //                break;
-    //            }
-    //        case (EnemyState.Return):
-    //            {
-    //                Return();
-    //                break;
-    //            }
-    //        case (EnemyState.Attack):
-    //            {
-    //                Attack();
-    //                break;
-    //            }
-    //        case (EnemyState.Hit):
-    //            {
-    //                break;
-    //            }
-    //        case (EnemyState.Die):
-    //            {
-    //                StartCoroutine(Die());
-    //                break;
-    //            }
-    //    }
-    //}    
 }

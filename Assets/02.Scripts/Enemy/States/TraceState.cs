@@ -33,29 +33,3 @@ public class TraceState : IEnemyState
         enemy.EnemyResetPath();
     }
 }
-
-//protected void Trace()
-//{
-//    // 멀어질 경우 Return으로 전환
-//    if (Vector3.Distance(transform.position, Player.transform.position) >= Stat.ReturnDistance)
-//    {
-//        Debug.Log("상태전환: Trace -> Return");
-//        BacklogUI.Instance.AddLog("적이 돌아갑니다");
-//        CurrentState = EnemyState.Return;
-//        return;
-//    }
-
-//    // 공격 범위만큼 가까워지면 Attack으로 전환
-//    if (Vector3.Distance(transform.position, Player.transform.position) < Stat.AttackDistance)
-//    {
-//        Debug.Log("상태전환: Trace -> Attack");
-//        BacklogUI.Instance.AddLog("적이 당신을 공격합니다");
-//        CurrentState = EnemyState.Attack;
-//        return;
-//    }
-
-//    // 플레이어 따라오기
-//    //Vector3 dir = (Player.transform.position - transform.position).normalized;
-//    //_characterController.Move(dir * MoveSpeed * Time.deltaTime);
-//    _agent.SetDestination(Player.transform.position);
-//}

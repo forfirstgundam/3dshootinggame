@@ -86,6 +86,17 @@ public class PlayerFire : MonoBehaviour
             BulletEffect.transform.forward = hitInfo.normal;
             BulletEffect.Play();
 
+            if( hitInfo.collider.TryGetComponent<IDamageable>(out IDamageable damageable))
+            {
+                Damage damage = new Damage();
+                damage.Value = 20;
+                damage.From = gameObject;
+                damage.KnockValue = 0.5f;
+                damage.KnockDir = hitInfo.point - FirePosition.transform.position;
+
+                damageable.TakeDamage(damage);
+            }
+
             if (hitInfo.collider.gameObject.CompareTag("Enemy"))
             {
                 BaseEnemy enemy = hitInfo.collider.GetComponent<BaseEnemy>();
@@ -112,7 +123,7 @@ public class PlayerFire : MonoBehaviour
         _curBullet--;
         MainUI.Instance.UpdateBulletNum(_curBullet);
         _bulletTimer = Stat.BulletCoolTime;
-        CameraVibrate.Instance.ShakeCamera();
+        CameraEffect.Instance.ShakeCamera();
     }
 
     private void FireBomb()

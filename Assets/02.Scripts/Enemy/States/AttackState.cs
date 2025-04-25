@@ -13,11 +13,20 @@ public class AttackState : IEnemyState
     public void Execute(BaseEnemy enemy)
     {
         _attackTimer += Time.deltaTime;
+        Damage damage = new Damage();
+        damage.Value = enemy.Stat.AttackDamage;
+        damage.KnockValue = enemy.Stat.AttackKnockValue;
+        damage.From = enemy.gameObject;
 
         // 쿨타임마다 플레이어를 공격
         if (_attackTimer >= enemy.Stat.AttackCoolTime)
         {
             Debug.Log("적이 공격했습니다!");
+            IDamageable player = enemy.Player.GetComponent<IDamageable>();
+            damage.KnockDir = (enemy.Player.transform.position - enemy.transform.position).normalized;
+
+            player.TakeDamage(damage);
+
             _attackTimer = 0f;
         }
 
@@ -34,26 +43,3 @@ public class AttackState : IEnemyState
 
     }
 }
-
-//protected void Attack()
-//{
-//    // 멀어질 경우 Trace로 전환
-//    if (Vector3.Distance(transform.position, Player.transform.position) >= Stat.AttackDistance)
-//    {
-//        Debug.Log("상태전환: Attack -> Trace");
-//        BacklogUI.Instance.AddLog("적이 당신을 알아챘습니다");
-//        CurrentState = EnemyState.Trace;
-//        _attackTimer = 1f;
-//        return;
-//    }
-
-//    // 플레이어를 공격
-//    _attackTimer += Time.deltaTime;
-//    if (_attackTimer >= Stat.AttackCoolTime)
-//    {
-//        Debug.Log("플레이어를 공격합니다");
-//        BacklogUI.Instance.AddLog("공격을 받았습니다");
-//        _attackTimer = 0f;
-//    }
-
-//}

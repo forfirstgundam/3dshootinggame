@@ -9,6 +9,8 @@ public class EnemyStatsSO : ScriptableObject
     public float AttackDistance = 3f;
 
     public float AttackCoolTime = 1f;
+    public int AttackDamage = 0;
+    public float AttackKnockValue = 0f;
 
     public float IdleTime = 5f;
     public float HitTime = 0.5f;

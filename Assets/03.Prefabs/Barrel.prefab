@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6999779036478388068}
   - component: {fileID: 1232674175805510601}
   - component: {fileID: 7243685481859033929}
+  - component: {fileID: -1808557151114791279}
   m_Layer: 10
   m_Name: Barrel
   m_TagString: ExplodableObject
@@ -129,3 +130,22 @@ MonoBehaviour:
   HitTime: 0.02
   FlyTime: 5
   ExplodePower: 100
+  ExplodePushPower: 0.2
+  ExplosionRadius: 10
+  ExplodeDamage: 50
+--- !u!208 &-1808557151114791279
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5838576533056581662}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 1, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 0
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0
