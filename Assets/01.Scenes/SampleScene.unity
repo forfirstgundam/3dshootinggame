@@ -559,7 +559,58 @@ MonoBehaviour:
   - {fileID: 4539606265308091279, guid: f4a97fd19b59c7f44a5f8f3bc88ad762, type: 3}
   - {fileID: 1831195155263561653, guid: a66d4f193ce0c414fa408f2e22fc84c3, type: 3}
   - {fileID: 8579202563842300952, guid: 3897871e572cdb0408fff620201ca1fb, type: 3}
-  PoolSizes: 030000000300000003000000
+  PoolSizes: 030000000a00000003000000
+--- !u!1 &272299716
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 272299717}
+  - component: {fileID: 272299718}
+  m_Layer: 0
+  m_Name: EnemySpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &272299717
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 272299716}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -36, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &272299718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 272299716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a6257a8c2a7fd045b3070d54948af83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpawnCoolTime: 10
+  offset: 3
+  PatrolPositions:
+  - {fileID: 1612633649}
+  - {fileID: 1235903772}
+  - {fileID: 841350704}
+  - {fileID: 1260053037}
 --- !u!1 &307820654
 GameObject:
   m_ObjectHideFlags: 0
@@ -5103,10 +5154,6 @@ PrefabInstance:
       value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 6300066252464642667, guid: a66d4f193ce0c414fa408f2e22fc84c3, type: 3}
-      propertyPath: Stat
-      value: 
-      objectReference: {fileID: 11400000, guid: bbe31d6ed3447e744a2fdf45d64649e7, type: 2}
-    - target: {fileID: 6300066252464642667, guid: a66d4f193ce0c414fa408f2e22fc84c3, type: 3}
       propertyPath: 'PatrolPositions.Array.data[0]'
       value: 
       objectReference: {fileID: 1612633649}
@@ -5264,3 +5311,4 @@ SceneRoots:
   - {fileID: 2132777164}
   - {fileID: 511196585}
   - {fileID: 7851845336318348100}
+  - {fileID: 272299717}
