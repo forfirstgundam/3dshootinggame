@@ -73,8 +73,40 @@ public class MainUI : MonoBehaviour
 
     private IEnumerator Glitching()
     {
-        
-        yield return null;
+        RectTransform rect = GlitchEffect.rectTransform;
+        Vector3 originalPos = rect.localPosition;
+
+        float duration = 0.5f;
+        float elapsed = 0f;
+        float maxShake = 200f;
+
+        Color color = GlitchEffect.color;
+        color.a = 1f;
+        GlitchEffect.color = color;
+        GlitchEffect.gameObject.SetActive(true);
+
+        while (elapsed < duration)
+        {
+            // 알파 감소
+            float alpha = Mathf.Lerp(1f, 0f, elapsed / duration);
+            color.a = alpha;
+            GlitchEffect.color = color;
+
+            // 랜덤 흔들림
+            float offsetX = Random.Range(-maxShake, maxShake);
+            float offsetY = Random.Range(-maxShake, maxShake);
+            rect.localPosition = originalPos + new Vector3(offsetX, offsetY, 0);
+
+            elapsed += Time.deltaTime;
+            yield return new WaitForSeconds(0.03f);
+        }
+
+        // 마무리
+        color.a = 0f;
+        GlitchEffect.color = color;
+        rect.localPosition = originalPos;
+        GlitchEffect.gameObject.SetActive(false);
+        GlitchOn = null;
     }
 
     private void Update()
