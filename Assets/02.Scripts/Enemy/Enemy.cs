@@ -19,6 +19,11 @@ public class Enemy : BaseEnemy
         this.ChangeEnemyState(new IdleState());
     }
 
+    private void Update()
+    {
+        _currentState?.Execute(this);
+    }
+
 
     //private void Update()
     //{
