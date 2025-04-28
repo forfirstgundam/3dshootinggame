@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
+using System;
 
 public class BaseEnemy : MonoBehaviour, IDamageable
 {
@@ -18,6 +19,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable
     public GameObject Player;
 
     protected Coroutine _beingHit;
+    public Action<int> OnEnemyHit;
 
     public void Initialize()
     {
@@ -68,6 +70,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable
     {
         if (_currentState is DieState) return;
         Health -= damage.Value;
+        OnEnemyHit?.Invoke(Health);
 
         if (Health <= 0)
         {

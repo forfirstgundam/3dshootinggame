@@ -17,7 +17,9 @@ MonoBehaviour:
   ReturnDistance: 15
   AttackDistance: 3
   AttackCoolTime: 1
+  AttackDamage: 20
+  AttackKnockValue: 0
   IdleTime: 5
   HitTime: 0.5
   DieTime: 1
-  Health: 100
+  MaxHealth: 100

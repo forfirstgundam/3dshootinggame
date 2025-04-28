@@ -8,7 +8,7 @@ using UnityEngine.AI;
 
 public class Enemy : BaseEnemy
 {
-    private void Start()
+    private void Awake()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
         _characterController = GetComponent<CharacterController>();
@@ -21,6 +21,7 @@ public class Enemy : BaseEnemy
 
     private void Update()
     {
+        if (GameManager.Instance.GameState != GameState.Play) return;
         _currentState?.Execute(this);
     }
 }

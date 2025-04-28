@@ -10,6 +10,7 @@ public class MainUI : MonoBehaviour
 
     public Slider StaminaBar;
     public Slider LoadBulletBar;
+    public Slider HealthBar;
 
     public TextMeshProUGUI BombNumber;
     public TextMeshProUGUI BulletNumber;
@@ -23,6 +24,12 @@ public class MainUI : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+    }
+
+    private void Start()
+    {
+        Player player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        player.OnPlayerHit += UpdateHealthBar;
     }
 
     public void UpdateBombNum(int num)
@@ -42,6 +49,12 @@ public class MainUI : MonoBehaviour
     public void HideLoadBar()
     {
         LoadBulletBar.gameObject.SetActive(false);
+    }
+
+    public void UpdateHealthBar(int hp)
+    {
+        Debug.Log($"health is {hp}");
+        HealthBar.value = (float)hp / (float)Stats.MaxHealth;
     }
 
     public void LoadBarUpdate(float progress)
@@ -111,6 +124,7 @@ public class MainUI : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.GameState != GameState.Play) return;
         StaminaBar.value = (Stats.Stamina / Stats.MaxStamina);
         //LoadBulletBar.value
 

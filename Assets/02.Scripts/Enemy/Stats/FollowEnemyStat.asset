@@ -17,6 +17,8 @@ MonoBehaviour:
   ReturnDistance: Infinity
   AttackDistance: 3
   AttackCoolTime: 1
+  AttackDamage: 10
+  AttackKnockValue: 0
   IdleTime: 0
   HitTime: 0.5
   DieTime: 1

@@ -180,6 +180,7 @@ public class PlayerFire : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.GameState != GameState.Play) return;
         _bulletTimer -= Time.deltaTime;
         if(Input.GetKey(KeyCode.R) && _loadBullet == null)
         {

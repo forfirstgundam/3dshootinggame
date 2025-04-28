@@ -10,6 +10,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.GameState != GameState.Play) return;
         _timer += Time.deltaTime;
 
         if(_timer > SpawnCoolTime)

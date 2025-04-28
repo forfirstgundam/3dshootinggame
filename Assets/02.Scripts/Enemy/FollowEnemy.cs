@@ -16,6 +16,7 @@ public class FollowEnemy : BaseEnemy
 
     private void Update()
     {
+        if (GameManager.Instance.GameState != GameState.Play) return;
         _currentState?.Execute(this);
     }
 }

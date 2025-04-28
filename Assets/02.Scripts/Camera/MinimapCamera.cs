@@ -32,6 +32,7 @@ public class MinimapCamera : MonoBehaviour
 
     public void MinimapScaleChange(bool zoom)
     {
+        if (GameManager.Instance.GameState != GameState.Play) return;
         if (zoom)
         {
             _minimapCamera.orthographicSize -= EachClick;

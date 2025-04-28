@@ -71,6 +71,7 @@ public class CameraFollow : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.GameState != GameState.Play) return;
         // interpoling, smoothing ±â¹ý
         ViewSwitch();
         Revolve();

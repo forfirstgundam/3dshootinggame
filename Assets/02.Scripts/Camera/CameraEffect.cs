@@ -27,6 +27,7 @@ public class CameraEffect : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (GameManager.Instance.GameState != GameState.Play) return;
         if (_vibrateTime > 0)
         {
             //  Perlin Noise를 사용한 부드러운 흔들림
