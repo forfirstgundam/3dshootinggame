@@ -39,7 +39,7 @@ public class AttackState : IEnemyState
             Debug.Log("상태 변화 : Attack -> Trace");
             enemy.ChangeEnemyState(new TraceState());
             enemy.Animator.SetTrigger("AttackDelayToMove");
-        }s
+        }
     }
     public void Exit(BaseEnemy enemy)
     {
