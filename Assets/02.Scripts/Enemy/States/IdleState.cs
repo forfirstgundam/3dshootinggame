@@ -19,6 +19,7 @@ public class IdleState : IEnemyState
         {
             Debug.Log("상태 변화 : Idle -> Patrol");
             enemy.ChangeEnemyState(new PatrolState());
+            enemy.Animator.SetTrigger("IdleToMove");
         }
 
         // Player가 가까워질 경우 TraceState로 전환
@@ -27,6 +28,7 @@ public class IdleState : IEnemyState
         {
             Debug.Log("상태 변화 : Idle -> Trace");
             enemy.ChangeEnemyState(new TraceState());
+            enemy.Animator.SetTrigger("IdleToMove");
         }
     }
 

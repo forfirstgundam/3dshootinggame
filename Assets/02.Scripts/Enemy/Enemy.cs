@@ -15,6 +15,7 @@ public class Enemy : BaseEnemy
         _agent = GetComponent<NavMeshAgent>();
         _returnPosition = transform.position;
         Health = Stat.MaxHealth;
+        Animator = gameObject.GetComponentInChildren<Animator>();
 
         this.ChangeEnemyState(new IdleState());
     }

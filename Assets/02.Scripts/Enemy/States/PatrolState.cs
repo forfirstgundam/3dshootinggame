@@ -17,6 +17,7 @@ public class PatrolState : IEnemyState
         {
             Debug.Log("상태 변화 : Patrol -> Idle");
             enemy.ChangeEnemyState(new IdleState());
+            enemy.Animator.SetTrigger("MoveToIdle");
             if (enemy.CurPatrolPos >= enemy.PatrolPositions.Length - 1)
             {
                 enemy.CurPatrolPos = 0;

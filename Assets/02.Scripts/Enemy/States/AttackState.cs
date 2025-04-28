@@ -23,6 +23,7 @@ public class AttackState : IEnemyState
         if (_attackTimer >= enemy.Stat.AttackCoolTime)
         {
             Debug.Log("적이 공격했습니다!");
+            enemy.Animator.SetTrigger("AttackDelayToAttack");
             IDamageable player = enemy.Player.GetComponent<IDamageable>();
             damage.KnockDir = (enemy.Player.transform.position - enemy.transform.position).normalized;
 
@@ -37,6 +38,7 @@ public class AttackState : IEnemyState
         {
             Debug.Log("상태 변화 : Attack -> Trace");
             enemy.ChangeEnemyState(new TraceState());
+            enemy.Animator.SetTrigger("AttackDelayToMove");
         }
     }
     public void Exit(BaseEnemy enemy)

@@ -21,7 +21,8 @@ public class PlayerMove : MonoBehaviour
     private const float WALL_ANGLE_THRESHOLD = 85f;
 
     // Component references
-    private CharacterController characterController;
+    private CharacterController _characterController;
+    private Animator _animator;
     private Camera mainCamera;
 
     // Movement state
@@ -32,9 +33,10 @@ public class PlayerMove : MonoBehaviour
 
     private void Awake()
     {
-        characterController = GetComponent<CharacterController>();
+        _characterController = GetComponent<CharacterController>();
         mainCamera = Camera.main;
         _availableJumps = _maxJumpCount;
+        _animator = GetComponentInChildren<Animator>();
     }
 
     private void Update()
@@ -43,7 +45,7 @@ public class PlayerMove : MonoBehaviour
         HandleMovementInput();
         ApplyGravity();
         HandleStaminaRegeneration();
-        if (characterController.isGrounded)
+        if (_characterController.isGrounded)
         {
             _availableJumps = _maxJumpCount;
             _verticalVelocity = 0;
@@ -82,7 +84,11 @@ public class PlayerMove : MonoBehaviour
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
-        Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
+        Vector3 direction = new Vector3(horizontal, 0, vertical);
+        _animator.SetFloat("MoveAmount", direction.magnitude);
+
+        direction = direction.normalized;
+
         return mainCamera.transform.TransformDirection(direction);
     }
 
@@ -98,7 +104,7 @@ public class PlayerMove : MonoBehaviour
             Vector3 climbDirection = (Vector3.up * Input.GetAxisRaw("Vertical") + 
                                     wallRight * Input.GetAxisRaw("Horizontal")).normalized;
 
-            characterController.Move(climbDirection * _moveSpeed * Time.deltaTime);
+            _characterController.Move(climbDirection * _moveSpeed * Time.deltaTime);
             ConsumeStamina(Stats.ClimbUseRate * Time.deltaTime);
         }
         else
@@ -110,13 +116,13 @@ public class PlayerMove : MonoBehaviour
     private void PerformNormalMovement(Vector3 direction)
     {
         direction.y = _verticalVelocity;
-        characterController.Move(direction * _moveSpeed * Time.deltaTime);
+        _characterController.Move(direction * _moveSpeed * Time.deltaTime);
     }
 
     private void PerformRun(Vector3 direction)
     {
         direction.y = _verticalVelocity;
-        characterController.Move(direction * _runSpeed * Time.deltaTime);
+        _characterController.Move(direction * _runSpeed * Time.deltaTime);
         ConsumeStamina(Stats.DashUseRate * Time.deltaTime);
     }
 
@@ -134,7 +140,7 @@ public class PlayerMove : MonoBehaviour
 
         while (elapsedTime <= ROLL_DURATION)
         {
-            characterController.Move(direction * _rollSpeed * Time.deltaTime);
+            _characterController.Move(direction * _rollSpeed * Time.deltaTime);
 
             float t = elapsedTime / ROLL_DURATION;
             float xRotation = Mathf.Lerp(initialX, initialX + 359f, t);

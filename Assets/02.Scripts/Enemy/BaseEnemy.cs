@@ -13,6 +13,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable
     protected NavMeshAgent _agent;
     protected Vector3 _returnPosition;
     public Vector3[] PatrolPositions;
+    public Animator Animator;
 
     public int CurPatrolPos;
 
@@ -71,12 +72,14 @@ public class BaseEnemy : MonoBehaviour, IDamageable
         if (_currentState is DieState) return;
         Health -= damage.Value;
         OnEnemyHit?.Invoke(Health);
+        Animator.SetTrigger("Hit");
 
         if (Health <= 0)
         {
             Debug.Log("상태전환: Hit -> Die");
             BacklogUI.Instance.AddLog("적이 죽었습니다");
             ChangeEnemyState(new DieState());
+            Animator.SetTrigger("Die");
             return;
         }
         else

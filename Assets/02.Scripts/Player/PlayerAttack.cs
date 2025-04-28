@@ -18,6 +18,7 @@ public class PlayerAttack : MonoBehaviour
     public GameObject FirePosition;
     public GameObject BombPrefab;
     public GameObject Stick;
+    private Animator _animator;
 
     private float _curThrowPower;
     private float _bulletTimer;
@@ -79,6 +80,7 @@ public class PlayerAttack : MonoBehaviour
                         _loadBullet = null;
                         Debug.Log("stop loading");
                         MainUI.Instance.HideLoadBar();
+                        _animator.SetTrigger("Shot");
                     }
                     InstantiateBullets();
                 }
@@ -172,6 +174,7 @@ public class PlayerAttack : MonoBehaviour
         BombCount = Stat.MaxBomb;
         _curThrowPower = Stat.MinThrowPower;
         _curBullet = Stat.MaxBullet;
+        _animator = GetComponentInChildren<Animator>();
 
         _bulletTimer = 0f;
 
