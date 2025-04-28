@@ -85,7 +85,7 @@ public class PlayerMove : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(horizontal, 0, vertical);
-        _animator.SetFloat("MoveAmount", direction.magnitude);
+        _animator.SetFloat("MoveValue", direction.magnitude);
 
         direction = direction.normalized;
 

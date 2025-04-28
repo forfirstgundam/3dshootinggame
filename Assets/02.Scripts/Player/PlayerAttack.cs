@@ -80,8 +80,8 @@ public class PlayerAttack : MonoBehaviour
                         _loadBullet = null;
                         Debug.Log("stop loading");
                         MainUI.Instance.HideLoadBar();
-                        _animator.SetTrigger("Shot");
                     }
+                    _animator.SetTrigger("Attack");
                     InstantiateBullets();
                 }
             }
