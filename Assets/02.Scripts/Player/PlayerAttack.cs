@@ -1,15 +1,23 @@
 using UnityEngine;
-using System;
 using System.Collections;
 using UnityEngine.EventSystems;
 using static UnityEngine.EventSystems.EventTrigger;
+using System;
 
-public class PlayerFire : MonoBehaviour
+public enum Weapon
+{
+    Gun,
+    Stick,
+}
+
+public class PlayerAttack : MonoBehaviour
 {
     public PlayerStatsSO Stat;
+    public Weapon CurrentWeapon = Weapon.Gun;
 
     public GameObject FirePosition;
     public GameObject BombPrefab;
+    public GameObject Stick;
 
     private float _curThrowPower;
     private float _bulletTimer;
@@ -20,6 +28,7 @@ public class PlayerFire : MonoBehaviour
     public ParticleSystem BulletEffect;
 
     private Coroutine _loadBullet;
+    public Action OnSwing;
 
     [SerializeField] private LineRenderer bulletLinePrefab;
     [SerializeField] private float lineDuration = 0.05f;
@@ -39,6 +48,21 @@ public class PlayerFire : MonoBehaviour
         _curBullet = Stat.MaxBullet;
         MainUI.Instance.UpdateBulletNum(_curBullet);
         MainUI.Instance.HideLoadBar();
+    }
+
+    private void WeaponSwitch()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            Debug.Log("switched to gun");
+            Stick.SetActive(false);
+            CurrentWeapon = Weapon.Gun;
+        } else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            Debug.Log("switched to stick");
+            Stick.SetActive(true);
+            CurrentWeapon = Weapon.Stick;
+        }
     }
 
     private void FireBullets()
@@ -95,29 +119,6 @@ public class PlayerFire : MonoBehaviour
                 damage.KnockDir = hitInfo.point - FirePosition.transform.position;
 
                 damageable.TakeDamage(damage);
-            }
-
-            if (hitInfo.collider.gameObject.CompareTag("Enemy"))
-            {
-                BaseEnemy enemy = hitInfo.collider.GetComponent<BaseEnemy>();
-                Damage damage = new Damage();
-                damage.Value = 20;
-                damage.From = gameObject;
-                damage.KnockValue = 0.5f;
-                damage.KnockDir = hitInfo.point - FirePosition.transform.position;
-
-                enemy.TakeDamage(damage);
-            }
-            if (hitInfo.collider.gameObject.CompareTag("ExplodableObject"))
-            {
-                Barrel barrel = hitInfo.collider.GetComponent<Barrel>();
-                Damage damage = new Damage();
-                damage.Value = 20;
-                damage.From = gameObject;
-                damage.KnockValue = 0.5f;
-                damage.KnockDir = hitInfo.point - FirePosition.transform.position;
-
-                barrel.TakeDamage(damage);
             }
         }
         _curBullet--;
@@ -182,11 +183,20 @@ public class PlayerFire : MonoBehaviour
     {
         if (GameManager.Instance.GameState != GameState.Play) return;
         _bulletTimer -= Time.deltaTime;
-        if(Input.GetKey(KeyCode.R) && _loadBullet == null)
+        WeaponSwitch();
+        if(CurrentWeapon == Weapon.Gun) {
+            if (Input.GetKey(KeyCode.R) && _loadBullet == null)
+            {
+                _loadBullet = StartCoroutine(LoadBullet());
+            }
+            FireBullets();
+        } else if(CurrentWeapon == Weapon.Stick)
         {
-            _loadBullet = StartCoroutine(LoadBullet());
+            if (Input.GetMouseButtonDown(0))
+            {
+                OnSwing?.Invoke();
+            }
         }
-        FireBullets();
         FireBomb();
     }
 }

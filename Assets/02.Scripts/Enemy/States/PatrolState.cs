@@ -10,6 +10,7 @@ public class PatrolState : IEnemyState
 
     public void Execute(BaseEnemy enemy)
     {
+        if (GameManager.Instance.GameState != GameState.Play) return;
         // 현재 PatrolPosition에 도착했을 경우 IdleState로 전환
         float distanceToPosition = Vector3.Distance(enemy.transform.position, enemy.PatrolPositions[enemy.CurPatrolPos]);
         if (distanceToPosition <= 0.5f)

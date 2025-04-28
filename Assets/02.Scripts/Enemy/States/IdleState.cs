@@ -11,6 +11,7 @@ public class IdleState : IEnemyState
 
     public void Execute(BaseEnemy enemy)
     {
+        if (GameManager.Instance.GameState != GameState.Play) return;
         _idleTimer += Time.deltaTime;
 
         // 일정 시간 지날 경우 PatrolState로 전환

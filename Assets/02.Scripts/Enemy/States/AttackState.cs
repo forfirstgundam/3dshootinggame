@@ -12,6 +12,7 @@ public class AttackState : IEnemyState
 
     public void Execute(BaseEnemy enemy)
     {
+        if (GameManager.Instance.GameState != GameState.Play) return;
         _attackTimer += Time.deltaTime;
         Damage damage = new Damage();
         damage.Value = enemy.Stat.AttackDamage;

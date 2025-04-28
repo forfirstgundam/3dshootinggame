@@ -18,6 +18,7 @@ public class HitState : IEnemyState
 
     public void Execute(BaseEnemy enemy)
     {
+        if (GameManager.Instance.GameState != GameState.Play) return;
         _timer += Time.deltaTime;
 
         // ³Ë¹é Ã³¸®

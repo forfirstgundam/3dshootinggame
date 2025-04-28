@@ -6,6 +6,7 @@ public class DieState : IEnemyState
 
     public void Enter(BaseEnemy enemy)
     {
+        if (GameManager.Instance.GameState != GameState.Play) return;
         enemy.EnemyResetPath();
         _dieTimer = 0f;
     }

@@ -78,45 +78,11 @@ public class Barrel : MonoBehaviour, IDamageable
         Collider[] colls = Physics.OverlapSphere(transform.position, ExplosionRadius);
         foreach (Collider col in colls)
         {
-            if(col.TryGetComponent<IDamageable>(out IDamageable damageable))
+            if (col.TryGetComponent<IDamageable>(out IDamageable damageable))
             {
                 damageable.TakeDamage(damage);
             }
         }
-
-        // layermask : 비트 연산으로 여러 개 가능
-        // 유니티는 레이어를 넘버링하는 것이 아니라 비트로 관리
-        // 제외할 때 : ~(1<<9) - 9번째 빼고 전체
-
-        //int enemyLayerMask = 1 << 8;
-        //Collider[] EnemyColliders = Physics.OverlapSphere(transform.position, ExplosionRadius, enemyLayerMask);
-        //foreach (var hitCollider in EnemyColliders)
-        //{
-        //    BaseEnemy enemy = hitCollider.GetComponent<BaseEnemy>();
-        //    damage.KnockDir = (hitCollider.transform.position - transform.position).normalized;
-        //    Debug.Log("barrel gave damage to enemy");
-        //    enemy.TakeDamage(damage);
-        //}
-
-        //int playerLayerMask = 1 << 6;
-        //Collider[] PlayerCollider = Physics.OverlapSphere(transform.position, ExplosionRadius, playerLayerMask);
-        ////foreach (var hitCollider in hitColliders)
-        ////{
-        ////    PlayerMove player = hitCollider.GetComponent<PlayerMove>();
-        ////    damage.KnockDir = (hitCollider.transform.position - transform.position).normalized;
-        ////    PlayerMove.TakeDamage(damage);
-        ////}
-
-        //int barrelLayerMask = 1 << 10;
-        //Collider[] BarrelColliders = Physics.OverlapSphere(transform.position, ExplosionRadius, barrelLayerMask);
-        //foreach (var hitCollider in BarrelColliders)
-        //{
-        //    if (hitCollider.gameObject == gameObject) continue;
-        //    Barrel barrel = hitCollider.GetComponent<Barrel>();
-        //    damage.KnockDir = (hitCollider.transform.position - transform.position).normalized;
-        //    Debug.Log("barrel gave damage to barrel");
-        //    barrel.TakeDamage(damage);
-        //}
     }
 
     public void TakeDamage(Damage damage)

@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator Ready()
     {
+        Debug.Log("Gamemode is now Ready");
         float timer = 0f;
         while(timer<= ReadyTime)
         {
@@ -48,6 +49,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator Play()
     {
+        Debug.Log("Gamemode is now Play");
         float timer = 0f;
         GameState = GameState.Play;
         while (timer <= GoTime)
@@ -60,6 +62,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator GameOver()
     {
+        Debug.Log("Gamemode is now GameOver");
         GameState = GameState.GameOver;
         GameOverUI.SetActive(true);
         yield return null;
