@@ -75,9 +75,9 @@ MonoBehaviour:
   Explosion: {fileID: 19800006, guid: e0609132424a24844b1d53ad3d704fd9, type: 3}
   HitTime: 0.02
   FlyTime: 5
-  ExplodePower: 100
+  ExplodePower: 50
   ExplodePushPower: 0.2
-  ExplosionRadius: 10
+  ExplosionRadius: 3
   ExplodeDamage: 50
 --- !u!208 &-1808557151114791279
 NavMeshObstacle:

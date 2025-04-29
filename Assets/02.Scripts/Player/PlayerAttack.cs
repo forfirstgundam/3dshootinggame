@@ -54,35 +54,6 @@ public class PlayerAttack : MonoBehaviour
         MainUI.Instance.UpdateBombNum(3);
     }
 
-    //private void FireBomb()
-    //{
-    //    if(BombCount > 0)
-    //    {
-    //        if (Input.GetMouseButton(1))
-    //        {
-    //            _curThrowPower += Time.deltaTime * 10f;
-    //            _curThrowPower = Mathf.Min(Stat.MaxThrowPower, _curThrowPower);
-    //            Debug.Log($"throw power is {_curThrowPower}");
-    //        }
-
-    //        if (Input.GetMouseButtonUp(1))
-    //        {
-    //            GameObject bomb = Pools.Instance.Create(0, FirePosition.transform.position);
-
-    //            Rigidbody bombRigidbody = bomb.GetComponent<Rigidbody>();
-
-    //            bombRigidbody.AddForce(Camera.main.transform.forward * _curThrowPower, ForceMode.Impulse);
-    //            bombRigidbody.AddTorque(Vector3.one);
-    //            BombCount--;
-    //            MainUI.Instance.UpdateBombNum(BombCount);
-    //            Debug.Log(BombCount);
-    //            _curThrowPower = Stat.MinThrowPower;
-    //        }
-    //        CurrentAnimator.SetTrigger("ThrowBomb");
-    //    }
-    //}
-
-
     private void Update()
     {
         if (GameManager.Instance.GameState != GameState.Play) return;

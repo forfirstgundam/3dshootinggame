@@ -6,7 +6,7 @@ public class Sword : WeaponBase
     public WeaponStatsSO Stat;
     private float _timer;
 
-    private void Start()
+    private void OnEnable()
     {
         Player.Instance.CurrentAnimator = GetComponent<Animator>();
         _timer = 0f;

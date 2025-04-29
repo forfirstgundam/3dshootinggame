@@ -15,7 +15,7 @@ public class Barrel : MonoBehaviour, IDamageable
 
     public float ExplodePower = 50f;
     public float ExplodePushPower = 0.2f;
-    public float ExplosionRadius = 10f;
+    public float ExplosionRadius = 3f;
     public int ExplodeDamage = 50;
 
     private Coroutine BeingHit;

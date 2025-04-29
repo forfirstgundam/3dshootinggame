@@ -22,7 +22,7 @@ public class Gun : WeaponBase
     [SerializeField] private LineRenderer bulletLinePrefab;
     [SerializeField] private float lineDuration = 0.05f;
 
-    private void Start()
+    private void OnEnable()
     {
         Player.Instance.CurrentAnimator = GetComponent<Animator>();
         _bulletTimer = 0f;

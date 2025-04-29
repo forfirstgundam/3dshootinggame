@@ -18,7 +18,7 @@ public class CameraEffect : MonoBehaviour
         _originalPos = transform.position;
     }
 
-    public void ShakeCamera(float duration = 0.1f, float magnitude = 2f)
+    public void ShakeCamera(float duration = 0.1f, float magnitude = 1f)
     {
         _originalPos = transform.position;
         _vibrateTime = duration;

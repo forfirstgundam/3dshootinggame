@@ -97,7 +97,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 83f1486e80ffcf0479148b5cda6cd29a, type: 3}
+        m_Texture: {fileID: 2800000, guid: d27853066484b5b469b300e6dadca7f9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MatCap_Sampler:
@@ -243,7 +243,7 @@ Material:
     - _Offset_X_Axis_BLD: -0.05
     - _Offset_Y_Axis_BLD: 0.09
     - _Offset_Z: 0
-    - _Outline_Width: 0
+    - _Outline_Width: 5
     - _Parallax: 0.02
     - _RimLight: 1
     - _RimLight_FeatherOff: 0
@@ -302,7 +302,7 @@ Material:
     - _Emissive_Color: {r: 0, g: 0, b: 0, a: 1}
     - _HighColor: {r: 0, g: 0, b: 0, a: 1}
     - _MatCapColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Outline_Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _Outline_Color: {r: 0.14901961, g: 0.14901961, b: 0.14901961, a: 1}
     - _RimLightColor: {r: 0.631, g: 0.541398, b: 0.541398, a: 1}
     - _ShadowColor: {r: 0.88235295, g: 0.85882354, b: 0.9529412, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
