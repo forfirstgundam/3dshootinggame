@@ -153,6 +153,7 @@ public class PlayerAttack : MonoBehaviour
                 Debug.Log(BombCount);
                 _curThrowPower = Stat.MinThrowPower;
             }
+            _animator.SetTrigger("ThrowBomb");
         }
     }
 

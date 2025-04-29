@@ -130,6 +130,7 @@ public class PlayerMove : MonoBehaviour
     {
         _verticalVelocity = _jumpPower;
         _availableJumps--;
+        _animator.SetTrigger("Jump");
     }
 
     private IEnumerator Roll(Vector3 direction)

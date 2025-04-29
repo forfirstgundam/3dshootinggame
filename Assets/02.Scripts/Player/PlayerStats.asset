@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40ea2920943793c4f90d3cd99b94f1ac, type: 3}
   m_Name: PlayerStats
   m_EditorClassIdentifier: 
-  MaxHealth: 500
+  MaxHealth: 50
   MaxStamina: 50
-  Stamina: 50
+  Stamina: 30.74694
   FillRate: 5
   DashUseRate: 10
   ClimbUseRate: 5

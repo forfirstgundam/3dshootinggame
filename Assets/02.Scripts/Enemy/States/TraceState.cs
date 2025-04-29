@@ -4,13 +4,15 @@ public class TraceState : IEnemyState
 {
     public void Enter(BaseEnemy enemy)
     {
-        // 플레이어 따라가기
-        enemy.EnemySetDestination(enemy.Player.transform.position);
+        
     }
 
     public void Execute(BaseEnemy enemy)
     {
         if (GameManager.Instance.GameState != GameState.Play) return;
+        // 플레이어 따라가기
+        enemy.EnemySetDestination(enemy.Player.transform.position);
+
         float distanceToPlayer = Vector3.Distance(enemy.transform.position, enemy.Player.transform.position);
         // 공격 범위만큼 가까워지면 AttackState로 전환
         if(distanceToPlayer <= enemy.Stat.AttackDistance)
