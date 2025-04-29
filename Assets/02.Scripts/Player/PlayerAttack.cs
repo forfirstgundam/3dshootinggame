@@ -16,186 +16,92 @@ public class PlayerAttack : MonoBehaviour
     public PlayerStatsSO Stat;
     public Weapon CurrentWeapon = Weapon.Gun;
 
-    public GameObject FirePosition;
-    public GameObject BombPrefab;
-    public GameObject Gun;
-    public GameObject Sword;
-    private Animator _animator;
+    public WeaponBase[] Weapons; // 0: Gun, 1: Sword, 2: Bomb
+    private int _currentWeaponIndex = 0;
+    private WeaponBase _currentWeapon;
 
-    private float _curThrowPower;
-    private float _bulletTimer;
-
-    private int _curBullet;
-    public int BombCount;
-
-    public ParticleSystem BulletEffect;
-
-    private Coroutine _loadBullet;
-    public Action OnSwing;
-
-    public GameObject UI_SniperZoom;
-    private bool _zoomMode = false;
-    public int ZoomInSize = 15;
-    public int ZoomOutSize = 60;
-
-    [SerializeField] private LineRenderer bulletLinePrefab;
-    [SerializeField] private float lineDuration = 0.05f;
-
-    private IEnumerator LoadBullet()
-    {
-        Debug.Log("loading bullet");
-        float timer = 0f;
-        MainUI.Instance.ShowLoadBar();
-
-        while(timer <= Stat.LoadTime)
-        {
-            timer += Time.deltaTime;
-            MainUI.Instance.LoadBarUpdate(timer);
-            yield return null;
-        }
-        _curBullet = Stat.MaxBullet;
-        MainUI.Instance.UpdateBulletNum(_curBullet);
-        MainUI.Instance.HideLoadBar();
-    }
-
-    private void WeaponSwitch()
+    private void HandleWeaponSwitchInput()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
+            EquipWeapon(0);
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+            EquipWeapon(1);
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+            EquipWeapon(2);
+        else if (Input.mouseScrollDelta.y != 0) // 마우스 휠
         {
-            Debug.Log("switched to gun");
-            Sword.SetActive(false);
-            CurrentWeapon = Weapon.Gun;
-        } else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            Debug.Log("switched to sword");
-            Sword.SetActive(true);
-            CurrentWeapon = Weapon.Sword;
+            int dir = (int)Mathf.Sign(Input.mouseScrollDelta.y);
+            int newIndex = (_currentWeaponIndex - dir + Weapons.Length) % Weapons.Length;
+            EquipWeapon(newIndex);
         }
     }
 
-    private void FireBullets()
+    private void EquipWeapon(int index)
     {
-        if (!EventSystem.current.IsPointerOverGameObject())
-        {
-            if (Input.GetMouseButton(0))
-            {
-                if (_bulletTimer <= 0f && _curBullet > 0)
-                {
-                    if (_loadBullet != null)
-                    {
-                        StopCoroutine(_loadBullet);
-                        _loadBullet = null;
-                        Debug.Log("stop loading");
-                        MainUI.Instance.HideLoadBar();
-                    }
-                    _animator.SetTrigger("Attack");
-                    InstantiateBullets();
-                }
-            }
-        }
-        else
-        {
-            Debug.Log("is on ui??");
-        }
+        if (_currentWeapon != null) _currentWeapon.OnUnequip();
+
+        _currentWeaponIndex = index;
+        _currentWeapon = Weapons[_currentWeaponIndex];
+        _currentWeapon.OnEquip();
     }
 
-    private void InstantiateBullets()
-    {
-        // Ray :  레이저(시작 위치, 방향)
-        // RayCast : 레이저를 발사
-        // RayCastHit: 레이저가 부딪힌 물체 저장
-        Ray ray = new Ray(FirePosition.transform.position, Camera.main.transform.forward);
-        RaycastHit hitInfo = new RaycastHit();
-        Debug.DrawRay(FirePosition.transform.position, Camera.main.transform.forward * 100f, Color.red, 1f);
-
-
-        bool isHit = Physics.Raycast(ray, out hitInfo);
-
-        if (isHit)
-        {
-            DrawLine(FirePosition.transform.position, hitInfo.point);
-            // Hit effect
-            BulletEffect.transform.position = hitInfo.point;
-            BulletEffect.transform.forward = hitInfo.normal;
-            BulletEffect.Play();
-
-            if( hitInfo.collider.TryGetComponent<IDamageable>(out IDamageable damageable))
-            {
-                Damage damage = new Damage();
-                damage.Value = 20;
-                damage.From = gameObject;
-                damage.KnockValue = 0.5f;
-                damage.KnockDir = hitInfo.point - FirePosition.transform.position;
-
-                damageable.TakeDamage(damage);
-            }
-        }
-        _curBullet--;
-        MainUI.Instance.UpdateBulletNum(_curBullet);
-        _bulletTimer = Stat.BulletCoolTime;
-        CameraEffect.Instance.ShakeCamera();
-    }
-
-    private void FireBomb()
-    {
-        if(BombCount > 0)
-        {
-            if (Input.GetMouseButton(1))
-            {
-                _curThrowPower += Time.deltaTime * 10f;
-                _curThrowPower = Mathf.Min(Stat.MaxThrowPower, _curThrowPower);
-                Debug.Log($"throw power is {_curThrowPower}");
-            }
-
-            if (Input.GetMouseButtonUp(1))
-            {
-                GameObject bomb = Pools.Instance.Create(0, FirePosition.transform.position);
-
-                Rigidbody bombRigidbody = bomb.GetComponent<Rigidbody>();
-
-                bombRigidbody.AddForce(Camera.main.transform.forward * _curThrowPower, ForceMode.Impulse);
-                bombRigidbody.AddTorque(Vector3.one);
-                BombCount--;
-                MainUI.Instance.UpdateBombNum(BombCount);
-                Debug.Log(BombCount);
-                _curThrowPower = Stat.MinThrowPower;
-            }
-            _animator.SetTrigger("ThrowBomb");
-        }
-    }
-
-    private void DrawLine(Vector3 start, Vector3 end)
-    {
-        LineRenderer line = Instantiate(bulletLinePrefab);
-        line.SetPosition(0, start);
-        line.SetPosition(1, end);
-        StartCoroutine(DisableLineAfter(line, lineDuration));
-    }
-
-    private IEnumerator DisableLineAfter(LineRenderer line, float duration)
-    {
-        yield return new WaitForSeconds(duration);
-        Destroy(line.gameObject); // 또는 풀링 시스템 사용 시 비활성화
-    }
     private void Start()
     {
-        BombCount = Stat.MaxBomb;
-        _curThrowPower = Stat.MinThrowPower;
-        _curBullet = Stat.MaxBullet;
-        _animator = GetComponentInChildren<Animator>();
+        EquipWeapon(_currentWeaponIndex);
 
-        _bulletTimer = 0f;
-
-        MainUI.Instance.UpdateBombNum(BombCount);
-        MainUI.Instance.UpdateBulletNum(_curBullet);
+        MainUI.Instance.UpdateBombNum(Stat.MaxBomb);
     }
+
+    //private void FireBomb()
+    //{
+    //    if(BombCount > 0)
+    //    {
+    //        if (Input.GetMouseButton(1))
+    //        {
+    //            _curThrowPower += Time.deltaTime * 10f;
+    //            _curThrowPower = Mathf.Min(Stat.MaxThrowPower, _curThrowPower);
+    //            Debug.Log($"throw power is {_curThrowPower}");
+    //        }
+
+    //        if (Input.GetMouseButtonUp(1))
+    //        {
+    //            GameObject bomb = Pools.Instance.Create(0, FirePosition.transform.position);
+
+    //            Rigidbody bombRigidbody = bomb.GetComponent<Rigidbody>();
+
+    //            bombRigidbody.AddForce(Camera.main.transform.forward * _curThrowPower, ForceMode.Impulse);
+    //            bombRigidbody.AddTorque(Vector3.one);
+    //            BombCount--;
+    //            MainUI.Instance.UpdateBombNum(BombCount);
+    //            Debug.Log(BombCount);
+    //            _curThrowPower = Stat.MinThrowPower;
+    //        }
+    //        CurrentAnimator.SetTrigger("ThrowBomb");
+    //    }
+    //}
+
 
     private void Update()
     {
         if (GameManager.Instance.GameState != GameState.Play) return;
-        _bulletTimer -= Time.deltaTime;
-        WeaponSwitch();
-        if(CurrentWeapon == Weapon.Gun) {
+        HandleWeaponSwitchInput();
+        if (Input.GetMouseButtonDown(0))
+        {
+            _currentWeapon.Attack();
+        }
+        if(CurrentWeapon == Weapon.Gun)
+        {
+            Gun gun = _currentWeapon.gameObject.GetComponent<Gun>();
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                gun.LoadGun();
+            }
+            else if (Input.GetMouseButtonDown(1))
+            {
+                gun.ToggleSniperMode();
+            }
+        }
+        /*if(CurrentWeapon == Weapon.Gun) {
             if (Input.GetKey(KeyCode.R) && _loadBullet == null)
             {
                 _loadBullet = StartCoroutine(LoadBullet());
@@ -224,8 +130,102 @@ public class PlayerAttack : MonoBehaviour
             {
                 OnSwing?.Invoke();
             }
-        }
-        
-        FireBomb();
+        }*/
     }
 }
+
+/*private IEnumerator LoadBullet()
+{
+    Debug.Log("loading bullet");
+    float timer = 0f;
+    MainUI.Instance.ShowLoadBar();
+
+    while (timer <= Stat.LoadTime)
+    {
+        timer += Time.deltaTime;
+        MainUI.Instance.LoadBarUpdate(timer);
+        yield return null;
+    }
+    _curBullet = Stat.MaxBullet;
+    MainUI.Instance.UpdateBulletNum(_curBullet);
+    MainUI.Instance.HideLoadBar();
+}
+
+private void WeaponSwitch()
+{
+    if (Input.GetKeyDown(KeyCode.Alpha1))
+    {
+        Debug.Log("switched to gun");
+        Sword.SetActive(false);
+        CurrentWeapon = Weapon.Gun;
+    }
+    else if (Input.GetKeyDown(KeyCode.Alpha2))
+    {
+        Debug.Log("switched to sword");
+        Sword.SetActive(true);
+        CurrentWeapon = Weapon.Sword;
+    }
+}
+
+private void FireBullets()
+{
+    if (!EventSystem.current.IsPointerOverGameObject())
+    {
+        if (Input.GetMouseButton(0))
+        {
+            if (_bulletTimer <= 0f && _curBullet > 0)
+            {
+                if (_loadBullet != null)
+                {
+                    StopCoroutine(_loadBullet);
+                    _loadBullet = null;
+                    Debug.Log("stop loading");
+                    MainUI.Instance.HideLoadBar();
+                }
+                CurrentAnimator.SetTrigger("Attack");
+                InstantiateBullets();
+            }
+        }
+    }
+    else
+    {
+        Debug.Log("is on ui??");
+    }
+}
+
+private void InstantiateBullets()
+{
+    // Ray :  레이저(시작 위치, 방향)
+    // RayCast : 레이저를 발사
+    // RayCastHit: 레이저가 부딪힌 물체 저장
+    Ray ray = new Ray(FirePosition.transform.position, Camera.main.transform.forward);
+    RaycastHit hitInfo = new RaycastHit();
+    Debug.DrawRay(FirePosition.transform.position, Camera.main.transform.forward * 100f, Color.red, 1f);
+
+
+    bool isHit = Physics.Raycast(ray, out hitInfo);
+
+    if (isHit)
+    {
+        DrawLine(FirePosition.transform.position, hitInfo.point);
+        // Hit effect
+        BulletEffect.transform.position = hitInfo.point;
+        BulletEffect.transform.forward = hitInfo.normal;
+        BulletEffect.Play();
+
+        if (hitInfo.collider.TryGetComponent<IDamageable>(out IDamageable damageable))
+        {
+            Damage damage = new Damage();
+            damage.Value = 20;
+            damage.From = gameObject;
+            damage.KnockValue = 0.5f;
+            damage.KnockDir = hitInfo.point - FirePosition.transform.position;
+
+            damageable.TakeDamage(damage);
+        }
+    }
+    _curBullet--;
+    MainUI.Instance.UpdateBulletNum(_curBullet);
+    _bulletTimer = Stat.BulletCoolTime;
+    CameraEffect.Instance.ShakeCamera();
+}*/

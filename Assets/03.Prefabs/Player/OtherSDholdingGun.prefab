@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4782462662317488930}
   m_Layer: 6
-  m_Name: FirePoint
+  m_Name: FirePosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -834,10 +834,40 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6717569439957396241, guid: fdf678a7193c58346a367114b3da57ac, type: 3}
       insertIndex: -1
       addedObject: {fileID: 203849730658338469}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1231873419245186938, guid: fdf678a7193c58346a367114b3da57ac, type: 3}
+      insertIndex: 2
+      addedObject: {fileID: 718919734624346130}
   m_SourcePrefab: {fileID: 100100000, guid: fdf678a7193c58346a367114b3da57ac, type: 3}
 --- !u!4 &3818621827289328558 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6717569439957396241, guid: fdf678a7193c58346a367114b3da57ac, type: 3}
   m_PrefabInstance: {fileID: 7622308841023865023}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8709855956832808901 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1231873419245186938, guid: fdf678a7193c58346a367114b3da57ac, type: 3}
+  m_PrefabInstance: {fileID: 7622308841023865023}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &718919734624346130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8709855956832808901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b123ef4f283b1d4685de7a985025eb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Stat: {fileID: 11400000, guid: 75766ed7c7bd19c4aa54d736c88039a3, type: 2}
+  FirePosition: {fileID: 431481512244719736}
+  GunSD: {fileID: 0}
+  GunModel: {fileID: 0}
+  BulletEffect: {fileID: 0}
+  UI_SniperZoom: {fileID: 0}
+  ZoomInSize: 15
+  ZoomOutSize: 60
+  bulletLinePrefab: {fileID: 8507503902477646425, guid: c53bde298efdd76469416a161b0608f1, type: 3}
+  lineDuration: 0.05
