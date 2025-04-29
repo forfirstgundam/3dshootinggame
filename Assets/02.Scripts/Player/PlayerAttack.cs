@@ -7,7 +7,8 @@ using System;
 public enum Weapon
 {
     Gun,
-    Stick,
+    Sword,
+    Bomb,
 }
 
 public class PlayerAttack : MonoBehaviour
@@ -17,7 +18,8 @@ public class PlayerAttack : MonoBehaviour
 
     public GameObject FirePosition;
     public GameObject BombPrefab;
-    public GameObject Stick;
+    public GameObject Gun;
+    public GameObject Sword;
     private Animator _animator;
 
     private float _curThrowPower;
@@ -30,6 +32,11 @@ public class PlayerAttack : MonoBehaviour
 
     private Coroutine _loadBullet;
     public Action OnSwing;
+
+    public GameObject UI_SniperZoom;
+    private bool _zoomMode = false;
+    public int ZoomInSize = 15;
+    public int ZoomOutSize = 60;
 
     [SerializeField] private LineRenderer bulletLinePrefab;
     [SerializeField] private float lineDuration = 0.05f;
@@ -56,13 +63,13 @@ public class PlayerAttack : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             Debug.Log("switched to gun");
-            Stick.SetActive(false);
+            Sword.SetActive(false);
             CurrentWeapon = Weapon.Gun;
         } else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            Debug.Log("switched to stick");
-            Stick.SetActive(true);
-            CurrentWeapon = Weapon.Stick;
+            Debug.Log("switched to sword");
+            Sword.SetActive(true);
+            CurrentWeapon = Weapon.Sword;
         }
     }
 
@@ -193,14 +200,32 @@ public class PlayerAttack : MonoBehaviour
             {
                 _loadBullet = StartCoroutine(LoadBullet());
             }
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                _zoomMode = !_zoomMode;
+
+                if (_zoomMode)
+                {
+                    UI_SniperZoom.SetActive(true);
+                    Camera.main.fieldOfView = ZoomInSize;
+                }
+                else
+                {
+                    UI_SniperZoom.SetActive(false);
+                    Camera.main.fieldOfView = ZoomOutSize;
+                }
+            }
+
             FireBullets();
-        } else if(CurrentWeapon == Weapon.Stick)
+        } else if(CurrentWeapon == Weapon.Sword)
         {
             if (Input.GetMouseButtonDown(0))
             {
                 OnSwing?.Invoke();
             }
         }
+        
         FireBomb();
     }
 }

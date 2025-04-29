@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Stick : MonoBehaviour
+public class Sword : MonoBehaviour
 {
     public int SwingDamage = 20;
     public float SwingRange = 2f;

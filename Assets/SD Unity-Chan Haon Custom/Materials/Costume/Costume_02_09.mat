@@ -13,7 +13,10 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _EMISSIVE_SIMPLE
+  - _IS_ANGELRING_OFF
+  - _IS_TRANSCLIPPING_OFF
   - _OUTLINE_NML
+  - _SHADINGGRADEMAP
   m_InvalidKeywords:
   - _
   - _INVERSE_Z_AXIS_BLD_ON
@@ -33,8 +36,10 @@ Material:
   m_LightmapFlags: 5
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
+  m_CustomRenderQueue: 2000
+  stringTagMap:
+    IgnoreProjection: False
+    RenderType: Opaque
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
@@ -97,7 +102,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: e31de51fa89c97945bbf6c1d1853bd44, type: 3}
+        m_Texture: {fileID: 2800000, guid: 8c6b84bd6176b124fa1db4c4e8bc509b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MatCap_Sampler:
@@ -162,7 +167,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _1st2nd_Shades_Feather: 0.0001
+    - _1st2nd_Shades_Feather: 0.427
     - _1st_ShadeColor_Feather: 0.341
     - _1st_ShadeColor_Step: 0.5
     - _2nd_ShadeColor_Feather: 0.427
@@ -176,7 +181,7 @@ Material:
     - _Ap_RimLight_Power: 0.1
     - _AutoRenderQueue: 1
     - _BaseColor_Step: 0.5
-    - _BaseShade_Feather: 0.0001
+    - _BaseShade_Feather: 0.341
     - _Base_Speed: 0
     - _BlurLevelMatcap: 0
     - _BlurLevelSGM: 0
@@ -252,10 +257,10 @@ Material:
     - _Scroll_EmissiveU: 0
     - _Scroll_EmissiveV: 0
     - _Set_SystemShadowsToBase: 1
-    - _ShadeColor_Step: 0
+    - _ShadeColor_Step: 0.217
     - _Smoothness: 0.5
     - _SrcBlend: 1
-    - _StencilComp: 8
+    - _StencilComp: 0
     - _StencilMode: 0
     - _StencilNo: 1
     - _StencilOpFail: 0
@@ -291,7 +296,7 @@ Material:
     - _AngelRing_Color: {r: 1, g: 1, b: 1, a: 1}
     - _Ap_RimLightColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.7647059, g: 0.7647059, b: 0.7647059, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _ColorShift: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Emissive_Color: {r: 0, g: 0, b: 0, a: 1}
