@@ -10,10 +10,11 @@ public enum Weapon
     Sword,
     Bomb,
 }
-
 public class PlayerAttack : MonoBehaviour
 {
     public PlayerStatsSO Stat;
+    public Player Player;
+
     public Weapon CurrentWeapon = Weapon.Gun;
 
     public WeaponBase[] Weapons; // 0: Gun, 1: Sword, 2: Bomb
@@ -48,8 +49,9 @@ public class PlayerAttack : MonoBehaviour
     private void Start()
     {
         EquipWeapon(_currentWeaponIndex);
+        Player = GetComponent<Player>();
 
-        MainUI.Instance.UpdateBombNum(Stat.MaxBomb);
+        MainUI.Instance.UpdateBombNum(3);
     }
 
     //private void FireBomb()

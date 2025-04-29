@@ -22,7 +22,6 @@ public class PlayerMove : MonoBehaviour
 
     // Component references
     private CharacterController _characterController;
-    private Animator _animator;
     private Camera mainCamera;
 
     // Movement state
@@ -36,7 +35,6 @@ public class PlayerMove : MonoBehaviour
         _characterController = GetComponent<CharacterController>();
         mainCamera = Camera.main;
         _availableJumps = _maxJumpCount;
-        _animator = GetComponentInChildren<Animator>();
     }
 
     private void Update()
@@ -85,7 +83,7 @@ public class PlayerMove : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(horizontal, 0, vertical);
-        _animator.SetFloat("MoveValue", direction.magnitude);
+        Player.Instance.CurrentAnimator.SetFloat("MoveValue", direction.magnitude);
 
         direction = direction.normalized;
 
@@ -130,7 +128,7 @@ public class PlayerMove : MonoBehaviour
     {
         _verticalVelocity = _jumpPower;
         _availableJumps--;
-        _animator.SetTrigger("Jump");
+        Player.Instance.CurrentAnimator.SetTrigger("Jump");
     }
 
     private IEnumerator Roll(Vector3 direction)

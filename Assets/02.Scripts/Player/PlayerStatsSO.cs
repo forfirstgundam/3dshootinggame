@@ -12,15 +12,4 @@ public class PlayerStatsSO : ScriptableObject
     public float ClimbUseRate = 5f;
 
     public float RollUsage = 20f;
-
-    public int MaxBomb = 3;
-
-    public float MinThrowPower = 15f;
-    public float MaxThrowPower = 30f;
-
-    public float ThrowPowerRate = 10f;
-    public float BulletCoolTime = 0.1f;
-    public float LoadTime = 2f;
-
-    public int MaxBullet = 50;
 }

@@ -3,16 +3,19 @@ using UnityEngine;
 
 public class Player : MonoBehaviour, IDamageable
 {
+    public static Player Instance;
+
     public PlayerStatsSO Stat;
     public int Health;
     public Action<int> OnPlayerHit;
     public Action OnPlayerDeath;
-    private Animator _animator;
+    public Animator CurrentAnimator;
 
     private void Awake()
     {
+        Instance = this;
         Health = Stat.MaxHealth;
-        _animator = GetComponentInChildren<Animator>();
+        CurrentAnimator = GetComponentInChildren<Animator>();
     }
 
     public void TakeDamage(Damage damage)
@@ -20,8 +23,8 @@ public class Player : MonoBehaviour, IDamageable
         Health -= damage.Value;
         OnPlayerHit?.Invoke(Health);
         float weight = (float)Health / (float)Stat.MaxHealth;
-        int injuredLayerIndex = _animator.GetLayerIndex("Injured Layer");
-        _animator.SetLayerWeight(injuredLayerIndex, 1f - weight);
+        int injuredLayerIndex = CurrentAnimator.GetLayerIndex("Injured Layer");
+        CurrentAnimator.SetLayerWeight(injuredLayerIndex, 1f - weight);
 
         if (Health <= 0)
         {

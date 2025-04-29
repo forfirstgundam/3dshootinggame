@@ -33,7 +33,7 @@ public class CameraEffect : MonoBehaviour
             //  Perlin Noise를 사용한 부드러운 흔들림
             float x = (Mathf.PerlinNoise(Time.time * 10, 0) - 0.5f) * _vibrateMagnitude;
             float y = (Mathf.PerlinNoise(0, Time.time * 10) - 0.5f) * _vibrateMagnitude;
-            float z = (Mathf.PerlinNoise(0, Time.time * 10) - 0.5f) * _vibrateMagnitude;
+            float z = (Mathf.PerlinNoise(0, Time.time * 10)) * _vibrateMagnitude;
 
             transform.localPosition = _originalPos + new Vector3(x, y, z);
 

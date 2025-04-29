@@ -488,6 +488,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Stats: {fileID: 11400000, guid: 75766ed7c7bd19c4aa54d736c88039a3, type: 2}
+  WeaponStats: {fileID: 11400000, guid: 8fc509f125bae774a9d8b42caf706101, type: 2}
   StaminaBar: {fileID: 1161222351}
   LoadBulletBar: {fileID: 630776472}
   HealthBar: {fileID: 1542557130}
@@ -1057,7 +1058,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Targets:
-  - {x: 0, y: 1.1, z: 0.5}
+  - {x: 0, y: 1.1, z: 0.7}
   - {x: 0, y: 1.5, z: -3}
   - {x: 0, y: 6, z: -8}
   Player: {fileID: 0}
@@ -1424,9 +1425,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Stat: {fileID: 11400000, guid: 75766ed7c7bd19c4aa54d736c88039a3, type: 2}
+  Player: {fileID: 0}
   CurrentWeapon: 0
   Weapons:
   - {fileID: 1138324818}
+  - {fileID: 2802464664022945871}
 --- !u!114 &399267597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1441,6 +1444,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Stat: {fileID: 11400000, guid: 75766ed7c7bd19c4aa54d736c88039a3, type: 2}
   Health: 0
+  CurrentAnimator: {fileID: 0}
 --- !u!1 &403257464
 GameObject:
   m_ObjectHideFlags: 0
@@ -7278,10 +7282,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 399267592}
     m_Modifications:
-    - target: {fileID: 479224961697867584, guid: 41d99fa948be34a489109f6ce832c7fc, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 5e050102261c18742a3a0407acbed7b2, type: 2}
     - target: {fileID: 2508261159892892261, guid: 41d99fa948be34a489109f6ce832c7fc, type: 3}
       propertyPath: m_RootBone
       value: 
@@ -7404,6 +7404,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5784486988761382202, guid: 41d99fa948be34a489109f6ce832c7fc, type: 3}
   m_PrefabInstance: {fileID: 2802464664022945869}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2802464664022945871 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5530228562169771176, guid: 41d99fa948be34a489109f6ce832c7fc, type: 3}
+  m_PrefabInstance: {fileID: 2802464664022945869}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16e9ab225cc40cb4a8fed4df9164fc7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4806155807429145280
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7412,6 +7423,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 399267592}
     m_Modifications:
+    - target: {fileID: 319935087768344187, guid: d9448af9342c19841be6e69d90c2c834, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 718919734624346130, guid: d9448af9342c19841be6e69d90c2c834, type: 3}
+      propertyPath: Stat
+      value: 
+      objectReference: {fileID: 11400000, guid: 8fc509f125bae774a9d8b42caf706101, type: 2}
     - target: {fileID: 718919734624346130, guid: d9448af9342c19841be6e69d90c2c834, type: 3}
       propertyPath: GunSD
       value: 
@@ -7428,6 +7447,14 @@ PrefabInstance:
       propertyPath: UI_SniperZoom
       value: 
       objectReference: {fileID: 1464321794}
+    - target: {fileID: 2847450769112021321, guid: d9448af9342c19841be6e69d90c2c834, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3808940130687110955, guid: d9448af9342c19841be6e69d90c2c834, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5657864736801299926, guid: d9448af9342c19841be6e69d90c2c834, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -7468,9 +7495,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6071122197575183145, guid: d9448af9342c19841be6e69d90c2c834, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8709855956832808901, guid: d9448af9342c19841be6e69d90c2c834, type: 3}
       propertyPath: m_Name
       value: HoldingGun
+      objectReference: {fileID: 0}
+    - target: {fileID: 8709855956832808901, guid: d9448af9342c19841be6e69d90c2c834, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -7,6 +7,7 @@ public class MainUI : MonoBehaviour
 {
     public static MainUI Instance;
     public PlayerStatsSO Stats;
+    public WeaponStatsSO WeaponStats;
 
     public Slider StaminaBar;
     public Slider LoadBulletBar;
@@ -34,12 +35,12 @@ public class MainUI : MonoBehaviour
 
     public void UpdateBombNum(int num)
     {
-        BombNumber.text = $"ÆøÅº : {num} / {Stats.MaxBomb}";
+        BombNumber.text = $"ÆøÅº : {num} / {WeaponStats.MaxBomb}";
     }
 
     public void UpdateBulletNum(int num)
     {
-        BulletNumber.text = $"ÃÑ¾Ë : {num} / {Stats.MaxBullet}";
+        BulletNumber.text = $"ÃÑ¾Ë : {num} / {WeaponStats.MaxBullet}";
     }
 
     public void ShowLoadBar()
@@ -59,7 +60,7 @@ public class MainUI : MonoBehaviour
 
     public void LoadBarUpdate(float progress)
     {
-        LoadBulletBar.value = (progress / Stats.LoadTime);
+        LoadBulletBar.value = (progress / WeaponStats.LoadTime);
     }
 
     public void OnMapPlus()

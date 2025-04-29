@@ -4,8 +4,7 @@ using System.Collections;
 
 public class Gun : WeaponBase
 {
-    public PlayerStatsSO Stat;
-    private Animator _animator;
+    public WeaponStatsSO Stat;
 
     public GameObject FirePosition;
     public GameObject GunModel;
@@ -25,7 +24,7 @@ public class Gun : WeaponBase
 
     private void Start()
     {
-        _animator = GetComponent<Animator>();
+        Player.Instance.CurrentAnimator = GetComponent<Animator>();
         _bulletTimer = 0f;
         _curBullet = Stat.MaxBullet;
 
@@ -52,7 +51,7 @@ public class Gun : WeaponBase
                         Debug.Log("stop loading");
                         MainUI.Instance.HideLoadBar();
                     }
-                    _animator.SetTrigger("Attack");
+                    Player.Instance.CurrentAnimator.SetTrigger("Attack");
                     InstantiateBullets();
                 }
             }
@@ -98,8 +97,6 @@ public class Gun : WeaponBase
         _curBullet = Stat.MaxBullet;
         MainUI.Instance.UpdateBulletNum(_curBullet);
         MainUI.Instance.HideLoadBar();
-
-        yield return null;
     }
 
     private void InstantiateBullets()
@@ -125,9 +122,9 @@ public class Gun : WeaponBase
             if (hitInfo.collider.TryGetComponent<IDamageable>(out IDamageable damageable))
             {
                 Damage damage = new Damage();
-                damage.Value = 20;
+                damage.Value = Stat.DamageValue;
                 damage.From = gameObject;
-                damage.KnockValue = 0.5f;
+                damage.KnockValue = Stat.KnockValue;
                 damage.KnockDir = hitInfo.point - FirePosition.transform.position;
 
                 damageable.TakeDamage(damage);
