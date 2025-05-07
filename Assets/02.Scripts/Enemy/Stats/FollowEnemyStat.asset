@@ -15,7 +15,7 @@ MonoBehaviour:
   MoveSpeed: 5
   FindDistance: Infinity
   ReturnDistance: Infinity
-  AttackDistance: 3
+  AttackDistance: 4
   AttackCoolTime: 1
   AttackDamage: 10
   AttackKnockValue: 0.5
