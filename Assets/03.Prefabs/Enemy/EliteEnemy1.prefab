@@ -110,8 +110,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 1.2}
-  m_SizeDelta: {x: 3, y: 0.15}
+  m_AnchoredPosition: {x: 0, y: 2}
+  m_SizeDelta: {x: 3, y: 0.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1612197287568484903
 MonoBehaviour:
@@ -200,7 +200,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 2}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &8502184673561791635
@@ -299,7 +299,7 @@ RectTransform:
   m_Father: {fileID: 6966251557563179522}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -587,21 +587,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4297330957366262272}
     m_Modifications:
+    - target: {fileID: 799248119263168446, guid: 29f170c4df6377d43bd624ccd31d37eb, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: b843e5e8a4baea64e9936aac2db1308a, type: 2}
     - target: {fileID: 6250015063484729214, guid: 29f170c4df6377d43bd624ccd31d37eb, type: 3}
       propertyPath: m_Name
       value: prf_Mimic-Chest1
       objectReference: {fileID: 0}
     - target: {fileID: 6770972075653422532, guid: 29f170c4df6377d43bd624ccd31d37eb, type: 3}
       propertyPath: m_LocalScale.x
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6770972075653422532, guid: 29f170c4df6377d43bd624ccd31d37eb, type: 3}
       propertyPath: m_LocalScale.y
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6770972075653422532, guid: 29f170c4df6377d43bd624ccd31d37eb, type: 3}
       propertyPath: m_LocalScale.z
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6770972075653422532, guid: 29f170c4df6377d43bd624ccd31d37eb, type: 3}
       propertyPath: m_LocalPosition.x

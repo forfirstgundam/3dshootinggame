@@ -18,6 +18,7 @@ public class MimicIdleState : IEnemyState
     public void Exit(BaseEnemy enemy)
     {
         MimicEnemy mimic = enemy.gameObject.GetComponent<MimicEnemy>();
+        enemy.Animator.SetTrigger("Uncovered");
         mimic.Canvas.SetActive(true);
     }
 }

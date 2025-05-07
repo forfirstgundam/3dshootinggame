@@ -12,6 +12,11 @@ public class Coin : MonoBehaviour
 
     private bool _isPulled = false;
 
+    private void OnEnable()
+    {
+        _isPulled = false;
+    }
+
     private void GoToPlayer()
     {
         transform.DOMove(Player.Instance.transform.position, 0.4f)
