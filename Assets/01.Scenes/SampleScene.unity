@@ -1431,6 +1431,7 @@ MonoBehaviour:
   Weapons:
   - {fileID: 1138324818}
   - {fileID: 2802464664022945871}
+  - {fileID: 1913293926}
 --- !u!114 &399267597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2766,37 +2767,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 704050468}
   m_CullTransparentMesh: 1
---- !u!1 &706122728
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 706122729}
-  m_Layer: 0
-  m_Name: ObstaclePlace1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &706122729
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 706122728}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6, y: 36, z: 32}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &743643823
 GameObject:
   m_ObjectHideFlags: 0
@@ -6439,6 +6409,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1801080628}
   m_CullTransparentMesh: 1
+--- !u!114 &1913293926 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7969670038612338014, guid: 4a7b2cb38497914428d6f78c2e3dc69b, type: 3}
+  m_PrefabInstance: {fileID: 7933928388761169948}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7726d3e4b18fb1c42b9fb25027ff08f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1913499593
 GameObject:
   m_ObjectHideFlags: 0
@@ -7185,37 +7166,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &2132777163
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2132777164}
-  m_Layer: 0
-  m_Name: ObstaclePlace2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2132777164
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2132777163}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6, y: 1, z: 32}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &352517770145713380
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7516,7 +7466,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8709855956832808901, guid: d9448af9342c19841be6e69d90c2c834, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7644,6 +7594,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: HoldingBomb
       objectReference: {fileID: 0}
+    - target: {fileID: 7302593982176165836, guid: 4a7b2cb38497914428d6f78c2e3dc69b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7969670038612338014, guid: 4a7b2cb38497914428d6f78c2e3dc69b, type: 3}
+      propertyPath: Stat
+      value: 
+      objectReference: {fileID: 11400000, guid: d46e5ecc55d258141af644c85f5f6e26, type: 2}
     - target: {fileID: 7969670038612338014, guid: 4a7b2cb38497914428d6f78c2e3dc69b, type: 3}
       propertyPath: FirePosition
       value: 
@@ -7666,8 +7624,6 @@ SceneRoots:
   - {fileID: 269473489}
   - {fileID: 126941134}
   - {fileID: 352517770145713380}
-  - {fileID: 706122729}
-  - {fileID: 2132777164}
   - {fileID: 511196585}
   - {fileID: 7851845336318348100}
   - {fileID: 272299717}

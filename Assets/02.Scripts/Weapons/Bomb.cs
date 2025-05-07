@@ -29,16 +29,24 @@ public class Bomb : WeaponBase
 
     public override void Attack()
     {
-        if (Input.GetMouseButton(0))
-        {
-            _curThrowPower += Time.deltaTime * 10f;
-            _curThrowPower = Mathf.Min(Stat.MaxThrowPower, _curThrowPower);
-            Debug.Log($"throw power is {_curThrowPower}");
-        }
+        
+    }
 
-        if (Input.GetMouseButtonUp(0))
+    private void Update()
+    {
+        if(BombCount >= 0)
         {
-            ThrowBomb();
+            if (Input.GetMouseButton(0))
+            {
+                _curThrowPower += Time.deltaTime * 10f;
+                _curThrowPower = Mathf.Min(Stat.MaxThrowPower, _curThrowPower);
+                Debug.Log($"throw power is {_curThrowPower}");
+            }
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                ThrowBomb();
+            }
         }
     }
 
@@ -58,12 +66,6 @@ public class Bomb : WeaponBase
         Player.Instance.CurrentAnimator.SetTrigger("Throw");
     }
 
-    public override void OnEquip()
-    {
-
-    }
-    public override void OnUnequip()
-    {
-
-    }
+    public override void OnEquip() => gameObject.SetActive(true);
+    public override void OnUnequip() => gameObject.SetActive(false);
 }

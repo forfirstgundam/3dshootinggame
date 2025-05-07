@@ -10,6 +10,8 @@ public class ThrownBomb : MonoBehaviour
         GameObject effectObject = Instantiate(ExplosionEffectPrefab);
         effectObject.transform.position = transform.position;
 
+        CameraEffect.Instance.ShakeCamera(0.3f, 2f);
+
         gameObject.SetActive(false);
     }
 }
