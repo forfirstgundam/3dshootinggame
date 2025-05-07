@@ -628,9 +628,6 @@ PrefabInstance:
       addedObject: {fileID: 3893696296936203807}
     - targetCorrespondingSourceObject: {fileID: 1725824020687250106, guid: ed64c1ea3e3ea9147bb81ea8808a52c6, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4635014775393660187}
-    - targetCorrespondingSourceObject: {fileID: 1725824020687250106, guid: ed64c1ea3e3ea9147bb81ea8808a52c6, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 2080085925401176805}
   m_SourcePrefab: {fileID: 100100000, guid: ed64c1ea3e3ea9147bb81ea8808a52c6, type: 3}
 --- !u!1 &3524347154055995578 stripped
@@ -725,22 +722,6 @@ MonoBehaviour:
   CurPatrolPos: 0
   Player: {fileID: 0}
   Canvas: {fileID: 5234383959665688630}
---- !u!114 &4635014775393660187
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3524347154055995578}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e682bd65fb4f8624793b43cbc199e851, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HealthBar: {fileID: 1612197287568484903}
-  MaxHealth: 0
-  Canvas: {fileID: 5234383959665688630}
-  Stat: {fileID: 11400000, guid: a96269e5e423b094c95eeef58b9a9118, type: 2}
 --- !u!114 &2080085925401176805
 MonoBehaviour:
   m_ObjectHideFlags: 0

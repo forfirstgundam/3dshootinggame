@@ -13,6 +13,17 @@ public class AttackState : IEnemyState
     public void Execute(BaseEnemy enemy)
     {
         if (GameManager.Instance.GameState != GameState.Play) return;
+
+        // ChargeEnemy가 2번 공격했을 경우
+        if (enemy.TryGetComponent<ChargeEnemy>(out ChargeEnemy charger))
+        {
+            if(charger.AttackCount >= 2)
+            {
+                charger.AttackCount = 0;
+                enemy.ChangeEnemyState(new ChargeState());
+            }
+        }
+
         _attackTimer += Time.deltaTime;
         Damage damage = new Damage();
         damage.Value = enemy.Stat.AttackDamage;
@@ -24,6 +35,13 @@ public class AttackState : IEnemyState
         {
             Debug.Log("적이 공격했습니다!");
             enemy.Animator.SetTrigger("AttackDelayToAttack");
+
+            // ChargeEnemy의 경우 2번 공격 후 Charge공격
+            if(charger != null)
+            {
+                charger.AttackCount++;
+            }
+
             IDamageable player = enemy.Player.GetComponent<IDamageable>();
             damage.KnockDir = (enemy.Player.transform.position - enemy.transform.position).normalized;
 
