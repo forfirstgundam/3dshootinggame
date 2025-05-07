@@ -18,7 +18,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable
 
     public int CurPatrolPos;
 
-    public GameObject Player;
+    public GameObject PlayerGameObject;
 
     protected Coroutine _beingHit;
     protected Coroutine _isFlashing;

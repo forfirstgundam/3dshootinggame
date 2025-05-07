@@ -29,7 +29,7 @@ public class PatrolState : IEnemyState
         }
 
         // Player가 가까워질 경우 TraceState로 전환
-        float distanceToPlayer = Vector3.Distance(enemy.transform.position, enemy.Player.transform.position);
+        float distanceToPlayer = Vector3.Distance(enemy.transform.position, enemy.PlayerGameObject.transform.position);
         if (distanceToPlayer < enemy.Stat.FindDistance)
         {
             Debug.Log("상태 변화 : Patrol -> Trace");

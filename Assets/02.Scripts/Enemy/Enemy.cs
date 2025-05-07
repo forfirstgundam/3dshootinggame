@@ -10,7 +10,7 @@ public class Enemy : BaseEnemy
 {
     private void Awake()
     {
-        Player = GameObject.FindGameObjectWithTag("Player");
+        PlayerGameObject = GameObject.FindGameObjectWithTag("Player");
         _characterController = GetComponent<CharacterController>();
         _agent = GetComponent<NavMeshAgent>();
         _returnPosition = transform.position;

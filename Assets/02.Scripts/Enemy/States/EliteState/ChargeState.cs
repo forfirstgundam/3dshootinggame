@@ -7,8 +7,6 @@ public class ChargeState : IEnemyState
     private Vector3 _chargePosition;
     private Coroutine _isPreparing;
 
-    private bool _canCharge = false;
-
     public void Enter(BaseEnemy enemy)
     {
         _charger = enemy.gameObject.GetComponent<ChargeEnemy>();
@@ -19,16 +17,17 @@ public class ChargeState : IEnemyState
     {
         if (GameManager.Instance.GameState != GameState.Play) return;
 
-        if (_canCharge)
+        if (_charger.CanCharge)
         {
             float distanceToCharge = Vector3.Distance(enemy.transform.position, _chargePosition);
             if (distanceToCharge <= 0.5f)
             {
-                // 플레이어와 충돌했을 경우 대미지를 주고 밀어냄
+                // 플레이어와 충돌했을 경우 대미지를 주고 밀어냄 - chargeenemy에서
 
                 // TraceState로 전환
                 enemy.ChangeEnemyState(new TraceState());
             }
+
             enemy.EnemySetDestination(_chargePosition);
         }
 
@@ -49,6 +48,6 @@ public class ChargeState : IEnemyState
     {
         yield return new WaitForSeconds(2f);
         _chargePosition = Player.Instance.transform.position;
-        _canCharge = true;
+        _charger.CanCharge = true;
     }
 }

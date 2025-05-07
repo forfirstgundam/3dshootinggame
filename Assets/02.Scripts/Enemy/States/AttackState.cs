@@ -42,8 +42,8 @@ public class AttackState : IEnemyState
                 charger.AttackCount++;
             }
 
-            IDamageable player = enemy.Player.GetComponent<IDamageable>();
-            damage.KnockDir = (enemy.Player.transform.position - enemy.transform.position).normalized;
+            IDamageable player = enemy.PlayerGameObject.GetComponent<IDamageable>();
+            damage.KnockDir = (enemy.PlayerGameObject.transform.position - enemy.transform.position).normalized;
 
             player.TakeDamage(damage);
 
@@ -51,7 +51,7 @@ public class AttackState : IEnemyState
         }
 
         // 공격범위보다 멀어질 경우 TraceState로 전환
-        float distanceToPlayer = Vector3.Distance(enemy.transform.position, enemy.Player.transform.position);
+        float distanceToPlayer = Vector3.Distance(enemy.transform.position, enemy.PlayerGameObject.transform.position);
         if (distanceToPlayer > enemy.Stat.AttackDistance)
         {
             Debug.Log("상태 변화 : Attack -> Trace");

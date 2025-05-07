@@ -11,9 +11,9 @@ public class TraceState : IEnemyState
     {
         if (GameManager.Instance.GameState != GameState.Play) return;
         // 플레이어 따라가기
-        enemy.EnemySetDestination(enemy.Player.transform.position);
+        enemy.EnemySetDestination(enemy.PlayerGameObject.transform.position);
 
-        float distanceToPlayer = Vector3.Distance(enemy.transform.position, enemy.Player.transform.position);
+        float distanceToPlayer = Vector3.Distance(enemy.transform.position, enemy.PlayerGameObject.transform.position);
         // 공격 범위만큼 가까워지면 AttackState로 전환
         if(distanceToPlayer <= enemy.Stat.AttackDistance)
         {
@@ -29,7 +29,7 @@ public class TraceState : IEnemyState
         }
 
         // 플레이어 위치를 계속 따라감
-        enemy.EnemySetDestination(enemy.Player.transform.position);
+        enemy.EnemySetDestination(enemy.PlayerGameObject.transform.position);
     }
     public void Exit(BaseEnemy enemy)
     {
