@@ -4,6 +4,7 @@ public class HitState : IEnemyState
 {
     private Damage _damage;
     private float _timer;
+    private Coroutine _isFlashing;
 
     public HitState(Damage damage)
     {

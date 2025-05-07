@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
 using System;
+using System.Collections.Generic;
 
 public class BaseEnemy : MonoBehaviour, IDamageable
 {
@@ -20,7 +21,11 @@ public class BaseEnemy : MonoBehaviour, IDamageable
     public GameObject Player;
 
     protected Coroutine _beingHit;
+    protected Coroutine _isFlashing;
     public Action<int> OnEnemyHit;
+
+    private List<Material> _flashingMats = new List<Material>();
+    private List<Color> _originalColors = new List<Color>();
 
     public void Initialize()
     {
@@ -49,22 +54,37 @@ public class BaseEnemy : MonoBehaviour, IDamageable
         _characterController.Move(direction * Time.deltaTime);
     }
 
-    public IEnumerator Hit(Vector3 dir, float knockback)
+    public IEnumerator FlashRed()
     {
-        // 일정 시간 경직
-        float _timer = 0f;
-        _agent.ResetPath();
-        while (_timer <= Stat.HitTime)
+        _flashingMats.Clear();
+        _originalColors.Clear();
+
+        foreach (var renderer in GetComponentsInChildren<SkinnedMeshRenderer>(true))
         {
-            _characterController.Move(dir * knockback * Time.deltaTime);
-            _timer += Time.deltaTime;
-            yield return null;
+            foreach (var mat in renderer.materials)
+            {
+                if (mat.HasProperty("_BaseColor"))
+                {
+                    _flashingMats.Add(mat);
+                    _originalColors.Add(mat.GetColor("_BaseColor"));
+                    mat.SetColor("_BaseColor", Color.red);
+                }
+            }
         }
 
-        // 상태 전환
-        _agent.SetDestination(Player.transform.position);
-        Debug.Log("상태전환: Hit -> Trace");
-        BacklogUI.Instance.AddLog("적이 당신을 알아챘습니다");
+        yield return ResetMaterialColors();
+    }
+
+    public IEnumerator ResetMaterialColors()
+    {
+        yield return new WaitForSeconds(Stat.HitTime);
+
+        for (int i = 0; i < _flashingMats.Count; i++)
+        {
+            _flashingMats[i].SetColor("_BaseColor", _originalColors[i]);
+        }
+
+        _isFlashing = null;
     }
 
     public void TakeDamage(Damage damage)
@@ -73,6 +93,10 @@ public class BaseEnemy : MonoBehaviour, IDamageable
         Health -= damage.Value;
         OnEnemyHit?.Invoke(Health);
         Animator.SetTrigger("Hit");
+        if(_isFlashing == null)
+        {
+            _isFlashing = StartCoroutine(FlashRed());
+        }
 
         if (Health <= 0)
         {
