@@ -1,5 +1,12 @@
 fileFormatVersion: 2
 guid: 8ee5b23764b3d8244b127179f583df9a
+AssetOrigin:
+  serializedVersion: 1
+  productId: 311173
+  packageName: Haon SD Creature Pack
+  packageVersion: 2025.0
+  assetPath: Assets/Haon SD series Pack/Creature/Animation/AnimFbx_Mimic_ChestMode.FBX
+  uploadId: 733196
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -233,7 +240,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 1
+    globalScale: 0.01
     rootMotionBoneName: _root
     hasTranslationDoF: 0
     hasExtraRoot: 0
@@ -250,10 +257,3 @@ ModelImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 311173
-  packageName: Haon SD Creature Pack
-  packageVersion: 2025.0
-  assetPath: Assets/Haon SD series Pack/Creature/Animation/AnimFbx_Mimic_ChestMode.FBX
-  uploadId: 733196

@@ -44,6 +44,7 @@ public class MainUI : MonoBehaviour
     {
         CoinAmount += num;
         CoinNumber.text = $"코인 : {CoinAmount}";
+        CoinNumber.text = $"코인 : {CoinAmount}";
     }
 
     public void UpdateBombNum(int num)

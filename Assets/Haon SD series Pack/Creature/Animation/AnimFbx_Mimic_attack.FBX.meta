@@ -1,5 +1,12 @@
 fileFormatVersion: 2
 guid: bb08c97a83fcd8c45b8c06746da41345
+AssetOrigin:
+  serializedVersion: 1
+  productId: 311173
+  packageName: Haon SD Creature Pack
+  packageVersion: 2025.0
+  assetPath: Assets/Haon SD series Pack/Creature/Animation/AnimFbx_Mimic_attack.FBX
+  uploadId: 733196
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -122,8 +129,7 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 8ee5b23764b3d8244b127179f583df9a,
-    type: 3}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 8ee5b23764b3d8244b127179f583df9a, type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
@@ -135,10 +141,3 @@ ModelImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 311173
-  packageName: Haon SD Creature Pack
-  packageVersion: 2025.0
-  assetPath: Assets/Haon SD series Pack/Creature/Animation/AnimFbx_Mimic_attack.FBX
-  uploadId: 733196

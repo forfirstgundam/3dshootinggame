@@ -19,6 +19,7 @@ Material:
   - _IS_OUTLINE_CLIPPING_NO
   - _OUTLINE_NML
   m_InvalidKeywords:
+  - _
   - _DISABLE_OUTLINE
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0

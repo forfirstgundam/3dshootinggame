@@ -200,6 +200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HealthBar: {fileID: 3373877062598706766}
   MaxHealth: 100
+  Canvas: {fileID: 3060666373851141247}
   Stat: {fileID: 11400000, guid: bbe31d6ed3447e744a2fdf45d64649e7, type: 2}
 --- !u!1 &2675578060039739651
 GameObject:
@@ -313,7 +314,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 1}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 100, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &3604503149825014807
 Canvas:
@@ -667,7 +668,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4132602640431134, guid: 26119e44fbf44b747b65d66d5e09db52, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4132602640431134, guid: 26119e44fbf44b747b65d66d5e09db52, type: 3}
       propertyPath: m_LocalRotation.x
@@ -675,7 +676,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4132602640431134, guid: 26119e44fbf44b747b65d66d5e09db52, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4132602640431134, guid: 26119e44fbf44b747b65d66d5e09db52, type: 3}
       propertyPath: m_LocalRotation.z
@@ -687,7 +688,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4132602640431134, guid: 26119e44fbf44b747b65d66d5e09db52, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4132602640431134, guid: 26119e44fbf44b747b65d66d5e09db52, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z

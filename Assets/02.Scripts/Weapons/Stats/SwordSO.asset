@@ -18,7 +18,7 @@ MonoBehaviour:
   BulletCoolTime: 0.1
   LoadTime: 2
   MaxBullet: 50
-  SwingCoolTime: 0.5
+  SwingCoolTime: 1
   SwingRange: 3
   SwingAngle: 100
   MaxBomb: 3
