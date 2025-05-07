@@ -15,6 +15,7 @@ public class MainUI : MonoBehaviour
 
     public GameObject[] WeaponIcons;
 
+    public TextMeshProUGUI CoinNumber;
     public TextMeshProUGUI BombNumber;
     public TextMeshProUGUI BulletNumber;
 
@@ -24,15 +25,25 @@ public class MainUI : MonoBehaviour
     public Button MinimapPlus;
     public Button MinimapMinus;
 
+    // 나중에 currency 등으로 분리
+    public int CoinAmount;
+
     private void Awake()
     {
         Instance = this;
+        CoinAmount = 0;
     }
 
     private void Start()
     {
         Player player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        MainUI.Instance.UpdateCoinNum(0);
         player.OnPlayerHit += UpdateHealthBar;
+    }
+    public void UpdateCoinNum(int num)
+    {
+        CoinAmount += num;
+        CoinNumber.text = $"코인 : {CoinAmount}";
     }
 
     public void UpdateBombNum(int num)
