@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Guide_White
-  m_Shader: {fileID: 4800000, guid: be891319084e9d147b09d89e80ce60e0, type: 3}
+  m_Shader: {fileID: 4800000, guid: 766736548846cdf459a9766614dcccab, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
@@ -18,6 +18,7 @@ Material:
   - _OUTLINE_NML
   - _SHADINGGRADEMAP
   m_InvalidKeywords:
+  - _
   - _INVERSE_Z_AXIS_BLD_ON
   - _IS_BLENDADDTOMATCAP_ON
   - _IS_FILTER_HICUTPOINTLIGHTCOLOR_ON
@@ -32,7 +33,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2000
   stringTagMap:
     IgnoreProjection: False
     RenderType: Opaque
@@ -503,9 +504,9 @@ Material:
     - _simpleUI: 0
     - _utsTechnique: 1
     - _utsVersion: 2.06
-    - _utsVersionX: 0
-    - _utsVersionY: 11
-    - _utsVersionZ: 0
+    - _utsVersionX: 2
+    - _utsVersionY: 5
+    - _utsVersionZ: 1
     m_Colors:
     - _1st_ShadeColor: {r: 0.6637148, g: 0.73761624, b: 0.8962264, a: 1}
     - _2nd_ShadeColor: {r: 1, g: 1, b: 1, a: 1}
@@ -537,6 +538,7 @@ Material:
     - _RimLightMaskColor: {r: 1, g: 0, b: 1, a: 1}
     - _SecondShadeMaskColor: {r: 0, g: 0, b: 1, a: 1}
     - _ShadowColor: {r: 0.5213154, g: 0.5213154, b: 0.6698113, a: 1}
+    - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _ThicknessRemap: {r: 0, g: 1, b: 0, a: 0}
     - _TransmittanceColor: {r: 1, g: 1, b: 1, a: 1}
