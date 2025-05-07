@@ -17,4 +17,6 @@ public class EnemyStatsSO : ScriptableObject
     public float DieTime = 1f;
 
     public int MaxHealth = 100;
+
+    public int DropCoins = 5;
 }
