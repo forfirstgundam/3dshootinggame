@@ -45,6 +45,7 @@ public class PlayerAttack : MonoBehaviour
         _currentWeaponIndex = index;
         _currentWeapon = Weapons[_currentWeaponIndex];
         _currentWeapon.OnEquip();
+        MainUI.Instance.SwitchWeaponIcon(index);
         CurrentWeapon = (Weapon)_currentWeaponIndex;
     }
 

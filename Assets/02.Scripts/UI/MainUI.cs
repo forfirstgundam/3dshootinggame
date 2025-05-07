@@ -13,6 +13,8 @@ public class MainUI : MonoBehaviour
     public Slider LoadBulletBar;
     public Slider HealthBar;
 
+    public GameObject[] WeaponIcons;
+
     public TextMeshProUGUI BombNumber;
     public TextMeshProUGUI BulletNumber;
 
@@ -83,6 +85,16 @@ public class MainUI : MonoBehaviour
             StopCoroutine(GlitchOn);
             GlitchOn = StartCoroutine(Glitching());
         }
+    }
+
+    public void SwitchWeaponIcon(int index)
+    {
+        foreach(GameObject icon in WeaponIcons)
+        {
+            icon.SetActive(false);
+        }
+
+        WeaponIcons[index].SetActive(true);
     }
 
     private IEnumerator Glitching()
