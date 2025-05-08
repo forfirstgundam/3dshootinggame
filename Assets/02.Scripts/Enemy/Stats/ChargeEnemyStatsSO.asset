@@ -16,7 +16,7 @@ MonoBehaviour:
   FindDistance: 15
   ReturnDistance: Infinity
   AttackDistance: 7
-  AttackCoolTime: 3
+  AttackCoolTime: 2
   AttackDamage: 50
   AttackKnockValue: 2
   IdleTime: Infinity

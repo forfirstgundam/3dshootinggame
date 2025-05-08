@@ -7,7 +7,8 @@ public enum GameState
 {
     Ready,
     Play,
-    GameOver
+    GameOver,
+    Pause
 }
 
 public class GameManager : MonoBehaviour
@@ -23,6 +24,7 @@ public class GameManager : MonoBehaviour
     public Slider ReadySlider;
     public TextMeshProUGUI PlayText;
     public GameObject GameOverUI;
+    public GameObject PopupUI;
 
     private void Awake()
     {
@@ -30,6 +32,14 @@ public class GameManager : MonoBehaviour
         ReadyState = StartCoroutine(Ready());
         Player player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         player.OnPlayerDeath += CallGameOver;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Pause();
+        }
     }
 
     public IEnumerator Ready()
@@ -71,5 +81,22 @@ public class GameManager : MonoBehaviour
     public void CallGameOver()
     {
         StartCoroutine(GameOver());
+    }
+
+    public void Pause()
+    {
+        // 1. 게임 상태를 Pause로 바꿈
+        if(GameState != GameState.Pause)
+        {
+            GameState = GameState.Pause;
+            Time.timeScale = 0f;
+            PopupUI.SetActive(true);
+        }
+        else if (GameState == GameState.Pause)
+        {
+            GameState = GameState.Play;
+            Time.timeScale = 1f;
+            PopupUI.SetActive(false);
+        }
     }
 }
