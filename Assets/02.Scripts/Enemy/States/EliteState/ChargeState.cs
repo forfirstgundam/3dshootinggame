@@ -17,20 +17,24 @@ public class ChargeState : IEnemyState
     {
         if (GameManager.Instance.GameState != GameState.Play) return;
 
+
         if (_charger.CanCharge)
         {
             float distanceToCharge = Vector3.Distance(enemy.transform.position, _chargePosition);
-            if (distanceToCharge <= 0.5f)
+            if (distanceToCharge <= 1f)
             {
                 // 플레이어와 충돌했을 경우 대미지를 주고 밀어냄 - chargeenemy에서
 
                 // TraceState로 전환
+                _charger.CanCharge = false;
+                Debug.Log("상태 변화 : Charge -> Attack");
                 enemy.ChangeEnemyState(new TraceState());
             }
-
             enemy.EnemySetDestination(_chargePosition);
+            return;
         }
 
+        enemy.transform.LookAt(Player.Instance.transform);
         enemy.EnemyResetPath();
         
         if(_isPreparing == null)
@@ -46,7 +50,8 @@ public class ChargeState : IEnemyState
 
     private IEnumerator SaveUpForCharge()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(5f);
+        Debug.Log("Saved up for charge");
         _chargePosition = Player.Instance.transform.position;
         _charger.CanCharge = true;
     }

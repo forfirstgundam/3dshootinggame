@@ -111,7 +111,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 2}
-  m_SizeDelta: {x: 3, y: 0.3}
+  m_SizeDelta: {x: 3, y: 0.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2718468965986467038
 MonoBehaviour:
@@ -199,7 +199,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 2}
-  m_SizeDelta: {x: 3, y: 0.3}
+  m_SizeDelta: {x: 3, y: 0.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &9024765580151896976
 MonoBehaviour:
@@ -309,7 +309,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.4
+  m_Radius: 2.3
   m_Height: 5
   m_Direction: 1
   m_Center: {x: 0, y: 2, z: 0}
@@ -396,7 +396,9 @@ MonoBehaviour:
   PatrolPositions: []
   Animator: {fileID: 0}
   CurPatrolPos: 0
-  Player: {fileID: 0}
+  PlayerGameObject: {fileID: 0}
+  AttackCount: 0
+  CanCharge: 0
 --- !u!1 &5062003506382408667
 GameObject:
   m_ObjectHideFlags: 0
@@ -434,7 +436,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 3}
+  m_AnchoredPosition: {x: 0, y: 4}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1965110139721274274
@@ -661,7 +663,7 @@ PrefabInstance:
     - target: {fileID: 2066896392029128874, guid: 45288819fde2143449a96207b14db0bb, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: c97ccd70af223f946901e2706b9e20d2, type: 2}
+      objectReference: {fileID: 9100000, guid: 41b28c5d7812b4b4d855ee72136a7e7c, type: 2}
     - target: {fileID: 2066896392038131396, guid: 45288819fde2143449a96207b14db0bb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

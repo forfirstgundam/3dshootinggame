@@ -19,6 +19,7 @@ public class AttackState : IEnemyState
         {
             if(charger.AttackCount >= 2)
             {
+                Debug.Log("상태 변화 : Attack -> Charge");
                 charger.AttackCount = 0;
                 enemy.ChangeEnemyState(new ChargeState());
             }
@@ -34,12 +35,14 @@ public class AttackState : IEnemyState
         if (_attackTimer >= enemy.Stat.AttackCoolTime)
         {
             Debug.Log("적이 공격했습니다!");
+            enemy.transform.LookAt(Player.Instance.transform);
             enemy.Animator.SetTrigger("AttackDelayToAttack");
 
             // ChargeEnemy의 경우 2번 공격 후 Charge공격
             if(charger != null)
             {
                 charger.AttackCount++;
+                Debug.Log($"Attack Count is {charger.AttackCount}");
             }
 
             IDamageable player = enemy.PlayerGameObject.GetComponent<IDamageable>();

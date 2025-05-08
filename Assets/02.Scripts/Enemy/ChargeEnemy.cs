@@ -2,10 +2,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-// 인공지능 : 지능을 가지고 행동하는 알고리즘
-// 반응형 / 계획형 -> 규칙 기반 인공지능(전통적인 방식) 
-//                 -> 제어문 기반
-
 public class ChargeEnemy : BaseEnemy
 {
     public int AttackCount = 0;
@@ -53,11 +49,15 @@ public class ChargeEnemy : BaseEnemy
 
     public void ChangeToChargeSpeed()
     {
+        Debug.Log("change speed to charge");
         _agent.speed = 15f;
+        _agent.acceleration = 100f;
     }
 
     public void ChangeToNormalSpeed()
     {
+        Debug.Log("change speed to normal");
         _agent.speed = Stat.MoveSpeed;
+        _agent.acceleration = 8f;
     }
 }
