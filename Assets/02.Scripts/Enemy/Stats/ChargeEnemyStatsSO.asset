@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: ChargeEnemyStatsSO
   m_EditorClassIdentifier: 
   MoveSpeed: 3
-  FindDistance: 20
-  ReturnDistance: 15
+  FindDistance: 15
+  ReturnDistance: Infinity
   AttackDistance: 7
   AttackCoolTime: 3
   AttackDamage: 50
@@ -23,4 +23,4 @@ MonoBehaviour:
   HitTime: 0.5
   DieTime: 1
   MaxHealth: 300
-  DropCoins: 5
+  DropCoins: 40
