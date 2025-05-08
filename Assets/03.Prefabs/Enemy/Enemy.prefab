@@ -157,10 +157,10 @@ MonoBehaviour:
   Stat: {fileID: 11400000, guid: bbe31d6ed3447e744a2fdf45d64649e7, type: 2}
   Health: 100
   PatrolPositions:
-  - {x: -30, y: 1, z: 30}
-  - {x: 30, y: 1, z: 30}
-  - {x: 30, y: 1, z: 0}
-  - {x: -30, y: 1, z: 0}
+  - {x: -25, y: 1, z: 30}
+  - {x: 40, y: 4, z: 35}
+  - {x: 30, y: 1, z: -30}
+  - {x: -40, y: 1, z: -40}
   Animator: {fileID: 0}
   CurPatrolPos: 0
   PlayerGameObject: {fileID: 0}
