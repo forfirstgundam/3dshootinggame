@@ -1,6 +1,9 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public enum GameState
@@ -23,8 +26,13 @@ public class GameManager : MonoBehaviour
     public Image ReadyImage;
     public Slider ReadySlider;
     public TextMeshProUGUI PlayText;
+
+    [Header("UI List")]
     public GameObject GameOverUI;
     public GameObject PopupUI;
+    public GameObject CreditPopUI;
+
+    private LinkedList<GameObject> _popups = new LinkedList<GameObject>();
 
     private void Awake()
     {
@@ -38,7 +46,23 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Pause();
+            if(_popups.Count == 0)
+            {
+                Pause();
+            }
+            else
+            {
+                if(_popups.Count > 1)
+                {
+                    GameObject last = _popups.Last();
+                    last.SetActive(false);
+                    _popups.RemoveLast();
+                }
+                else
+                {
+                    UnPause();
+                }
+            }
         }
     }
 
@@ -85,18 +109,32 @@ public class GameManager : MonoBehaviour
 
     public void Pause()
     {
-        // 1. 게임 상태를 Pause로 바꿈
-        if(GameState != GameState.Pause)
-        {
-            GameState = GameState.Pause;
-            Time.timeScale = 0f;
-            PopupUI.SetActive(true);
-        }
-        else if (GameState == GameState.Pause)
-        {
-            GameState = GameState.Play;
-            Time.timeScale = 1f;
-            PopupUI.SetActive(false);
-        }
+        GameState = GameState.Pause;
+        Time.timeScale = 0f;
+        Cursor.lockState = CursorLockMode.None;
+
+        _popups.AddLast(PopupUI);
+
+        PopupUI.SetActive(true);
+    }
+
+    public void UnPause()
+    {
+        GameState = GameState.Play;
+        Time.timeScale = 1f;
+        _popups.RemoveLast();
+        PopupUI.SetActive(false);
+    }
+
+    public void Retry()
+    {
+        SceneManager.LoadScene("SampleScene");
+    }
+
+    public void Credit()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        _popups.AddLast(CreditPopUI);
+        CreditPopUI.SetActive(true);
     }
 }
