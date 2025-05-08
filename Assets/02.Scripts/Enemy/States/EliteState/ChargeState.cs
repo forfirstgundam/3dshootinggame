@@ -21,7 +21,7 @@ public class ChargeState : IEnemyState
         if (_charger.CanCharge)
         {
             float distanceToCharge = Vector3.Distance(enemy.transform.position, _chargePosition);
-            if (distanceToCharge <= 1f)
+            if (distanceToCharge <= 1.2f)
             {
                 // 플레이어와 충돌했을 경우 대미지를 주고 밀어냄 - chargeenemy에서
 
@@ -50,7 +50,7 @@ public class ChargeState : IEnemyState
 
     private IEnumerator SaveUpForCharge()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(3f);
         Debug.Log("Saved up for charge");
         _chargePosition = Player.Instance.transform.position;
         _charger.CanCharge = true;

@@ -6,7 +6,6 @@ public class AttackState : IEnemyState
     public void Enter(BaseEnemy enemy)
     {
         Debug.Log("적이 공격했습니다!");
-        // 플레이어에게 대미지 주는 것 구현(아직 없음)
         _attackTimer = 0f;
     }
 
@@ -35,6 +34,7 @@ public class AttackState : IEnemyState
         if (_attackTimer >= enemy.Stat.AttackCoolTime)
         {
             Debug.Log("적이 공격했습니다!");
+            enemy.EnemyResetPath();
             enemy.transform.LookAt(Player.Instance.transform);
             enemy.Animator.SetTrigger("AttackDelayToAttack");
 

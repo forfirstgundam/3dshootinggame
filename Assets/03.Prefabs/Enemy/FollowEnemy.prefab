@@ -534,7 +534,7 @@ MonoBehaviour:
   PatrolPositions: []
   Animator: {fileID: 0}
   CurPatrolPos: 0
-  Player: {fileID: 0}
+  PlayerGameObject: {fileID: 0}
 --- !u!114 &6946020650551284261
 MonoBehaviour:
   m_ObjectHideFlags: 0
