@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum PopUpType
@@ -10,19 +11,23 @@ public enum PopUpType
 public class PopUpManager : MonoBehaviour
 {
     public static PopUpManager Instance;
+    public GameObject[] PopUps;
 
+    private List<GameObject> OpenPopUps;
+    
     private void Awake()
     {
         Instance = this;
+        OpenPopUps = new List<GameObject>();
     }
-    void Start()
+    
+    public void Open(PopUpType type)
     {
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Close(PopUpType type)
     {
-        
+
     }
 }

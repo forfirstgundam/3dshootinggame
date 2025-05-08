@@ -17,11 +17,21 @@ public class PopupUI : MonoBehaviour
     public void OnClickQuit()
     {
         // Quit
+    #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+    #else
+        Application.Quit();
+    #endif
     }
 
     public void OnClickCredit()
     {
         // Credit
         GameManager.Instance.Credit();
+    }
+
+    public void CreditClose()
+    {
+        GameManager.Instance.CloseFront();
     }
 }

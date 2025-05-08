@@ -128,6 +128,7 @@ public class GameManager : MonoBehaviour
 
     public void Retry()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene("SampleScene");
     }
 
@@ -136,5 +137,12 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         _popups.AddLast(CreditPopUI);
         CreditPopUI.SetActive(true);
+    }
+
+    public void CloseFront()
+    {
+        GameObject last = _popups.Last();
+        last.SetActive(false);
+        _popups.RemoveLast();
     }
 }

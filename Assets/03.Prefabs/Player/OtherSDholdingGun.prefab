@@ -124,6 +124,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1709849256630245519, guid: 91ae9411a4d02cf41964a3f538884b64, type: 3}
   m_PrefabInstance: {fileID: 1544350843973295658}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2130980944476973918 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 647499141696943476, guid: 91ae9411a4d02cf41964a3f538884b64, type: 3}
+  m_PrefabInstance: {fileID: 1544350843973295658}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7622308841023865023
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -861,10 +866,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b123ef4f283b1d4685de7a985025eb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Stat: {fileID: 11400000, guid: 75766ed7c7bd19c4aa54d736c88039a3, type: 2}
+  Stat: {fileID: 11400000, guid: 8fc509f125bae774a9d8b42caf706101, type: 2}
   FirePosition: {fileID: 431481512244719736}
-  GunSD: {fileID: 0}
-  GunModel: {fileID: 0}
+  GunModel: {fileID: 2130980944476973918}
   BulletEffect: {fileID: 0}
   UI_SniperZoom: {fileID: 0}
   ZoomInSize: 15

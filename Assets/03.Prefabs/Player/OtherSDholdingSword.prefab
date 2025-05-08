@@ -416,9 +416,22 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3349941097944643052, guid: 485d662c63590f74dac20be0cf684019, type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: b1ca9eb47697e8e4883ec4b3782d43bf, type: 3}
+    - target: {fileID: 3349941097944643052, guid: 485d662c63590f74dac20be0cf684019, type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 5e050102261c18742a3a0407acbed7b2, type: 2}
+    - target: {fileID: 3349941097944643052, guid: 485d662c63590f74dac20be0cf684019, type: 3}
+      propertyPath: m_WarningMessage
+      value: "\nBinding warning: Some generic clip(s) animate transforms that are
+        already bound by a Humanoid avatar. These transforms can only be changed
+        by Humanoid clips.\n\tTransform 'Jaw'\n\tTransform 'Toes_L'\n\tTransform
+        'Toes_L'\n\tTransform 'Toes_R'\n\tTransform 'Jaw'\n\tTransform 'Toes_R'\n\tTransform
+        'Jaw'\n\tTransform 'Toes_L'\n\tTransform 'Toes_R'\n\tFrom animation clip
+        'WGS_Run_Front@Loop'"
+      objectReference: {fileID: 0}
     - target: {fileID: 3460500875827598349, guid: 485d662c63590f74dac20be0cf684019, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -821,7 +834,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8347032502207345964, guid: 485d662c63590f74dac20be0cf684019, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8397928831939239369, guid: 485d662c63590f74dac20be0cf684019, type: 3}
       propertyPath: m_Layer
@@ -972,5 +985,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Stat: {fileID: 11400000, guid: 30a8d64343ccfe04999bf20c446fa784, type: 2}
-  LayerMask: 0
-  Player: {fileID: 0}
