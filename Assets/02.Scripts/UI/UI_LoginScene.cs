@@ -4,6 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 [Serializable]
@@ -33,23 +34,23 @@ public class UI_LoginScene : MonoBehaviour
 
     private void Start()
     {
-        LoginPanel.SetActive(true);
-        RegisterPanel.SetActive(false);
+        /*LoginPanel.SetActive(true);
+        RegisterPanel.SetActive(false);*/
 
         SetResultText("로그인하세요");
     }
 
     public void OnClickGoToRegisterButton()
     {
-        LoginPanel.SetActive(false);
-        RegisterPanel.SetActive(true);
+        /*LoginPanel.SetActive(false);
+        RegisterPanel.SetActive(true);*/
         RegisterInputFields.PassConfirmInputField.gameObject.SetActive(true);
     }
 
     public void OnClickGoToLoginButton()
     {
-        LoginPanel.SetActive(true);
-        RegisterPanel.SetActive(false);
+        /*LoginPanel.SetActive(true);
+        RegisterPanel.SetActive(false);*/
         RegisterInputFields.PassConfirmInputField.gameObject.SetActive(false);
     }
     private void SetResultText(string message)
@@ -64,10 +65,12 @@ public class UI_LoginScene : MonoBehaviour
 
     public void Login()
     {
+        OnClickGoToLoginButton();
+
         string id = LoginInputFields.IDInputField.text;
         if (string.IsNullOrEmpty(id))
         {
-            SetResultText("ID를 입력해주세요");
+            SetResultText("아이디를 입력해주세요");
             return;
         }
 
@@ -87,26 +90,28 @@ public class UI_LoginScene : MonoBehaviour
             {
                 SetResultText("로그인에 성공했습니다");
                 // 게임 씬으로 이동
+                SceneManager.LoadScene(1);
             }
             else
             {
-                SetResultText("비밀번호가 틀렸습니다");
+                SetResultText("아이디와 비밀번호를 확인해 주세요");
             }
         }
         else
         {
-            SetResultText("ID를 등록해 주세요");
-            OnClickGoToRegisterButton();
+            SetResultText("아이디와 비밀번호를 확인해 주세요");
         }
     }
 
     public void Register()
     {
+        OnClickGoToRegisterButton();
+
         // 1. 아이디 입력을 확인한다
         string id = RegisterInputFields.IDInputField.text;
         if (string.IsNullOrEmpty(id))
         {
-            SetResultText("ID를 입력해주세요");
+            SetResultText("아이디를 입력해주세요");
             // ResultText 흔들기
             return;
         }
@@ -143,8 +148,16 @@ public class UI_LoginScene : MonoBehaviour
         // 5. 로그인 창으로 돌아간다 (아이디 자동입력)
         LoginInputFields.IDInputField.text = id;
         LoginInputFields.PasswordInputField.text = string.Empty;
+        LoginInputFields.PassConfirmInputField.text = string.Empty;
         SetResultText("등록에 성공했습니다");
         OnClickGoToLoginButton();
+    }
+
+    public void LoginCheck()
+    {
+        string id = LoginInputFields.IDInputField.text;
+        string pass = LoginInputFields.PasswordInputField.text;
+
     }
 
     public string Encryption(string text)
