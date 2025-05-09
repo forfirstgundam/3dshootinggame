@@ -1,5 +1,7 @@
 using DG.Tweening;
 using System;
+using System.Security.Cryptography;
+using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,6 +28,8 @@ public class UI_LoginScene : MonoBehaviour
     [Header("Register")]
     public UIInputFields RegisterInputFields;
 
+    private const string SALT = "726851";
+    private const string PREFIX = "ID_";
 
     private void Start()
     {
@@ -58,7 +62,6 @@ public class UI_LoginScene : MonoBehaviour
         ResultPanel.rectTransform.DOPunchScale(Vector3.one * 0.2f, 0.3f, 5, 0.5f);
     }
 
-
     public void Login()
     {
         string id = LoginInputFields.IDInputField.text;
@@ -74,23 +77,26 @@ public class UI_LoginScene : MonoBehaviour
             SetResultText("비밀번호를 입력해주세요");
             return;
         }
+
+        string encrypted = Encryption(pass + SALT);
+        string stored = PlayerPrefs.GetString(PREFIX + id, null);
+
+        if (!string.IsNullOrEmpty(stored))
+        {
+            if (stored == encrypted)
+            {
+                SetResultText("로그인에 성공했습니다");
+                // 게임 씬으로 이동
+            }
+            else
+            {
+                SetResultText("비밀번호가 틀렸습니다");
+            }
+        }
         else
         {
-            if(PlayerPrefs.GetString("ID") == id)
-            {
-                if(PlayerPrefs.GetString("PASS") == pass)
-                {
-                    SetResultText("로그인에 성공했습니다");
-                }
-                else
-                {
-                    SetResultText("비밀번호가 틀렸습니다");
-                }
-            } else
-            {
-                SetResultText("ID를 등록해 주세요");
-                OnClickGoToRegisterButton();
-            }
+            SetResultText("ID를 등록해 주세요");
+            OnClickGoToRegisterButton();
         }
     }
 
@@ -124,8 +130,8 @@ public class UI_LoginScene : MonoBehaviour
             if(password == passcheck)
             {
                 // 4. PlayerPrefs를 이용해서 아이디/ 비번 저장
-                PlayerPrefs.SetString("ID", id);
-                PlayerPrefs.SetString("PASS", password);
+                password = Encryption(password + SALT);
+                PlayerPrefs.SetString(PREFIX + id, password);
             }
             else
             {
@@ -139,5 +145,20 @@ public class UI_LoginScene : MonoBehaviour
         LoginInputFields.PasswordInputField.text = string.Empty;
         SetResultText("등록에 성공했습니다");
         OnClickGoToLoginButton();
+    }
+
+    public string Encryption(string text)
+    {
+        SHA256 sha256 = SHA256.Create();
+
+        byte[] bytes = Encoding.UTF8.GetBytes(text);
+        byte[] hash = sha256.ComputeHash(bytes);
+
+        string resultText = string.Empty;
+        foreach(byte b in hash)
+        {
+            resultText += b.ToString("X2");
+        }
+        return resultText;     
     }
 }
