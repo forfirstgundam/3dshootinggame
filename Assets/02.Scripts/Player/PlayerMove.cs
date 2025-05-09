@@ -185,6 +185,7 @@ public class PlayerMove : MonoBehaviour
     {
         Stats.Stamina -= amount;
         Stats.Stamina = Mathf.Max(0, Stats.Stamina);
+        MainUI.Instance.UpdateStaminaBar(Stats.Stamina);
     }
 
     private bool CanJump() => _availableJumps > 0;

@@ -72,6 +72,11 @@ public class MainUI : MonoBehaviour
         HealthBar.value = (float)hp / (float)Stats.MaxHealth;
     }
 
+    public void UpdateStaminaBar(float stamina)
+    {
+        StaminaBar.value = (Stats.Stamina / Stats.MaxStamina);
+    }
+
     public void LoadBarUpdate(float progress)
     {
         LoadBulletBar.value = (progress / WeaponStats.LoadTime);
@@ -150,7 +155,6 @@ public class MainUI : MonoBehaviour
     private void Update()
     {
         if (GameManager.Instance.GameState != GameState.Play) return;
-        StaminaBar.value = (Stats.Stamina / Stats.MaxStamina);
         //LoadBulletBar.value
 
         if (Input.GetKeyDown(KeyCode.KeypadMinus))
