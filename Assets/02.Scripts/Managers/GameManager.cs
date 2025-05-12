@@ -123,6 +123,8 @@ public class GameManager : MonoBehaviour
         GameState = GameState.Play;
         Time.timeScale = 1f;
         _popups.RemoveLast();
+        Cursor.lockState = CursorLockMode.Locked;  // 커서 중앙에 고정
+        Cursor.visible = false;                    // 커서 숨기기
         PopupUI.SetActive(false);
     }
 

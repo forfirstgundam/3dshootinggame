@@ -58,7 +58,7 @@ public class PlayerMove : MonoBehaviour
 
         if (_isClimbing)
         {
-            HandleClimbing(moveDirection);
+            //HandleClimbing(moveDirection);
         }
         else if (Input.GetButtonDown("Jump") && CanJump())
         {
@@ -178,6 +178,7 @@ public class PlayerMove : MonoBehaviour
         {
             Stats.Stamina += Stats.FillRate * Time.deltaTime;
             Stats.Stamina = Mathf.Clamp(Stats.Stamina, 0, Stats.MaxStamina);
+            MainUI.Instance.UpdateStaminaBar(Stats.Stamina);
         }
     }
 
