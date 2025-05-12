@@ -5,10 +5,10 @@ public class Pools : MonoBehaviour
 {
     public static Pools Instance;
 
-    [Header("ÇÁ¸®ÆÕ ¸®½ºÆ®")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®")]
     public List<GameObject> PoolObjects;
 
-    [Header("°¢ ÇÁ¸®ÆÕÀÇ ÃÊ±â »ý¼º °³¼ö")]
+    [Header("ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")]
     public List<int> PoolSizes;
 
     private List<List<GameObject>> PoolList;
@@ -47,7 +47,7 @@ public class Pools : MonoBehaviour
             }
         }
 
-        // ¾øÀ¸¸é »õ·Î »ý¼ºÇØ¼­ ¸®½ºÆ®¿¡ Ãß°¡
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ß°ï¿½
         GameObject newObj = Instantiate(PoolObjects[index], position, Quaternion.identity, transform);
         newObj.SetActive(true);
         PoolList[index].Add(newObj);
