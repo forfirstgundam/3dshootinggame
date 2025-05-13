@@ -58,7 +58,7 @@ public class PlayerMove : MonoBehaviour
 
         if (_isClimbing)
         {
-            //HandleClimbing(moveDirection);
+            HandleClimbing(moveDirection);
         }
         else if (Input.GetButtonDown("Jump") && CanJump())
         {
@@ -199,11 +199,15 @@ public class PlayerMove : MonoBehaviour
         Vector3 forward = transform.forward;
         float rayDistance = 0.6f;
 
+        Debug.DrawRay(transform.position - Vector3.up, transform.forward * 0.6f, Color.red);
+
         return Physics.Raycast(origin, forward, rayDistance);
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
+        float angle = Vector3.Angle(hit.normal, Vector3.up);
         _isClimbing = Vector3.Angle(hit.normal, Vector3.up) > WALL_ANGLE_THRESHOLD;
+        Debug.Log($"[Hit] {hit.collider.name} at angle {angle}");
     }
 }
