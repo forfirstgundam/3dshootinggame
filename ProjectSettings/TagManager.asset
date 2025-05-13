@@ -11,7 +11,7 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - DesertLight
   - Water
   - UI
   - Player
@@ -19,7 +19,7 @@ TagManager:
   - Enemy
   - Minimap
   - ExplodableObject
-  - 
+  - EnemyBullet
   - 
   - 
   - 
