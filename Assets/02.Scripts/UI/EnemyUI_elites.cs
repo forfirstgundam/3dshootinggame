@@ -46,9 +46,14 @@ public class EnemyUI_elites : MonoBehaviour
 
         _delayCoroutine = null;
     }
-
-    private void Update()
+    private void LateUpdate()
     {
-        Canvas.transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
+        var cam = Camera.main;
+        if (cam != null)
+        {
+            Vector3 dir = (Canvas.transform.position - cam.transform.position).normalized;
+            Canvas.transform.forward = dir;
+        }
     }
+
 }
